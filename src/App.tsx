@@ -3,27 +3,22 @@ import Counter from "./Counter/counter";
 import Shop from "./shop/Shop";
 import { useEffect, useState } from "react";
 import { ProductArgs } from "./shop/Shop";
+import ClearMenu from "./ClearMenu/ClearMenu";
+
+function loadData(key: string, defValue: number) {
+  return Number(localStorage.getItem(key) || defValue);
+}
 
 function App() {
-  function PerClickBonus(buff: number, price: number) {
-    if (count >= price) {
-      setPerClick(perclick + buff);
-      setCount(count - price);
-    }
-  }
-
-  function PeriodPointsBonus(buff: number, price: number) {
-    if (count >= price) {
-      setPoints(periodPoints + buff);
-      setCount(count - price);
-    }
-  }
-
-  function PeriodTimeBonus(buff: number, price: number) {
-    if (count >= price) {
-      setTime(periodTime - buff);
-      setCount(count - price);
-    }
+  function upgradeClickHandler(
+    method: (value: React.SetStateAction<number>) => void
+  ) {
+    return function (buff: number, price: number) {
+      if (count >= price) {
+        method((v) => v + buff);
+        setCount(count - price);
+      }
+    };
   }
 
   function Save() {
@@ -33,28 +28,19 @@ function App() {
     localStorage.setItem("periodPoints", periodPoints.toString());
   }
 
-  const [count, setCount] = useState(
-    Number(localStorage.getItem("count") ? localStorage.getItem("count") : 0)
-  );
-  const [perclick, setPerClick] = useState(
-    Number(
-      localStorage.getItem("perClick") ? localStorage.getItem("perClick") : 1
-    )
-  );
-  const [periodTime, setTime] = useState(
-    Number(
-      localStorage.getItem("periodTime")
-        ? localStorage.getItem("periodTime")
-        : 15
-    )
-  );
-  const [periodPoints, setPoints] = useState(
-    Number(
-      localStorage.getItem("periodPoints")
-        ? localStorage.getItem("periodPoints")
-        : 0
-    )
-  );
+  function ClearProgress() {
+    localStorage.setItem("count", "0");
+    localStorage.setItem("perclick", "1");
+    localStorage.setItem("periodTime", "15");
+    localStorage.setItem("periodPoints", "0");
+    setCount(0);
+  }
+
+  const [count, setCount] = useState(loadData("count", 0));
+  const [perclick, setPerClick] = useState(loadData("perClick", 1));
+  const [periodTime, setTime] = useState(loadData("periodTime", 15));
+  const [periodPoints, setPoints] = useState(loadData("periodPoints", 0));
+  const [hideMenu, setHide] = useState(true);
 
   useEffect(() => {
     Save();
@@ -73,32 +59,28 @@ function App() {
       price: 10,
       name: "UPGRADE!",
       buff: 1,
-      onClick: PerClickBonus,
-      type: "perClick",
+      onClick: upgradeClickHandler(setPerClick),
       active: count < 10 ? false : true,
     },
     {
       price: 100,
       name: "UPGRADE!!!!",
       buff: 12,
-      onClick: PerClickBonus,
-      type: "perClick",
+      onClick: upgradeClickHandler(setPerClick),
       active: count < 100 ? false : true,
     },
     {
       price: 50,
       name: "Points per period",
       buff: 1,
-      onClick: PeriodPointsBonus,
-      type: "autoClick",
+      onClick: upgradeClickHandler(setPoints),
       active: count < 50 ? false : true,
     },
     {
       price: 20,
       name: "Period Time",
-      buff: 0.1,
-      onClick: PeriodTimeBonus,
-      type: "autoSpeed",
+      buff: -0.1,
+      onClick: upgradeClickHandler(setTime),
       active: count < 20 ? false : true,
     },
   ];
@@ -108,6 +90,19 @@ function App() {
       <div className="value">{count}</div>
       <Counter onClick={() => setCount(count + perclick)}></Counter>
       {Shop(products)}
+      <button className="clear" onClick={() => setHide(false)}>
+        Clear Progress
+      </button>
+      <ClearMenu
+        isHided={hideMenu}
+        OnAcept={() => {
+          setHide(true);
+          ClearProgress();
+        }}
+        OnCancellation={() => {
+          setHide(true);
+        }}
+      />
     </div>
   );
 }

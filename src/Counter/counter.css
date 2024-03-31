@@ -8,6 +8,8 @@
   user-select: none;
   grid-area: 4 / 4 / 7 / 7;
   cursor: pointer;
+  background-color: transparent;
+  border-width: 0;
 }
 
 .counter img {

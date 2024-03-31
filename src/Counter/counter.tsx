@@ -4,8 +4,8 @@ type args = {
 };
 export default function Counter({ onClick }: args) {
   return (
-    <div className="counter">
+    <button className="counter">
       <img src="/cookie.png" onClick={onClick} />
-    </div>
+    </button>
   );
 }
