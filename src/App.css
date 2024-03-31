@@ -15,4 +15,39 @@
   grid-area: 1/4/1/7;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.perSecond {
+  font-size: 15px;
+}
+
+.clear {
+  box-shadow: 5px 5px black;
+  user-select: none;
+  cursor: pointer;
+  text-align: center;
+  font-size: large;
+  background-color: lightgreen;
+  grid-area: 8 / 4 / 9 / 7;
+}
+
+.clear:active {
+  box-shadow: 3px 3px;
+}
+
+.indecator {
+  position: absolute;
+  color: white;
+  user-select: none;
+  animation: up 2s linear;
+  font-size: 20px;
+  pointer-events: none;
+}
+
+@keyframes up {
+  100% {
+    transform: translate(0, -30vh);
+    opacity: 0;
+  }
 }

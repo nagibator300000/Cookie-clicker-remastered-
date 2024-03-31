@@ -1,56 +1,42 @@
 import "./Shop.css";
 import { clsx } from "clsx";
-export type ProductArgs = {
+export type ProductObj = {
   price: number;
   name: string;
   buff: number;
-  onClick: (buff: number, price: number) => void;
-  type: "perClick" | "autoClick" | "autoSpeed";
-  active: boolean;
+  type: "perClick" | "periodPoints" | "periodTime";
+  hidden?: (periodTime: number) => boolean;
 };
-type ShopArgs = ProductArgs[];
-export default function Shop(products: ShopArgs) {
-  const productsArr = products.map((product) => {
-    return <Product {...product} />;
-  });
 
-  return <div className="shop">{productsArr}</div>;
-}
+type ProductArgs = {
+  price: number;
+  name: string;
+  buff: number;
+  type: "perClick" | "periodPoints" | "periodTime";
+  hidden?: boolean;
+};
 
-function Product({ price, name, buff, onClick, type, active }: ProductArgs) {
-  switch (type) {
-    case "perClick":
-      return (
-        <div
-          className={clsx("product", active && "active")}
-          onClick={() => onClick(buff, price)}
-        >
-          <div className="price">{price}</div>
-          <div className="name">{name}</div>
-          <div className="buff">+{buff}</div>
-        </div>
-      );
-    case "autoClick":
-      return (
-        <div
-          className={clsx("product", active && "active")}
-          onClick={() => onClick(buff, price)}
-        >
-          <div className="price">{price}</div>
-          <div className="name">{name}</div>
-          <div className="buff">+{buff}</div>
-        </div>
-      );
-    case "autoSpeed":
-      return (
-        <div
-          className={clsx("product", active && "active")}
-          onClick={() => onClick(buff, price)}
-        >
-          <div className="price">{price}</div>
-          <div className="name">{name}</div>
-          <div className="buff">-{buff} time</div>
-        </div>
-      );
+export default function Product({
+  price,
+  name,
+  buff,
+  onClick,
+  active,
+  hidden,
+}: ProductArgs & {
+  onClick: (price: number, buff: number) => void;
+  active: boolean;
+}) {
+  if (!hidden) {
+    return (
+      <button
+        className={clsx("product", active && "active")}
+        onClick={() => onClick(buff, price)}
+      >
+        <div className="price">{price}</div>
+        <div className="name">{name}</div>
+        <div className="buff">{buff}</div>
+      </button>
+    );
   }
 }

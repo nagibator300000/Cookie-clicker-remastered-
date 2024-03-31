@@ -1,113 +1,208 @@
 import "./App.css";
 import Counter from "./Counter/counter";
-import Shop from "./shop/Shop";
-import { useEffect, useState } from "react";
-import { ProductArgs } from "./shop/Shop";
+import { Key, ReactNode, useEffect, useState } from "react";
+import type { ProductObj } from "./shop/Shop";
+import ClearMenu from "./ClearMenu/ClearMenu";
+import Product from "./shop/Shop";
+import Notification from "./Notification/Notification";
+import "./Notification/Notification.css";
+
+function loadData(key: string, defValue: GameStats): GameStats {
+  const item = localStorage.getItem(key);
+  if (item) {
+    return JSON.parse(item);
+  }
+  return defValue;
+}
+
+function saveData(val: GameStats) {
+  localStorage.setItem("gameData", JSON.stringify(val));
+}
+
+const defaulStats = {
+  count: 0,
+  perClick: 1,
+  periodPoints: 0,
+  periodTime: 5,
+};
+
+type GameStats = typeof defaulStats;
+
+type Notification = {
+  key: string;
+  children: ReactNode;
+  data?: "info" | "success" | "error" | "warning";
+};
+
+const products: ProductObj[] = [
+  {
+    price: 10,
+    name: "UPGRADE!",
+    buff: 1,
+    type: "perClick",
+  },
+  {
+    price: 100,
+    name: "UPGRADE!!!!",
+    buff: 12,
+    type: "perClick",
+  },
+  {
+    price: 50,
+    name: "Points per period",
+    buff: 1,
+    type: "periodPoints",
+  },
+  {
+    price: 20,
+    name: "Period Time",
+    buff: -0.1,
+    type: "periodTime",
+    hidden: (periodTime: number) => Math.round(periodTime * 10) === 1,
+  },
+];
+
+let appInit = false;
 
 function App() {
-  function PerClickBonus(buff: number, price: number) {
-    if (count >= price) {
-      setPerClick(perclick + buff);
-      setCount(count - price);
-    }
+  const [indicator, setIndicator] = useState<
+    { key: Key; inner: number; top: number; left: number }[]
+  >([]);
+  const [gameData, setData] = useState(loadData("gameData", defaulStats));
+  const [hideMenu, setHide] = useState(true);
+  const [notifications, setNotif] = useState<Notification[]>([]);
+
+  function upgradeClickHandler(key: keyof GameStats) {
+    return function (buff: number, price: number) {
+      if (gameData.count >= price) {
+        setData((data) => {
+          return {
+            ...data,
+            [key]: data[key] + buff,
+            count: data.count - price,
+          };
+        });
+      }
+    };
   }
 
-  function PeriodPointsBonus(buff: number, price: number) {
-    if (count >= price) {
-      setPoints(periodPoints + buff);
-      setCount(count - price);
-    }
+  function ClearProgress() {
+    localStorage.clear();
+    setData(defaulStats);
   }
 
-  function PeriodTimeBonus(buff: number, price: number) {
-    if (count >= price) {
-      setTime(periodTime - buff);
-      setCount(count - price);
-    }
+  function indicatorWrapper() {
+    return indicator.map((i) => (
+      <div
+        className="indecator"
+        key={i.key}
+        style={{ top: i.top, left: i.left }}
+      >
+        +{i.inner}
+      </div>
+    ));
   }
-
-  function Save() {
-    localStorage.setItem("count", count.toString());
-    localStorage.setItem("perclick", perclick.toString());
-    localStorage.setItem("periodTime", periodTime.toString());
-    localStorage.setItem("periodPoints", periodPoints.toString());
-  }
-
-  const [count, setCount] = useState(
-    Number(localStorage.getItem("count") ? localStorage.getItem("count") : 0)
-  );
-  const [perclick, setPerClick] = useState(
-    Number(
-      localStorage.getItem("perClick") ? localStorage.getItem("perClick") : 1
-    )
-  );
-  const [periodTime, setTime] = useState(
-    Number(
-      localStorage.getItem("periodTime")
-        ? localStorage.getItem("periodTime")
-        : 15
-    )
-  );
-  const [periodPoints, setPoints] = useState(
-    Number(
-      localStorage.getItem("periodPoints")
-        ? localStorage.getItem("periodPoints")
-        : 0
-    )
-  );
 
   useEffect(() => {
-    Save();
-  }, [count]);
+    saveData(gameData);
+  }, [gameData]);
 
   useEffect(() => {
-    const period = setInterval(
-      () => setCount((val) => val + periodPoints),
-      periodTime * 1000
-    );
+    const period = setInterval(() => {
+      setData((data) => {
+        return {
+          ...data,
+          count: data.count + data.periodPoints,
+        };
+      });
+    }, gameData.periodTime * 1000);
     return () => clearInterval(period);
-  }, [periodPoints, periodTime]);
+  }, [gameData.periodPoints, gameData.periodTime]);
 
-  const products: ProductArgs[] = [
-    {
-      price: 10,
-      name: "UPGRADE!",
-      buff: 1,
-      onClick: PerClickBonus,
-      type: "perClick",
-      active: count < 10 ? false : true,
-    },
-    {
-      price: 100,
-      name: "UPGRADE!!!!",
-      buff: 12,
-      onClick: PerClickBonus,
-      type: "perClick",
-      active: count < 100 ? false : true,
-    },
-    {
-      price: 50,
-      name: "Points per period",
-      buff: 1,
-      onClick: PeriodPointsBonus,
-      type: "autoClick",
-      active: count < 50 ? false : true,
-    },
-    {
-      price: 20,
-      name: "Period Time",
-      buff: 0.1,
-      onClick: PeriodTimeBonus,
-      type: "autoSpeed",
-      active: count < 20 ? false : true,
-    },
-  ];
+  useEffect(() => {
+    if (!appInit) {
+      appInit = true;
+
+      const key = crypto.randomUUID();
+      setNotif((arr) => [
+        ...arr,
+        {
+          key,
+          children: "Click on coockie to get points",
+        },
+      ]);
+      setTimeout(
+        () => setNotif((arr) => arr.filter((item) => item.key !== key)),
+        1000
+      );
+    }
+  }, []);
 
   return (
     <div className="clicker">
-      <div className="value">{count}</div>
-      <Counter onClick={() => setCount(count + perclick)}></Counter>
-      {Shop(products)}
+      <div className="value">
+        <div>{gameData.count}</div>
+        <div className="perSecond">
+          points per second:
+          {(
+            gameData.periodPoints / Number(gameData.periodTime.toFixed(1))
+          ).toFixed(2)}
+        </div>
+      </div>
+      <Counter
+        onClick={(event) => {
+          {
+            setData({ ...gameData, count: gameData.count + gameData.perClick });
+            const newIndicator = {
+              key: crypto.randomUUID(),
+              inner: gameData.perClick,
+              top: event.clientY,
+              left: event.clientX,
+            };
+            setIndicator([...indicator, newIndicator]);
+            setTimeout(
+              () =>
+                setIndicator((ind) =>
+                  ind.filter((click) => click.key !== newIndicator.key)
+                ),
+              1500
+            );
+          }
+        }}
+      ></Counter>
+
+      <div className="indecators">{indicatorWrapper()}</div>
+      <div className="shop">
+        {products.map((product) => {
+          return (
+            <Product
+              {...product}
+              active={gameData.count >= product.price}
+              onClick={upgradeClickHandler(product.type)}
+              key={product.name}
+              hidden={product.hidden && product.hidden(gameData.periodTime)}
+            />
+          );
+        })}
+      </div>
+      <button className="clear" onClick={() => setHide(false)}>
+        Clear Progress
+      </button>
+      <ClearMenu
+        isHided={hideMenu}
+        OnAcept={() => {
+          setHide(true);
+          ClearProgress();
+        }}
+        OnCancel={() => {
+          setHide(true);
+        }}
+      />
+      {notifications.map((item) => (
+        <Notification data={item.data} key={item.key}>
+          {item.children}
+        </Notification>
+      ))}
     </div>
   );
 }

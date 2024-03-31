@@ -1,11 +1,11 @@
 import "./counter.css";
 type args = {
-  onClick: () => void;
+  onClick: (event: React.MouseEvent) => void;
 };
 export default function Counter({ onClick }: args) {
   return (
-    <div className="counter">
-      <img src="/cookie.png" onClick={onClick} />
-    </div>
+    <button className="counter" onClick={onClick}>
+      <img src="/nuke.png" />
+    </button>
   );
 }
