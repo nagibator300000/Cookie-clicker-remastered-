@@ -1,0 +1,21 @@
+.indicator {
+  --ofs: -50%, -50%;
+  color: white;
+  position: absolute;
+  pointer-events: none;
+  background-image: url("/Geo.png");
+  background-size: contain;
+  aspect-ratio: 58/61;
+  width: 2rem;
+  animation: rotate linear infinite 0.5s;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(var(--ofs)) rotateZ(0);
+  }
+
+  to {
+    transform: translate(var(--ofs)) rotateZ(360deg);
+  }
+}

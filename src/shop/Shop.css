@@ -1,25 +1,38 @@
 .product {
-  background-color: red;
-  box-shadow: 5px 5px black;
+  font-family: "Hollow";
+
+  font-size: 2vh;
+  background-color: transparent;
+  border: none;
   user-select: none;
   cursor: pointer;
   text-align: center;
-  font-size: large;
-  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 11vw;
+  width: 22vw;
+  background-image: url("/Shop.png");
+  background-size: 100% 100%;
 }
 
-.product:active {
-  box-shadow: 3px 3px;
-}
+/* .product::after {
+  position: absolute;
+  display: block;
+  content: "";
+  left: 0%;
+  top: 0%;
+  height: 11vw;
+  width: 22vw;
+  background-color: transparent;
+  
+} */
 
 .shop {
-  grid-area: 1 / 8 / 10 / 10;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 30px;
-}
-
-.active {
-  background-color: lightgreen;
 }

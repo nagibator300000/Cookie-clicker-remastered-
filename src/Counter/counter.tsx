@@ -1,11 +1,16 @@
+import { ReactNode } from "react";
 import "./counter.css";
 type args = {
-  onClick: () => void;
+  onClick: (event: React.MouseEvent) => void;
+  img: string;
+  children: ReactNode;
 };
-export default function Counter({ onClick }: args) {
+export default function Counter({ onClick, img, children }: args) {
+  img = "/" + img + ".png";
   return (
-    <div className="counter">
-      <img src="/cookie.png" onClick={onClick} />
-    </div>
+    <button className="counter">
+      <img src={img} onClick={onClick} />
+      {children}
+    </button>
   );
 }

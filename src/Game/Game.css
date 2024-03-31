@@ -1,0 +1,50 @@
+.game {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  padding: 12.5vh 0;
+  border-color: transparent;
+  border-width: 1px;
+  border-image: linear-gradient(transparent 10%, #fff, transparent 90%);
+  border-image-slice: 1;
+  border-style: solid;
+}
+
+.perSecond {
+  font-size: 15px;
+}
+
+.clear {
+  box-shadow: 5px 5px black;
+  user-select: none;
+  cursor: pointer;
+  text-align: center;
+  font-size: large;
+  background-color: lightgreen;
+}
+
+.clear:active {
+  box-shadow: 3px 3px;
+}
+
+.indecator {
+  position: absolute;
+  color: white;
+  user-select: none;
+  animation: up 2s linear;
+  font-size: 20px;
+  pointer-events: none;
+}
+
+@keyframes up {
+  100% {
+    opacity: 0;
+  }
+}
+
+.geoes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

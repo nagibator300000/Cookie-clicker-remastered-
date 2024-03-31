@@ -1,0 +1,15 @@
+.charm {
+  width: 64px;
+  height: 64px;
+  grid-row: var(--row);
+  grid-column: var(--col);
+  background-size: cover;
+}
+
+.dropping {
+  opacity: 0.2;
+}
+
+.overlaping {
+  background-color: rgba(255, 0, 0, 0.2);
+}

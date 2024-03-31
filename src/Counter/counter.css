@@ -1,26 +1,17 @@
 .counter {
-  border-radius: 5000px;
   aspect-ratio: 1/1;
+  min-width: 20%;
+  max-width: 40%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
   user-select: none;
-  grid-area: 4 / 4 / 7 / 7;
-  cursor: pointer;
+  border-width: 0;
+  background-color: transparent;
 }
 
 .counter img {
-  height: 100%;
   width: 100%;
-  animation: cookie 0.7s infinite alternate ease-in-out;
-}
-
-@keyframes cookie {
-  from {
-    transform: rotate(-45deg);
-  }
-  to {
-    transform: rotate(45deg);
-  }
+  cursor: pointer;
 }
