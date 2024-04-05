@@ -7,6 +7,8 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  top: 0;
 }
 
 .clearMenu.hide {

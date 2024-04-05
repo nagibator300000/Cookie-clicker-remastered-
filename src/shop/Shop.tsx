@@ -1,30 +1,42 @@
 import "./Shop.css";
 import { clsx } from "clsx";
-export type ProductArgs = {
+export type ProductObj = {
   price: number;
   name: string;
   buff: number;
-  onClick: (buff: number, price: number) => void;
-  active: boolean;
+  type: "perClick" | "periodPoints" | "periodTime";
+  hidden?: (periodTime: number) => boolean;
 };
-type ShopArgs = ProductArgs[];
-export default function Shop(products: ShopArgs) {
-  const productsArr = products.map((product) => {
-    return <Product {...product} />;
-  });
 
-  return <div className="shop">{productsArr}</div>;
-}
+type ProductArgs = {
+  price: number;
+  name: string;
+  buff: number;
+  type: "perClick" | "periodPoints" | "periodTime";
+  hidden?: boolean;
+};
 
-function Product({ price, name, buff, onClick, active }: ProductArgs) {
-  return (
-    <button
-      className={clsx("product", active && "active")}
-      onClick={() => onClick(buff, price)}
-    >
-      <div className="price">{price}</div>
-      <div className="name">{name}</div>
-      <div className="buff">{buff}</div>
-    </button>
-  );
+export default function Product({
+  price,
+  name,
+  buff,
+  onClick,
+  active,
+  hidden,
+}: ProductArgs & {
+  onClick: (price: number, buff: number) => void;
+  active: boolean;
+}) {
+  if (!hidden) {
+    return (
+      <button
+        className={clsx("product", active && "active")}
+        onClick={() => onClick(buff, price)}
+      >
+        <div className="price">{price}</div>
+        <div className="name">{name}</div>
+        <div className="buff">{buff}</div>
+      </button>
+    );
+  }
 }

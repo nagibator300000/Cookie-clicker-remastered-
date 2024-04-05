@@ -1,95 +1,167 @@
 import "./App.css";
 import Counter from "./Counter/counter";
-import Shop from "./shop/Shop";
-import { useEffect, useState } from "react";
-import { ProductArgs } from "./shop/Shop";
+import { Key, useEffect, useState } from "react";
+import type { ProductObj } from "./shop/Shop";
 import ClearMenu from "./ClearMenu/ClearMenu";
+import Product from "./shop/Shop";
 
-function loadData(key: string, defValue: number) {
-  return Number(localStorage.getItem(key) || defValue);
+function loadData(key: string, defValue: GameStats): GameStats {
+  const item = localStorage.getItem(key);
+  if (item) {
+    return JSON.parse(item);
+  }
+  return defValue;
 }
 
+function saveData(val: GameStats) {
+  localStorage.setItem("gameData", JSON.stringify(val));
+}
+
+const defaulStats = {
+  count: 0,
+  perClick: 1,
+  periodPoints: 0,
+  periodTime: 5,
+};
+
+type GameStats = typeof defaulStats;
+
+const products: ProductObj[] = [
+  {
+    price: 10,
+    name: "UPGRADE!",
+    buff: 1,
+    type: "perClick",
+  },
+  {
+    price: 100,
+    name: "UPGRADE!!!!",
+    buff: 12,
+    type: "perClick",
+  },
+  {
+    price: 50,
+    name: "Points per period",
+    buff: 1,
+    type: "periodPoints",
+  },
+  {
+    price: 20,
+    name: "Period Time",
+    buff: -0.1,
+    type: "periodTime",
+    hidden: (periodTime: number) => Math.round(periodTime * 10) === 1,
+  },
+];
+
 function App() {
-  function upgradeClickHandler(
-    method: (value: React.SetStateAction<number>) => void
-  ) {
+  const [indicator, setIndicator] = useState<
+    { key: Key; inner: number; top: number; left: number }[]
+  >([]);
+  const [gameData, setData] = useState(loadData("gameData", defaulStats));
+  const [hideMenu, setHide] = useState(true);
+
+  function upgradeClickHandler(key: keyof GameStats) {
     return function (buff: number, price: number) {
-      if (count >= price) {
-        method((v) => v + buff);
-        setCount(count - price);
+      if (gameData.count >= price) {
+        setData((data) => {
+          return {
+            ...data,
+            [key]: data[key] + buff,
+            count: data.count - price,
+          };
+        });
       }
     };
   }
 
-  function Save() {
-    localStorage.setItem("count", count.toString());
-    localStorage.setItem("perclick", perclick.toString());
-    localStorage.setItem("periodTime", periodTime.toString());
-    localStorage.setItem("periodPoints", periodPoints.toString());
-  }
-
   function ClearProgress() {
-    localStorage.setItem("count", "0");
-    localStorage.setItem("perclick", "1");
-    localStorage.setItem("periodTime", "15");
-    localStorage.setItem("periodPoints", "0");
-    setCount(0);
+    localStorage.clear();
+    setData(defaulStats);
   }
 
-  const [count, setCount] = useState(loadData("count", 0));
-  const [perclick, setPerClick] = useState(loadData("perClick", 1));
-  const [periodTime, setTime] = useState(loadData("periodTime", 15));
-  const [periodPoints, setPoints] = useState(loadData("periodPoints", 0));
-  const [hideMenu, setHide] = useState(true);
+  function indicatorWrapper() {
+    return indicator.map((i) => (
+      <div
+        className="indecator"
+        key={i.key}
+        style={{ top: i.top, left: i.left }}
+      >
+        +{i.inner}
+      </div>
+    ));
+  }
 
   useEffect(() => {
-    Save();
-  }, [count]);
+    saveData(gameData);
+  }, [gameData]);
 
   useEffect(() => {
-    const period = setInterval(
-      () => setCount((val) => val + periodPoints),
-      periodTime * 1000
-    );
+    const period = setInterval(() => {
+      setData((data) => {
+        return {
+          ...data,
+          count: data.count + data.periodPoints,
+        };
+      });
+    }, gameData.periodTime * 1000);
     return () => clearInterval(period);
-  }, [periodPoints, periodTime]);
-
-  const products: ProductArgs[] = [
-    {
-      price: 10,
-      name: "UPGRADE!",
-      buff: 1,
-      onClick: upgradeClickHandler(setPerClick),
-      active: count < 10 ? false : true,
-    },
-    {
-      price: 100,
-      name: "UPGRADE!!!!",
-      buff: 12,
-      onClick: upgradeClickHandler(setPerClick),
-      active: count < 100 ? false : true,
-    },
-    {
-      price: 50,
-      name: "Points per period",
-      buff: 1,
-      onClick: upgradeClickHandler(setPoints),
-      active: count < 50 ? false : true,
-    },
-    {
-      price: 20,
-      name: "Period Time",
-      buff: -0.1,
-      onClick: upgradeClickHandler(setTime),
-      active: count < 20 ? false : true,
-    },
-  ];
+  }, [gameData.periodPoints, gameData.periodTime]);
 
   return (
     <div className="clicker">
-      <div className="value">{count}</div>
-      <Counter onClick={() => setCount(count + perclick)}></Counter>
-      {Shop(products)}
+      <div className="value">
+        <div>{gameData.count}</div>
+        <div className="perSecond">
+          points per second:{gameData.periodPoints / gameData.periodTime}
+        </div>
+      </div>
+      <Counter
+        onClick={(event) => {
+          {
+            setData({ ...gameData, count: gameData.count + gameData.perClick });
+            const newIndicator = {
+              key: crypto.randomUUID(),
+              inner: gameData.perClick,
+              top: event.clientY,
+              left: event.clientX,
+            };
+            setIndicator([...indicator, newIndicator]);
+            setTimeout(
+              () =>
+                setIndicator((ind) =>
+                  ind.filter((click) => click.key !== newIndicator.key)
+                ),
+              1500
+            );
+          }
+        }}
+      ></Counter>
+
+      <div className="indecators">{indicatorWrapper()}</div>
+      <div className="shop">
+        {products.map((product) => {
+          return (
+            <Product
+              {...product}
+              active={gameData.count >= product.price}
+              onClick={upgradeClickHandler(product.type)}
+              key={product.name}
+              hidden={product.hidden && product.hidden(gameData.periodTime)}
+            />
+          );
+        })}
+      </div>
+      {/* products,
+        upgradeClickHandler(),
+        [
+          products[0].price < gameData.count,
+          products[1].price < gameData.count,
+          products[2].price < gameData.count,
+          products[3].price < gameData.count,
+        ],
+        [false, false, false, ]
+      )} */}
       <button className="clear" onClick={() => setHide(false)}>
         Clear Progress
       </button>
@@ -99,7 +171,7 @@ function App() {
           setHide(true);
           ClearProgress();
         }}
-        OnCancellation={() => {
+        OnCancel={() => {
           setHide(true);
         }}
       />

@@ -1,6 +1,6 @@
 import "./counter.css";
 type args = {
-  onClick: () => void;
+  onClick: (event: React.MouseEvent) => void;
 };
 export default function Counter({ onClick }: args) {
   return (
