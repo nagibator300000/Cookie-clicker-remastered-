@@ -8,21 +8,19 @@ type args = {
   onClick?: () => void;
 };
 
+const SVGs = {
+  info: infoSvg(),
+  error: errorSvg(),
+  warning: warningSvg(),
+  success: successSvg(),
+};
+
 export default function Notification({
   data = "info",
   children,
   onClick,
 }: args) {
-  let svg;
-  if (data == "info") {
-    svg = infoSvg();
-  } else if (data == "error") {
-    svg = errorSvg();
-  } else if (data == "warning") {
-    svg = warningSvg();
-  } else {
-    svg = successSvg();
-  }
+  const svg = SVGs[data];
   return (
     <div className="notification" datatype={data} onClick={onClick}>
       {svg}
