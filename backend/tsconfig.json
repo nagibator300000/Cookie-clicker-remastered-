@@ -5,5 +5,5 @@
     "allowImportingTsExtensions": false,
     "outDir": "./build"
   },
-  "include": ["server.ts"]
+  "include": ["server.ts", "utils.ts", "global.d.ts"]
 }

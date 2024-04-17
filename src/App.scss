@@ -1,0 +1,118 @@
+.clicker {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  padding: 30px;
+}
+
+.overlayer {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.load {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin spriteAnim($name, $frameCount, $width, $time, $repeat-count: 1) {
+  animation: $name $time steps($frameCount - 1) $repeat-count forwards;
+  @keyframes #{$name} {
+    from {
+      background-position-x: 0px;
+    }
+    to {
+      background-position-x: (-$width * $frameCount) + $width;
+    }
+  }
+}
+
+.loadAnim {
+  height: 111px;
+  width: 105px;
+  background-image: url("/loading.png");
+  @include spriteAnim(loading, 8, 105px, 0.5s, infinite);
+}
+
+.saving {
+  position: absolute;
+  right: 10%;
+  bottom: 10%;
+  background-image: url("/Save.png");
+  width: 200px;
+  height: 200px;
+  @include spriteAnim(save, 14, 200px, 0.5s);
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+  padding: 1rem;
+}
+
+.topFleur {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 426px;
+  height: 123px;
+  transform: translateX(-50%);
+  background-image: url("/top.png");
+  @include spriteAnim(topFleurAnim, 8, 426px, 0.5s);
+}
+
+.bottomFleur {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 303px;
+  height: 66px;
+  transform: translate(-50%, -100%);
+  background-image: url("/bottom.png");
+  @include spriteAnim(bottomFleurAnim, 8, 303px, 0.5s);
+}
+
+.leftCornerFleur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 842px;
+  height: 87px;
+  transform: translateY(50%);
+  background-image: url("/top_left_corner.png");
+  @include spriteAnim(leftFleurAnim, 8, 842px, 0.5s);
+}
+
+.rightCornerFleur {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 842px;
+  height: 87px;
+  transform: translateY(50%);
+  background-image: url("/top_right_corner.png");
+  @include spriteAnim(rightFleurAnim, 8, 842px, 0.5s);
+}
+
+.char {
+  aspect-ratio: 1/1;
+  width: 60px;
+  background-color: red;
+}
+
+.inventory {
+  width: 100%;
+  height: 100%;
+}

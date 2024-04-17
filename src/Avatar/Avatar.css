@@ -1,8 +1,9 @@
 .avatar {
-  width: 64px;
+  width: 20%;
   aspect-ratio: 1/1;
   overflow: hidden;
-  border-radius: 30px;
+  border-radius: 100%;
+  cursor: pointer;
 }
 
 .avatar img {
