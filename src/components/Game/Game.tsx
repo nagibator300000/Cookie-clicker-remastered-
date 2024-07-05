@@ -1,9 +1,9 @@
-import Counter from "../Counter/counter";
+import { Counter } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
 import { Key, useState } from "react";
-import type { GameStats } from "../App";
-import "/Deposit 1.png";
-import Indicator from "../indecator/Indicator";
+import type { GameStats } from "../../App";
+import Indicator from "../Indicator/Indicator";
+import "./Game.css";
 
 type Indecator = {
   key: Key;
@@ -45,7 +45,7 @@ export default function Game({ gameData, functions }: GameArgs) {
         </div>
       </div>
       <Counter
-        img={"Deposit 1"}
+        img={"/Deposit 1"}
         onClick={(event) => {
           functions.OnClick();
           const newIndicator = {

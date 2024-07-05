@@ -1,47 +1,22 @@
 import "./App.scss";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import type { ProductObj } from "./shop/Shop";
-import Product from "./shop/Shop";
-import Notification from "./Notification/Notification";
-import "./Notification/Notification.css";
-import "./Game/Game.css";
-import Game from "./Game/Game";
-import Login from "./Login/Login";
-import Account from "./Account/Account";
-import useFetch from "./useFetch";
+import {
+  Notification,
+  Game,
+  Login,
+  Account,
+  GridContext,
+  Charm,
+  Inventory,
+} from "./components";
+import type { CharmProps, GridMoveEvent } from "./components";
+import { useFetch } from "./utils";
 import { User } from "@prisma/client";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
-import GridContext, { GridMoveEvent } from "./GridContext/GridContext";
-import Charm, { CharmProps } from "./Charm/Charm";
-import Inventory from "./Inventory/Inventory";
 
 const port = import.meta.env.VITE_BACK_PORT;
 
 const backURL = `http://localhost:${port}`;
-
-// function loadData(key: string, defValue: GameStats): GameStats {
-//   const item = fetch("http://localhost:1488/gamedata", {
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     credentials: "include",
-//   });
-//   if (item) {
-//     return JSON.parse(item);
-//   }
-//   return defValue;
-// }
-
-// function saveData(val: GameStats) {
-//   fetch("http://localhost:1488/gamedata", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(val),
-//     credentials: "include",
-//   });
-// }
 
 const defaulStats = {
   count: 0,
@@ -57,34 +32,6 @@ type Notification = {
   children: ReactNode;
   data?: "info" | "success" | "error" | "warning";
 };
-
-// const products: ProductObj[] = [
-//   {
-//     price: 10,
-//     name: "UPGRADE!",
-//     buff: 1,
-//     type: "perClick",
-//   },
-//   {
-//     price: 100,
-//     name: "UPGRADE!!!!",
-//     buff: 12,
-//     type: "perClick",
-//   },
-//   {
-//     price: 50,
-//     name: "Points per period",
-//     buff: 1,
-//     type: "periodPoints",
-//   },
-//   {
-//     price: 20,
-//     name: "Period Time",
-//     buff: -0.1,
-//     type: "periodTime",
-//     hidden: (periodTime: number) => Math.round(periodTime * 10) === 1,
-//   },
-// ];
 
 let appInit = false;
 
@@ -158,20 +105,6 @@ function App() {
     setDropTargetData(null);
   }
 
-  // function upgradeClickHandler(key: keyof GameStats) {
-  //   return function (buff: number, price: number) {
-  //     if (gameData.count >= price) {
-  //       setData((data) => {
-  //         return {
-  //           ...data,
-  //           [key]: data[key] + buff,
-  //           count: data.count - price,
-  //         };
-  //       });
-  //     }
-  //   };
-  // }
-
   function ClearProgress() {
     localStorage.clear();
     setData(defaulStats);
@@ -207,21 +140,6 @@ function App() {
       );
     }
   }, []);
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     setData((data) => {
-  //       saveData(data);
-  //       return data;
-  //     });
-  //     setSaving((val) => !val);
-  //     setTimeout(() => setSaving((val) => !val), 500);
-  //   }, 60000);
-  //   return setData((data) => {
-  //     saveData(data);
-  //     return data;
-  //   });
-  // }, []);
 
   return load ? (
     <div className="load">
@@ -283,20 +201,6 @@ function App() {
               <Login url={`${backURL}/login`} />
             )}
           </div>
-
-          {/* <div className="shop">
-            {products.map((product) => {
-              return (
-                <Product
-                  {...product}
-                  active={gameData.count >= product.price}
-                  onClick={upgradeClickHandler(product.type)}
-                  key={product.name}
-                  hidden={product.hidden && product.hidden(gameData.periodTime)}
-                />
-              );
-            })} 
-          </div> */}
         </div>
       </GridContext>
     </div>
