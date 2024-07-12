@@ -32,7 +32,6 @@ export default function Charm({
     "--col": col,
     backgroundImage: `url("${url}")`,
   } as CSSProperties;
-  console.log(style);
   return (
     <div
       ref={setNodeRef}

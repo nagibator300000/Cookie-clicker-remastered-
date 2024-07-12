@@ -1,5 +1,5 @@
 import "./App.scss";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Notification,
   Game,
@@ -10,9 +10,9 @@ import {
   Inventory,
 } from "./components";
 import type { CharmProps, GridMoveEvent } from "./components";
-import { useFetch } from "./utils";
-import { User } from "@prisma/client";
+import { useFetch, isUser } from "./utils";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
+import type { NotificationData } from ".";
 
 const port = import.meta.env.VITE_BACK_PORT;
 
@@ -27,33 +27,12 @@ const defaulStats = {
 
 type GameStats = typeof defaulStats;
 
-type Notification = {
-  key: string;
-  children: ReactNode;
-  data?: "info" | "success" | "error" | "warning";
-};
-
 let appInit = false;
 
-function isUser(obj: unknown): obj is User {
-  return (
-    typeof obj === "object" &&
-    !!obj &&
-    "id" in obj &&
-    typeof obj.id === "string" &&
-    "picture" in obj &&
-    typeof obj.picture === "string" &&
-    "name" in obj &&
-    typeof obj.name === "string" &&
-    "gameData" in obj &&
-    typeof obj.gameData === "string"
-  );
-}
-
 function App() {
-  const [gameData, setData] = useState(defaulStats);
-  const [notifications, setNotif] = useState<Notification[]>([]);
-  const [isSaving, setSaving] = useState(false);
+  const [gameData, setGameData] = useState(defaulStats);
+  const [notifications, setNotif] = useState<NotificationData[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
   const [dropTargetData, setDropTargetData] = useState<CharmProps | null>(null);
   const [charms, setCharms] = useState<CharmProps[]>([]);
 
@@ -61,17 +40,14 @@ function App() {
     (val) => val.col === dropTargetData?.col && val.row === dropTargetData?.row
   );
 
-  const GameFunctions = useRef({
-    OnClick: () => {
-      {
-        setData({
-          ...gameData,
-          count: gameData.count + gameData.perClick,
-        });
-      }
-    },
-    ClearFunction: ClearProgress,
-  });
+  function OnClick() {
+    {
+      setGameData({
+        ...gameData,
+        count: gameData.count + gameData.perClick,
+      });
+    }
+  }
   const [user, error, load] = useFetch(`${backURL}/user`, {
     credentials: "include",
   });
@@ -107,12 +83,12 @@ function App() {
 
   function ClearProgress() {
     localStorage.clear();
-    setData(defaulStats);
+    setGameData(defaulStats);
   }
 
   useEffect(() => {
     const period = setInterval(() => {
-      setData((data) => {
+      setGameData((data) => {
         return {
           ...data,
           count: data.count + data.periodPoints,
@@ -122,24 +98,22 @@ function App() {
     return () => clearInterval(period);
   }, [gameData.periodPoints, gameData.periodTime]);
 
-  useEffect(() => {
-    if (!appInit) {
-      appInit = true;
+  if (!appInit) {
+    appInit = true;
 
-      const key = crypto.randomUUID();
-      setNotif((arr) => [
-        ...arr,
-        {
-          key,
-          children: "Click on coockie to get points",
-        },
-      ]);
-      setTimeout(
-        () => setNotif((arr) => arr.filter((item) => item.key !== key)),
-        60000
-      );
-    }
-  }, []);
+    const key = crypto.randomUUID();
+    setNotif((arr) => [
+      ...arr,
+      {
+        key,
+        children: "Click on coockie to get points",
+      },
+    ]);
+    setTimeout(
+      () => setNotif((arr) => arr.filter((item) => item.key !== key)),
+      60000
+    );
+  }
 
   return load ? (
     <div className="load">
@@ -188,7 +162,11 @@ function App() {
             })}
           </Inventory>
         </div>
-        <Game functions={GameFunctions.current} gameData={gameData}></Game>
+        <Game
+          onClick={OnClick}
+          onClear={ClearProgress}
+          gameData={gameData}
+        ></Game>
         <div className="right">
           <Charm id="Abob1" url="/Charms/Fragile Strength.png" />
           <Charm id="Abob2" url="/Charms/Fury of the Fallen.png" />

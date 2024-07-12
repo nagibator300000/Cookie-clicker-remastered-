@@ -1,4 +1,4 @@
-import { Counter } from "../";
+import { Counter, useNotification } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
 import { Key, useState } from "react";
 import type { GameStats } from "../../App";
@@ -16,13 +16,12 @@ type Indecator = {
 
 type GameArgs = {
   gameData: GameStats;
-  functions: {
-    OnClick: () => void;
-    ClearFunction: () => void;
-  };
+  onClick: () => void;
+  onClear: () => void;
 };
 
-export default function Game({ gameData, functions }: GameArgs) {
+export default function Game({ gameData, onClick, onClear }: GameArgs) {
+  const notification = useNotification();
   const [hideMenu, setHide] = useState(true);
   const [indicator, setIndicator] = useState<Indecator[]>([]);
   function indicatorWrapper() {
@@ -45,9 +44,10 @@ export default function Game({ gameData, functions }: GameArgs) {
         </div>
       </div>
       <Counter
-        img={"/Deposit 1"}
+        img={"/Deposit 1.png"}
         onClick={(event) => {
-          functions.OnClick();
+          onClick();
+          notification.add({ type: "info", content: "You recive geo" });
           const newIndicator = {
             key: crypto.randomUUID(),
             inner: gameData.perClick,
@@ -56,6 +56,7 @@ export default function Game({ gameData, functions }: GameArgs) {
               y: event.clientY,
             },
           };
+
           setIndicator([...indicator, newIndicator]);
           setTimeout(
             () =>
@@ -75,7 +76,7 @@ export default function Game({ gameData, functions }: GameArgs) {
         isHided={hideMenu}
         OnAcept={() => {
           setHide(true);
-          functions.ClearFunction();
+          onClear();
         }}
         OnCancel={() => {
           setHide(true);

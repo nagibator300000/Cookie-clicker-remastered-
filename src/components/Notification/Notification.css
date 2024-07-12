@@ -9,6 +9,7 @@
   gap: 10px;
   font-size: 30px;
   font-family: Arial, Helvetica, sans-serif;
+  z-index: 99;
 }
 
 .notification > svg {
@@ -17,22 +18,22 @@
   object-fit: cover;
 }
 
-.notification[datatype="info"] {
+.notification_info {
   background-color: rgb(207, 229, 240);
   color: rgb(66, 119, 163);
 }
 
-.notification[datatype="error"] {
+.notification_error {
   background-color: rgb(235, 200, 196);
   color: rgb(186, 51, 48);
 }
 
-.notification[datatype="warning"] {
+.notification_warning {
   background-color: rgb(248, 243, 214);
   color: rgb(134, 99, 41);
 }
 
-.notification[datatype="success"] {
+.notification_success {
   background-color: rgb(222, 242, 214);
   color: rgb(95, 115, 87);
 }

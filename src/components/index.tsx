@@ -13,3 +13,9 @@ export { default as Shop } from "./Shop/Shop";
 
 export type { CharmProps } from "./Charm/Charm";
 export type { GridMoveEvent } from "./GridContext/GridContext";
+export type { NotificationData } from "./Notification/Notification";
+
+export {
+  default as NotificationProvider,
+  useNotification,
+} from "./NotificationProvider/NotificationProvider";

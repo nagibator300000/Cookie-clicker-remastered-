@@ -2,11 +2,14 @@ import { ReactNode } from "react";
 import { errorSvg, infoSvg, successSvg, warningSvg } from "./SVGs";
 import "./Notification.css";
 
-type args = {
-  data?: "error" | "warning" | "info" | "success";
-  children?: ReactNode;
+export interface NotificationData {
+  type?: "error" | "warning" | "info" | "success";
+  content?: ReactNode;
+}
+
+interface NotificationProps extends NotificationData {
   onClick?: () => void;
-};
+}
 
 const SVGs = {
   info: infoSvg(),
@@ -16,17 +19,17 @@ const SVGs = {
 };
 
 export default function Notification({
-  data = "info",
-  children,
+  type = "info",
+  content,
   onClick,
-}: args) {
-  const svg = SVGs[data];
+}: NotificationProps) {
+  const svg = SVGs[type];
   return (
-    <div className="notification" datatype={data} onClick={onClick}>
+    <div className={`notification natification_${type}`} onClick={onClick}>
       {svg}
       <p>
-        <b>{data}: </b>
-        {children}
+        <b>{type}: </b>
+        {content}
       </p>
     </div>
   );

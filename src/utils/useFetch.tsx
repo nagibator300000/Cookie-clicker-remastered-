@@ -8,16 +8,17 @@ export default function useFetch(...[url, init]: Args): Return {
   const [data, setData] = useState<unknown | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [load, setLoad] = useState(true);
-  async function GetData() {
-    try {
-      const resp = await fetch(url, init);
-      setData(await resp.json());
-    } catch (error) {
-      setError(error as Error);
-    }
-    setLoad(false);
-  }
+
   useEffect(() => {
+    async function GetData() {
+      try {
+        const resp = await fetch(url, init);
+        setData(await resp.json());
+      } catch (error) {
+        setError(error as Error);
+      }
+      setLoad(false);
+    }
     GetData();
   }, []);
 
