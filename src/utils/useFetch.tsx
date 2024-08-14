@@ -20,7 +20,7 @@ export default function useFetch(...[url, init]: Args): Return {
       setLoad(false);
     }
     GetData();
-  }, []);
+  }, [init, url]);
 
   return [data, error, load];
 }
