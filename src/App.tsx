@@ -9,10 +9,11 @@ import {
   Inventory,
 } from "./components";
 import type { CharmProps, GridMoveEvent } from "./components";
-import { useFetch, isUser } from "./utils";
+import { isUser } from "./utils";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useGameStats } from "./components/ReducerProvider/ReducerProvider";
 import { GameActionTypes } from "./utils/gameReducer";
+import useUser from "./utils/useUser";
 
 const port = import.meta.env.VITE_BACK_PORT;
 
@@ -35,9 +36,7 @@ function App() {
       });
     }
   }
-  const [user, error, load] = useFetch(`${backURL}/user`, {
-    credentials: "include",
-  });
+  const user = useUser();
 
   function OnMove(event: GridMoveEvent) {
     if (event.position) {
@@ -80,7 +79,7 @@ function App() {
     return () => clearInterval(period);
   }, [gameStats]);
 
-  return load ? (
+  return user.isLoading ? (
     <div className="load">
       <div className="loadAnim"></div>
     </div>
@@ -95,8 +94,8 @@ function App() {
       >
         <div className="overlayer">
           <div className="user">
-            {isUser(user) ? (
-              <Account url={user.picture} name={user.name} />
+            {user.data ? (
+              <Account url={user.data.picture} name={user.data.name} />
             ) : (
               <Login url={`${backURL}/login`} />
             )}
