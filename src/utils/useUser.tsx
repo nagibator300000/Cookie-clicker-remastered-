@@ -5,7 +5,9 @@ import UserSchema from "../../schemas/user";
 const BACK_URL = import.meta.env.VITE_BACK_URL;
 
 async function fetchUser() {
-  const res = await fetchJSON(BACK_URL + "/user");
+  const res = await fetchJSON(BACK_URL + "/user", {
+    credentials: "include",
+  });
   return UserSchema.parse(res);
 }
 

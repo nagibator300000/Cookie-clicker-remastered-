@@ -9,7 +9,6 @@ import {
   Inventory,
 } from "./components";
 import type { CharmProps, GridMoveEvent } from "./components";
-import { isUser } from "./utils";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useGameStats } from "./components/ReducerProvider/ReducerProvider";
 import { GameActionTypes } from "./utils/gameReducer";
@@ -92,20 +91,6 @@ function App() {
         onGridMove={OnMove}
         onDragEnd={OnEnd}
       >
-        <div className="overlayer">
-          <div className="user">
-            {user.data ? (
-              <Account url={user.data.picture} name={user.data.name} />
-            ) : (
-              <Login url={`${backURL}/login`} />
-            )}
-          </div>
-          <div className="topFleur"></div>
-          <div className="bottomFleur"></div>
-          <div className="leftCornerFleur"></div>
-          <div className="rightCornerFleur"></div>
-          {isSaving && <div className="saving"></div>}
-        </div>
         <div className="inventoryHandler">
           <Inventory>
             {dropTargetData && (
@@ -137,6 +122,20 @@ function App() {
           <Charm id="Abob1" url="/Charms/Fragile Strength.png" />
           <Charm id="Abob2" url="/Charms/Fury of the Fallen.png" />
           <Charm id="Abob3" url="/Charms/Quick Slash.png" />
+        </div>
+        <div className="overlayer">
+          <div className="user">
+            {user.data ? (
+              <Account url={user.data.picture} name={user.data.name} />
+            ) : (
+              <Login url={`${backURL}/login`} />
+            )}
+          </div>
+          <div className="topFleur"></div>
+          <div className="bottomFleur"></div>
+          <div className="leftCornerFleur"></div>
+          <div className="rightCornerFleur"></div>
+          {isSaving && <div className="saving"></div>}
         </div>
       </GridContext>
     </div>
