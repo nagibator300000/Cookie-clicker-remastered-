@@ -13,6 +13,7 @@ import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useGameStats } from "./components/ReducerProvider/ReducerProvider";
 import { GameActionTypes } from "./utils/gameReducer";
 import useUser from "./utils/useUser";
+import { FetchError } from "./utils/fetchJSON";
 
 const port = import.meta.env.VITE_BACK_PORT;
 
@@ -78,11 +79,17 @@ function App() {
     return () => clearInterval(period);
   }, [gameStats]);
 
-  return user.isLoading ? (
-    <div className="load">
-      <div className="loadAnim"></div>
-    </div>
-  ) : (
+  if (user.isLoading) {
+    return (
+      <div className="load">
+        <div className="loadAnim"></div>
+      </div>
+    );
+  }
+  if (user.error instanceof FetchError && user.error.status === 401) {
+    return <Login></Login>;
+  }
+  return (
     <div className="clicker">
       <GridContext
         horizontalCellCount={5}
@@ -123,14 +130,9 @@ function App() {
           <Charm id="Abob2" url="/Charms/Fury of the Fallen.png" />
           <Charm id="Abob3" url="/Charms/Quick Slash.png" />
         </div>
+        <Account url={user.data.picture} name={user.data.name} />
         <div className="overlayer">
-          <div className="user">
-            {user.data ? (
-              <Account url={user.data.picture} name={user.data.name} />
-            ) : (
-              <Login url={`${backURL}/login`} />
-            )}
-          </div>
+          <div className="user"></div>
           <div className="topFleur"></div>
           <div className="bottomFleur"></div>
           <div className="leftCornerFleur"></div>

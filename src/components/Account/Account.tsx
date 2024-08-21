@@ -16,6 +16,14 @@ export default function Account({ url, name }: Args) {
         <Avatar img={url} />
       </button>
       <div className={clsx("overlay", isHidden && "hide")}>
+        <button
+          className="close"
+          onClick={() => {
+            setHidden(true);
+          }}
+        >
+          <img src="/close.png" alt="" />
+        </button>
         <div className="userData">
           <Avatar img={url} />
           <div className="name">{name}</div>
