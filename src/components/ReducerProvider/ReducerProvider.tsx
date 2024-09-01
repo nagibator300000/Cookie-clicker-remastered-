@@ -10,7 +10,7 @@ type ReducerContext = {
 
 const gameStatsContext = createContext<ReducerContext | null>(null);
 
-export default function GameStatsProvider({
+export default function GameStatsReducerProvider({
   children,
 }: GameStatsProviderProps) {
   const [state, dispatch] = useReducer(gameReducer, defaultStats);
@@ -21,7 +21,7 @@ export default function GameStatsProvider({
   );
 }
 
-export function useGameStats() {
+export function useGameStatsReducer() {
   const context = useContext(gameStatsContext);
   if (!context) {
     throw new Error("This hook shouldn't be used outside of ReducerProvider");

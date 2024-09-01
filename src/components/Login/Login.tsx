@@ -7,7 +7,7 @@ export default function Login() {
     <div className="login_wrapper">
       <video
         className="login_back"
-        src="/login_background.mp4"
+        src="/login_background.webm"
         autoPlay
         loop
         muted

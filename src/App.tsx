@@ -7,23 +7,22 @@ import {
   GridContext,
   Charm,
   Inventory,
+  Avatar,
 } from "./components";
 import type { CharmProps, GridMoveEvent } from "./components";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
-import { useGameStats } from "./components/ReducerProvider/ReducerProvider";
+import useGameStats from "./utils/useGameStats";
 import { GameActionTypes } from "./utils/gameReducer";
 import useUser from "./utils/useUser";
 import { FetchError } from "./utils/fetchJSON";
-
-const port = import.meta.env.VITE_BACK_PORT;
-
-const backURL = `http://localhost:${port}`;
+import useInterval from "./utils/useInterval";
 
 function App() {
   const gameStats = useGameStats();
-  const [isSaving, setIsSaving] = useState(false);
   const [dropTargetData, setDropTargetData] = useState<CharmProps | null>(null);
   const [charms, setCharms] = useState<CharmProps[]>([]);
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
+  const [isSavingAnimationEnd, setIsSavingAnimationEnd] = useState(true);
 
   const overlap = charms.find(
     (val) => val.col === dropTargetData?.col && val.row === dropTargetData?.row
@@ -73,21 +72,37 @@ function App() {
   }
 
   useEffect(() => {
-    const period = setInterval(() => {
-      gameStats.dispatch({ type: GameActionTypes.AUTOCLICK });
-    }, gameStats.state.periodTime * 1000);
-    return () => clearInterval(period);
-  }, [gameStats]);
+    if (gameStats.isSaving) {
+      setIsSavingAnimationEnd(false);
+      const timeout = setTimeout(() => {
+        setIsSavingAnimationEnd(true), 6000;
+      });
+      return () => clearTimeout(timeout);
+    }
+  }, [gameStats.isSaving]);
 
-  if (user.isLoading) {
+  useInterval(() => {
+    gameStats.dispatch({ type: GameActionTypes.AUTOCLICK });
+  }, gameStats.stats.periodTime);
+  if (user.isLoading || gameStats.isLoading) {
     return (
       <div className="load">
         <div className="loadAnim"></div>
       </div>
     );
   }
+  console.log(isSavingAnimationEnd);
   if (user.error instanceof FetchError && user.error.status === 401) {
     return <Login></Login>;
+  }
+  if (user.error || !user.data || gameStats.error) {
+    console.log(gameStats.error);
+    return (
+      <div className="oops">
+        <h1>Oops</h1>
+        <h5>We've got some problems with backend</h5>
+      </div>
+    );
   }
   return (
     <div className="clicker">
@@ -123,22 +138,30 @@ function App() {
         <Game
           onClick={OnClick}
           onClear={ClearProgress}
-          gameData={gameStats.state}
+          gameData={gameStats.stats}
         ></Game>
         <div className="right">
           <Charm id="Abob1" url="/Charms/Fragile Strength.png" />
           <Charm id="Abob2" url="/Charms/Fury of the Fallen.png" />
           <Charm id="Abob3" url="/Charms/Quick Slash.png" />
         </div>
-        <Account url={user.data.picture} name={user.data.name} />
-        <div className="overlayer">
-          <div className="user"></div>
-          <div className="topFleur"></div>
-          <div className="bottomFleur"></div>
-          <div className="leftCornerFleur"></div>
-          <div className="rightCornerFleur"></div>
-          {isSaving && <div className="saving"></div>}
-        </div>
+        {isOpenProfile && (
+          <Account
+            url={user.data.picture}
+            name={user.data.name}
+            onClose={() => {
+              setIsOpenProfile(false);
+            }}
+          />
+        )}
+        <button className="account" onClick={() => setIsOpenProfile(true)}>
+          Profile
+          <Avatar img={user.data.picture} />
+        </button>
+
+        {(gameStats.isSaving || !isSavingAnimationEnd) && (
+          <div className="saving"></div>
+        )}
       </GridContext>
     </div>
   );

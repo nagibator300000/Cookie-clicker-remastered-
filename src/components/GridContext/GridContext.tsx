@@ -47,7 +47,12 @@ export default function GridContext({
       col: Math.ceil(localPosition.x / cellSize.width),
       row: Math.ceil(localPosition.y / cellSize.height),
     };
-    onMoveHandler(event, targetPosition);
+    const fixedPosition = {
+      col: targetPosition.col === 0 ? 1 : targetPosition.col,
+      row: targetPosition.row === 0 ? 1 : targetPosition.row,
+    };
+    console.log(JSON.stringify(localPosition));
+    onMoveHandler(event, fixedPosition);
   }
 
   function onMoveHandler(event: DragMoveEvent, position?: Position) {

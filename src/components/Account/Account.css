@@ -6,15 +6,6 @@
   aspect-ratio: 1/1;
 }
 
-.account {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  right: 5vh;
-  top: 5vh;
-}
-
 .overlay.hide {
   display: none;
 }

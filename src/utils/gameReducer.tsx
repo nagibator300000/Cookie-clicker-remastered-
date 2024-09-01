@@ -1,11 +1,11 @@
+import type { GameStats } from "../../schemas/gameStats";
+
 export const defaultStats = {
   count: 0,
   perClick: 1,
   periodPoints: 0,
   periodTime: 5,
 };
-
-type GameStats = typeof defaultStats;
 
 export enum GameActionTypes {
   CLICK,
@@ -14,6 +14,7 @@ export enum GameActionTypes {
   UPGRADE_PERIOD_POINTS,
   UPGRADE_PERIOD_TIME,
   RESET,
+  INIT,
 }
 
 type NoPayloadTypes =
@@ -25,11 +26,16 @@ type NoPayloadAction = {
   type: NoPayloadTypes;
 };
 type WithPayloadAction = {
-  type: Exclude<GameActionTypes, NoPayloadTypes>;
+  type: Exclude<GameActionTypes, NoPayloadTypes | GameActionTypes.INIT>;
   payload: number;
 };
 
-export type GameAction = NoPayloadAction | WithPayloadAction;
+type InitAction = {
+  type: GameActionTypes.INIT;
+  payload: GameStats;
+};
+
+export type GameAction = NoPayloadAction | WithPayloadAction | InitAction;
 
 export default function gameReducer(
   state: GameStats,
@@ -64,5 +70,7 @@ export default function gameReducer(
         ...state,
         periodTime: state.periodTime + action.payload,
       };
+    case GameActionTypes.INIT:
+      return action.payload;
   }
 }

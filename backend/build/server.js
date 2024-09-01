@@ -136,10 +136,11 @@ app.post("/gamedata", corsMiddleware, async (req, res) => {
     if (req.user) {
         const newData = req.body;
         console.log(newData);
-        const { gameData } = await db.user.update({
+        const { gameData: string_gameData } = await db.user.update({
             where: { id: req.user.id },
             data: { gameData: JSON.stringify(newData) },
         });
+        const gameData = JSON.parse(string_gameData);
         res.json(gameData);
     }
     else {

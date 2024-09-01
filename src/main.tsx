@@ -23,6 +23,12 @@ const client = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <div className="overlayer">
+      <div className="topFleur"></div>
+      <div className="bottomFleur"></div>
+      <div className="leftCornerFleur"></div>
+      <div className="rightCornerFleur"></div>
+    </div>
     <QueryClientProvider client={client}>
       <NotificationProvider>
         <GameStatsProvider>
