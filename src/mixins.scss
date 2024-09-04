@@ -1,0 +1,11 @@
+@mixin spriteAnim($name, $frameCount, $width, $time, $repeat-count: 1) {
+  animation: $name $time steps($frameCount - 1) $repeat-count forwards;
+  @keyframes #{$name} {
+    from {
+      background-position-x: 0px;
+    }
+    to {
+      background-position-x: (-$width * $frameCount) + $width;
+    }
+  }
+}

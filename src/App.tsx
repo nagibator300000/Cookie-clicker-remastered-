@@ -8,6 +8,7 @@ import {
   Charm,
   Inventory,
   Avatar,
+  Saving,
 } from "./components";
 import type { CharmProps, GridMoveEvent } from "./components";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
@@ -22,7 +23,6 @@ function App() {
   const [dropTargetData, setDropTargetData] = useState<CharmProps | null>(null);
   const [charms, setCharms] = useState<CharmProps[]>([]);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
-  const [isSavingAnimationEnd, setIsSavingAnimationEnd] = useState(true);
 
   const overlap = charms.find(
     (val) => val.col === dropTargetData?.col && val.row === dropTargetData?.row
@@ -71,19 +71,9 @@ function App() {
     gameStats.dispatch({ type: GameActionTypes.RESET });
   }
 
-  useEffect(() => {
-    if (gameStats.isSaving) {
-      setIsSavingAnimationEnd(false);
-      const timeout = setTimeout(() => {
-        setIsSavingAnimationEnd(true), 6000;
-      });
-      return () => clearTimeout(timeout);
-    }
-  }, [gameStats.isSaving]);
-
   useInterval(() => {
     gameStats.dispatch({ type: GameActionTypes.AUTOCLICK });
-  }, gameStats.stats.periodTime);
+  }, gameStats.stats.periodTime * 1000);
   if (user.isLoading || gameStats.isLoading) {
     return (
       <div className="load">
@@ -91,7 +81,6 @@ function App() {
       </div>
     );
   }
-  console.log(isSavingAnimationEnd);
   if (user.error instanceof FetchError && user.error.status === 401) {
     return <Login></Login>;
   }
@@ -158,10 +147,7 @@ function App() {
           Profile
           <Avatar img={user.data.picture} />
         </button>
-
-        {(gameStats.isSaving || !isSavingAnimationEnd) && (
-          <div className="saving"></div>
-        )}
+        <Saving isSaving={gameStats.isSaving} />
       </GridContext>
     </div>
   );

@@ -1,0 +1,15 @@
+@use "../../mixins.scss";
+.saving {
+  display: none;
+  position: absolute;
+  right: 10%;
+  bottom: 10%;
+  background-image: url("/Save.png");
+  width: 200px;
+  height: 200px;
+  @include mixins.spriteAnim(save, 14, 200px, 0.5s, infinite);
+}
+
+.visible {
+  display: block;
+}

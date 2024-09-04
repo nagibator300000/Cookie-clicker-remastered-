@@ -10,6 +10,7 @@ export { default as Inventory } from "./Inventory/Inventory";
 export { default as Login } from "./Login/Login";
 export { default as Notification } from "./Notification/Notification";
 export { default as Shop } from "./Shop/Shop";
+export { default as Saving } from "./Saving/Saving";
 
 export type { CharmProps } from "./Charm/Charm";
 export type { GridMoveEvent } from "./GridContext/GridContext";

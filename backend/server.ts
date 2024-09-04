@@ -118,28 +118,6 @@ app.get("/stat/:userId", (req, res) => {
   res.json(stat);
 });
 
-app.get("/count", (req, res) => {
-  console.log(req.cookies.count);
-  if (!req.cookies.count) {
-    console.log("Cookie created");
-    res.cookie("count", "0");
-  } else {
-    console.log("Cookie changed");
-    res.cookie("count", Number(req.cookies.count) + 1);
-  }
-  res.send(req.cookies.count);
-});
-
-app.get("/resCount", (_req, res) => {
-  res.cookie("count", "0");
-  res.send("Count was reseted");
-});
-
-app.get("/delCount", (_req, res) => {
-  res.cookie("count", "0", { maxAge: 0 });
-  res.send("Count was deleted");
-});
-
 app.get(
   "/login",
   passport.authenticate("google", {
@@ -188,6 +166,7 @@ app.post("/gamedata", corsMiddleware, async (req, res) => {
     res.sendStatus(401);
   }
 });
+
 app.get("/logout", (req, res) => {
   req.logout((err) => {
     console.log(err);
