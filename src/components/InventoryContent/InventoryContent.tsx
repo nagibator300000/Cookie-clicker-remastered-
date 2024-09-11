@@ -1,36 +1,53 @@
 import type { CSSProperties } from "react";
-import "./Charm.css";
+import "./InventoryContent.css";
 import { useDraggable, type UniqueIdentifier } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import clsx from "clsx";
 
-export type CharmProps = {
+export type InventoryContentProps = {
   row?: number;
   col?: number;
   id: UniqueIdentifier;
   isDropTarget?: boolean;
   isOverlaping?: boolean;
-  url: string;
+  type: keyof typeof CONTENT_TYPES;
 };
 
-export default function Charm({
+const CONTENT_TYPES = {
+  blocker: {
+    img: "/",
+  },
+  fragile_force: {
+    img: "/",
+  },
+  quick_slash: {
+    img: "/",
+  },
+  fury_of_the_fallen: {
+    img: "/",
+  },
+} as const;
+
+export default function InventoryContent({
   row,
   col,
   id,
   isDropTarget,
   isOverlaping,
-  url,
-}: CharmProps) {
+  type,
+}: InventoryContentProps) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: id,
-    data: { url: url },
+    data: { type: type },
   });
+
+  const content_data = CONTENT_TYPES[type];
 
   const style = {
     transform: CSS.Translate.toString(transform),
     "--row": row,
     "--col": col,
-    backgroundImage: `url("${url}")`,
+    backgroundImage: `url("${content_data.img}")`,
   } as CSSProperties;
   return (
     <div

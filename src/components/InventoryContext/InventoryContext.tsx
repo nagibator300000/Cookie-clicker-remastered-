@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { CharmProps, GridContext, GridMoveEvent } from "..";
+import { InventoryContentProps, GridContext, GridMoveEvent } from "..";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 
 type InventoryProviderProps = {
@@ -9,13 +9,9 @@ type InventoryProviderProps = {
 };
 
 type InventoryContext = {
-  charms: CharmProps[];
-  setCharms: React.Dispatch<React.SetStateAction<CharmProps[]>>;
-  blanks: CharmProps[];
-  setBlanks: React.Dispatch<React.SetStateAction<CharmProps[]>>;
-  dropTargetData: CharmProps | null;
-  setDropTargetData: React.Dispatch<React.SetStateAction<CharmProps | null>>;
-  overlap: CharmProps | undefined;
+  inventoryContent: InventoryContentProps[];
+  dropTargetData: InventoryContentProps | null;
+  overlap: InventoryContentProps | undefined;
 };
 
 const inventoryContext = createContext<InventoryContext | null>(null);
@@ -25,18 +21,22 @@ export default function InventoryProvider({
   horizontalCellCount,
   children,
 }: InventoryProviderProps) {
-  const [dropTargetData, setDropTargetData] = useState<CharmProps | null>(null);
-  const [charms, setCharms] = useState<CharmProps[]>([]);
-  const [blanks, setBlanks] = useState<CharmProps[]>([]);
-  const overlap = charms.find(
+  const [dropTargetData, setDropTargetData] =
+    useState<InventoryContentProps | null>(null);
+  const [inventoryContent, setInventoryContent] = useState<
+    InventoryContentProps[]
+  >([]);
+
+  const overlap = inventoryContent.find(
     (val) => val.col === dropTargetData?.col && val.row === dropTargetData?.row
   );
+
   function OnMove(event: GridMoveEvent) {
     if (event.position) {
       const newDropTargetData = {
         ...event.position,
         id: event.active.id,
-        url: event.active.data.current?.url,
+        type: event.active.data.current?.type,
       };
       setDropTargetData(newDropTargetData);
     } else {
@@ -50,8 +50,8 @@ export default function InventoryProvider({
       setDropTargetData(null);
       return;
     }
-    setCharms([
-      ...charms.filter((el) => el.id !== dropTargetData.id),
+    setInventoryContent([
+      ...inventoryContent.filter((el) => el.id !== dropTargetData.id),
       {
         ...dropTargetData,
         id: `col:${dropTargetData.col} row:${dropTargetData.row}`,
@@ -62,12 +62,8 @@ export default function InventoryProvider({
   return (
     <inventoryContext.Provider
       value={{
-        charms,
-        setCharms,
-        blanks,
-        setBlanks,
+        inventoryContent,
         dropTargetData,
-        setDropTargetData,
         overlap,
       }}
     >
