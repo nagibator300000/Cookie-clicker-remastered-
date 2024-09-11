@@ -20,3 +20,7 @@ export {
   default as NotificationProvider,
   useNotification,
 } from "./NotificationProvider/NotificationProvider";
+export {
+  default as InventoryProvider,
+  useInventory,
+} from "./InventoryContext/InventoryContext";

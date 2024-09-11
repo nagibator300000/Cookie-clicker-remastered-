@@ -6,6 +6,7 @@ import { NotificationProvider } from "./components";
 import GameStatsProvider from "./components/ReducerProvider/ReducerProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { FetchError } from "./utils/fetchJSON.ts";
+import { InventoryProvider } from "./components";
 
 const client = new QueryClient({
   defaultOptions: {
@@ -32,7 +33,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={client}>
       <NotificationProvider>
         <GameStatsProvider>
-          <App />
+          <InventoryProvider verticalCellCount={5} horizontalCellCount={5}>
+            <App />
+          </InventoryProvider>
         </GameStatsProvider>
       </NotificationProvider>
     </QueryClientProvider>

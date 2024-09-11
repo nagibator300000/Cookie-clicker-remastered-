@@ -51,7 +51,6 @@ export default function GridContext({
       col: targetPosition.col === 0 ? 1 : targetPosition.col,
       row: targetPosition.row === 0 ? 1 : targetPosition.row,
     };
-    console.log(JSON.stringify(localPosition));
     onMoveHandler(event, fixedPosition);
   }
 
