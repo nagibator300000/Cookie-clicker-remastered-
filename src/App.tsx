@@ -9,11 +9,11 @@ import {
   Avatar,
   Saving,
 } from "./components";
-import useGameStats from "./utils/useGameStats";
+import useGameStats from "./hooks/useGameStats";
 import { GameActionTypes } from "./utils/gameReducer";
-import useUser from "./utils/useUser";
+import useUser from "./hooks/useUser";
 import { FetchError } from "./utils/fetchJSON";
-import useInterval from "./utils/useInterval";
+import useInterval from "./hooks/useInterval";
 import { useInventory } from "./components";
 
 function App() {

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import type { GameStats } from "../../schemas/gameStats";
-import fetchJSON from "./fetchJSON";
+import fetchJSON from "../utils/fetchJSON";
 import GameStatsSchema from "../../schemas/gameStats";
 
 const BACK_URL = import.meta.env.VITE_BACK_URL;

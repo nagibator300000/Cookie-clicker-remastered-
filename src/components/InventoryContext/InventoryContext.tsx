@@ -10,11 +10,8 @@ type InventoryProviderProps = {
 
 type InventoryContext = {
   charms: CharmProps[];
-  setCharms: React.Dispatch<React.SetStateAction<CharmProps[]>>;
   blanks: CharmProps[];
-  setBlanks: React.Dispatch<React.SetStateAction<CharmProps[]>>;
   dropTargetData: CharmProps | null;
-  setDropTargetData: React.Dispatch<React.SetStateAction<CharmProps | null>>;
   overlap: CharmProps | undefined;
 };
 
@@ -63,11 +60,8 @@ export default function InventoryProvider({
     <inventoryContext.Provider
       value={{
         charms,
-        setCharms,
         blanks,
-        setBlanks,
         dropTargetData,
-        setDropTargetData,
         overlap,
       }}
     >

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useGameStatsMutation from "./useGameStatsMutation";
 import useGameStatsQuery from "./useGameStatsQuery";
-import { GameActionTypes } from "./gameReducer";
+import { GameActionTypes } from "../utils/gameReducer";
 import useInterval from "./useInterval";
 import { useGameStatsReducer } from "../components/ReducerProvider/ReducerProvider";
 
