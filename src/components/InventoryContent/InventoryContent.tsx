@@ -15,16 +15,16 @@ export type InventoryContentProps = {
 
 const CONTENT_TYPES = {
   blocker: {
-    img: "/",
+    img: "/Charms/Blocker.png",
   },
   fragile_force: {
-    img: "/",
+    img: "/Charms/Fragile Strength.png",
   },
   quick_slash: {
-    img: "/",
+    img: "/Charms/Quick Slash.png",
   },
   fury_of_the_fallen: {
-    img: "/",
+    img: "/Charms/Fury of the Fallen.png",
   },
 } as const;
 
@@ -39,6 +39,7 @@ export default function InventoryContent({
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: id,
     data: { type: type },
+    disabled: type == "blocker",
   });
 
   const content_data = CONTENT_TYPES[type];

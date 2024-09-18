@@ -27,7 +27,7 @@ type NoPayloadAction = {
 };
 type WithPayloadAction = {
   type: Exclude<GameActionTypes, NoPayloadTypes | GameActionTypes.INIT>;
-  payload: number;
+  payload: { cost: number; upgrade: number };
 };
 
 type InitAction = {
@@ -58,17 +58,20 @@ export default function gameReducer(
     case GameActionTypes.UPGRADE_PERCLICK:
       return {
         ...state,
-        perClick: state.perClick + action.payload,
+        count: state.count - action.payload.cost,
+        perClick: state.perClick + action.payload.upgrade,
       };
     case GameActionTypes.UPGRADE_PERIOD_POINTS:
       return {
         ...state,
-        periodPoints: state.periodPoints + action.payload,
+        count: state.count - action.payload.cost,
+        periodPoints: state.periodPoints + action.payload.upgrade,
       };
     case GameActionTypes.UPGRADE_PERIOD_TIME:
       return {
         ...state,
-        periodTime: state.periodTime + action.payload,
+        count: state.count - action.payload.cost,
+        periodTime: state.periodTime + action.payload.upgrade,
       };
     case GameActionTypes.INIT:
       return action.payload;

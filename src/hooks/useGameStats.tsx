@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import useGameStatsMutation from "./useGameStatsMutation";
 import useGameStatsQuery from "./useGameStatsQuery";
 import { GameActionTypes } from "../utils/gameReducer";
@@ -10,6 +10,8 @@ export default function useGameStats() {
   const get = useGameStatsQuery();
   const { state, dispatch } = useGameStatsReducer();
 
+  const mutateFunc = useCallback(() => post.mutate(state), [post, state]);
+
   useEffect(() => {
     if (get.data) {
       dispatch({
@@ -19,9 +21,7 @@ export default function useGameStats() {
     }
   }, [dispatch, get.data]);
 
-  useInterval(() => {
-    post.mutate(state);
-  }, 10000);
+  useInterval(mutateFunc, 10000);
   return {
     error: get.error || post.error,
     stats: state,

@@ -25,7 +25,10 @@ export default function InventoryProvider({
     useState<InventoryContentProps | null>(null);
   const [inventoryContent, setInventoryContent] = useState<
     InventoryContentProps[]
-  >([]);
+  >([
+    { row: 1, col: 1, id: "blocker row:1 col:1", type: "blocker" },
+    { row: 2, col: 1, id: "blocker row:2 col:1", type: "blocker" },
+  ]);
 
   const overlap = inventoryContent.find(
     (val) => val.col === dropTargetData?.col && val.row === dropTargetData?.row

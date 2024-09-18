@@ -1,6 +1,6 @@
 export { default as Account } from "./Account/Account";
 export { default as Avatar } from "./Avatar/Avatar";
-export { default as Charm } from "./InventoryContent/InventoryContent";
+export { default as InventoryContent } from "./InventoryContent/InventoryContent";
 export { default as ClearMenu } from "./ClearMenu/ClearMenu";
 export { default as Counter } from "./Counter/Counter";
 export { default as Game } from "./Game/Game";

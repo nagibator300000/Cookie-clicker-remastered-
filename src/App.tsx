@@ -4,10 +4,10 @@ import {
   Game,
   Login,
   Account,
-  Charm,
   Inventory,
   Avatar,
   Saving,
+  Shop,
 } from "./components";
 import useGameStats from "./hooks/useGameStats";
 import { GameActionTypes } from "./utils/gameReducer";
@@ -15,6 +15,7 @@ import useUser from "./hooks/useUser";
 import { FetchError } from "./utils/fetchJSON";
 import useInterval from "./hooks/useInterval";
 import { useInventory } from "./components";
+import InventoryContent from "./components/InventoryContent/InventoryContent";
 
 function App() {
   const gameStats = useGameStats();
@@ -63,24 +64,24 @@ function App() {
       <div className="inventoryHandler">
         <Inventory>
           {inventory.dropTargetData && (
-            <Charm
-              url={inventory.dropTargetData.url}
+            <InventoryContent
+              type={inventory.dropTargetData.type}
               row={inventory.dropTargetData.row}
               col={inventory.dropTargetData.col}
               id="Abob5"
               isDropTarget
-            ></Charm>
+            ></InventoryContent>
           )}
-          {inventory.charms.map((el) => {
+          {inventory.inventoryContent.map((el) => {
             return (
-              <Charm
+              <InventoryContent
                 {...el}
                 key={el.id}
                 isOverlaping={
                   el === inventory.overlap &&
                   el.id !== inventory.dropTargetData?.id
                 }
-              ></Charm>
+              ></InventoryContent>
             );
           })}
         </Inventory>
@@ -90,11 +91,7 @@ function App() {
         onClear={ClearProgress}
         gameData={gameStats.stats}
       ></Game>
-      <div className="right">
-        <Charm id="Abob1" url="/Charms/Fragile Strength.png" />
-        <Charm id="Abob2" url="/Charms/Fury of the Fallen.png" />
-        <Charm id="Abob3" url="/Charms/Quick Slash.png" />
-      </div>
+      <Shop></Shop>
       {isOpenProfile && (
         <Account
           url={user.data.picture}
