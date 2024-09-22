@@ -1,7 +1,7 @@
 import { Counter, useNotification } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
 import { Key, useState } from "react";
-import type { GameStats } from "../../App";
+import type { GameStats } from "../../../schemas/gameStats";
 import Indicator from "../Indicator/Indicator";
 import "./Game.css";
 
@@ -26,7 +26,7 @@ export default function Game({ gameData, onClick, onClear }: GameArgs) {
   const [indicator, setIndicator] = useState<Indecator[]>([]);
   function indicatorWrapper() {
     return indicator.map((i) => (
-      <Indicator position={i.position} val={String(i.inner)} key={i.key} />
+      <Indicator position={i.position} key={i.key} />
     ));
   }
   return (

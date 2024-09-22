@@ -10,39 +10,57 @@ export default function Shop() {
   const { stats, dispatch } = useGameStats();
   return (
     <div className="shop">
+      <button
+        className="switch_shop"
+        onClick={() => setIsSwitched(!isSwitched)}
+      >
+        switch
+      </button>
       <div className="upgrades_shop">
-        <button className="open_shop" onClick={() => setIsSwitched(true)}>
-          open
-        </button>
-        <div className="product">
+        <button
+          className="product"
+          onClick={() => {
+            if (stats.count >= 10) {
+              dispatch({
+                type: GameActionTypes.UPGRADE_PERCLICK,
+                payload: { cost: 10, upgrade: 1 },
+              });
+            }
+          }}
+        >
           <div className="name">per click</div>
-          <button
-            className="buy"
-            onClick={() => {
-              if (stats.count >= 10) {
-                dispatch({
-                  type: GameActionTypes.UPGRADE_PERCLICK,
-                  payload: { cost: 10, upgrade: 1 },
-                });
-              }
-            }}
-          >
-            10
-          </button>
-        </div>
-        <div className="product">
+          <div className="buy">10</div>
+        </button>
+        <button
+          className="product"
+          onClick={() => {
+            if (stats.count >= 100) {
+              dispatch({
+                type: GameActionTypes.UPGRADE_PERCLICK,
+                payload: { cost: 100, upgrade: 0.1 },
+              });
+            }
+          }}
+        >
           <div className="name">period time</div>
-          <button className="buy">100</button>
-        </div>
-        <div className="product">
+          <div className="buy">100</div>
+        </button>
+        <button
+          className="product"
+          onClick={() => {
+            if (stats.count >= 50) {
+              dispatch({
+                type: GameActionTypes.UPGRADE_PERIOD_POINTS,
+                payload: { cost: 50, upgrade: 1 },
+              });
+            }
+          }}
+        >
           <div className="name">period points</div>
-          <button className="buy">50</button>
-        </div>
+          <div className="buy">50</div>
+        </button>
       </div>
       <div className={clsx("charms_shop", isSwitched && "active")}>
-        <button className="close_shop" onClick={() => setIsSwitched(false)}>
-          close
-        </button>
         <InventoryContent id={"fury_of_the_fallen"} type="fury_of_the_fallen" />
         <InventoryContent id={"quick_slash"} type="quick_slash" />
         <InventoryContent id={"fragile_force"} type="fragile_force" />
