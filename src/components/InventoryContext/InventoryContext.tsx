@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { InventoryContentProps, GridContext, GridMoveEvent } from "..";
-import { restrictToWindowEdges } from "@dnd-kit/modifiers";
+import { restrictToFirstScrollableAncestor, restrictToWindowEdges } from "@dnd-kit/modifiers";
 
 type InventoryProviderProps = {
   verticalCellCount: number;
@@ -73,7 +73,7 @@ export default function InventoryProvider({
       <GridContext
         horizontalCellCount={horizontalCellCount}
         verticalCellCount={verticalCellCount}
-        modifiers={[restrictToWindowEdges]}
+        modifiers={[restrictToFirstScrollableAncestor]}
         onGridMove={OnMove}
         onDragEnd={OnEnd}
       >

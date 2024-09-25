@@ -71,7 +71,7 @@ export default function gameReducer(
       return {
         ...state,
         count: state.count - action.payload.cost,
-        periodTime: state.periodTime - action.payload.upgrade,
+        periodTime: state.periodTime * (1 - action.payload.upgrade),
       };
     case GameActionTypes.INIT:
       return action.payload;

@@ -1,4 +1,4 @@
-import { Counter, useNotification } from "../";
+import { Counter } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
 import { Key, useState } from "react";
 import type { GameStats } from "../../../schemas/gameStats";
@@ -21,7 +21,6 @@ type GameArgs = {
 };
 
 export default function Game({ gameData, onClick, onClear }: GameArgs) {
-  const notification = useNotification();
   const [hideMenu, setHide] = useState(true);
   const [indicator, setIndicator] = useState<Indecator[]>([]);
   function indicatorWrapper() {
@@ -38,16 +37,13 @@ export default function Game({ gameData, onClick, onClear }: GameArgs) {
         </div>
         <div className="perSecond">
           points per second:
-          {(
-            gameData.periodPoints / Number(gameData.periodTime.toFixed(1))
-          ).toFixed(2)}
+          {(gameData.periodPoints / gameData.periodTime).toFixed(2)}
         </div>
       </div>
       <Counter
         img={"/Deposit 1.png"}
         onClick={(event) => {
           onClick();
-          notification.add({ type: "info", content: "You recive geo" });
           const newIndicator = {
             key: crypto.randomUUID(),
             inner: gameData.perClick,

@@ -14,7 +14,11 @@ export default function Shop() {
         className="switch_shop"
         onClick={() => setIsSwitched(!isSwitched)}
       >
-        switch
+        <img
+          src="/switch button.png"
+          alt=""
+          className={clsx("switch_img", isSwitched && "switched")}
+        />
       </button>
       <div className="upgrades_shop">
         <button
@@ -29,21 +33,21 @@ export default function Shop() {
           }}
         >
           <div className="name">per click</div>
-          <div className="buy">10</div>
+          <div className="price">10</div>
         </button>
         <button
           className="product"
           onClick={() => {
             if (stats.count >= 100) {
               dispatch({
-                type: GameActionTypes.UPGRADE_PERCLICK,
+                type: GameActionTypes.UPGRADE_PERIOD_TIME,
                 payload: { cost: 100, upgrade: 0.1 },
               });
             }
           }}
         >
           <div className="name">period time</div>
-          <div className="buy">100</div>
+          <div className="price">100</div>
         </button>
         <button
           className="product"
@@ -57,13 +61,42 @@ export default function Shop() {
           }}
         >
           <div className="name">period points</div>
-          <div className="buy">50</div>
+          <div className="price">50</div>
         </button>
       </div>
       <div className={clsx("charms_shop", isSwitched && "active")}>
-        <InventoryContent id={"fury_of_the_fallen"} type="fury_of_the_fallen" />
-        <InventoryContent id={"quick_slash"} type="quick_slash" />
-        <InventoryContent id={"fragile_force"} type="fragile_force" />
+        <div className="row">
+          <InventoryContent
+            id={"fury_of_the_fallen1"}
+            type="fury_of_the_fallen"
+          />
+          <InventoryContent id={"quick_slash1"} type="quick_slash" />
+          <InventoryContent id={"fragile_force1"} type="fragile_force" />
+        </div>
+        <div className="row">
+          <InventoryContent
+            id={"fury_of_the_fallen2"}
+            type="fury_of_the_fallen"
+          />
+          <InventoryContent id={"quick_slash2"} type="quick_slash" />
+          <InventoryContent id={"fragile_force2"} type="fragile_force" />
+        </div>
+        <div className="row">
+          <InventoryContent
+            id={"fury_of_the_fallen3"}
+            type="fury_of_the_fallen"
+          />
+          <InventoryContent id={"quick_slash3"} type="quick_slash" />
+          <InventoryContent id={"fragile_force3"} type="fragile_force" />
+        </div>
+        <div className="row">
+          <InventoryContent
+            id={"fury_of_the_fallen4"}
+            type="fury_of_the_fallen"
+          />
+          <InventoryContent id={"quick_slash4"} type="quick_slash" />
+          <InventoryContent id={"fragile_force4"} type="fragile_force" />
+        </div>
       </div>
     </div>
   );
