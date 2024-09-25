@@ -3,6 +3,7 @@
   right: 40%;
   top: 50%;
   text-decoration: none;
+  z-index: 2;
 }
 
 .login_back {
