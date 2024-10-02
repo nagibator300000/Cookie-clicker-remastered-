@@ -24,10 +24,17 @@ function App() {
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
   function OnClick() {
-    {
-      gameStats.dispatch({
-        type: GameActionTypes.CLICK,
-      });
+    gameStats.dispatch({
+      type: GameActionTypes.CLICK,
+      payload: gameStats.stats.perClick,
+    });
+    if (inventory.inventoryContent.find((el) => el.type === "quick_slash")) {
+      setTimeout(() => {
+        gameStats.dispatch({
+          type: GameActionTypes.CLICK,
+          payload: gameStats.stats.perClick,
+        });
+      }, 300);
     }
   }
   const user = useUser();

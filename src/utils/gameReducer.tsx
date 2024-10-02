@@ -18,19 +18,16 @@ export enum GameActionTypes {
   UNLOCK,
 }
 
-type NoPayloadTypes =
-  | GameActionTypes.CLICK
-  | GameActionTypes.AUTOCLICK
-  | GameActionTypes.RESET;
+type NoPayloadTypes = GameActionTypes.AUTOCLICK | GameActionTypes.RESET;
 
 type NoPayloadAction = {
   type: NoPayloadTypes;
 };
 type WithPayloadAction = {
-  type: Exclude<
-    GameActionTypes,
-    NoPayloadTypes | GameActionTypes.INIT | GameActionTypes.UNLOCK
-  >;
+  type:
+    | GameActionTypes.UPGRADE_PERCLICK
+    | GameActionTypes.UPGRADE_PERIOD_POINTS
+    | GameActionTypes.UPGRADE_PERIOD_TIME;
   payload: { cost: number; upgrade: number };
 };
 
@@ -44,11 +41,17 @@ type Unlock = {
   payload: number;
 };
 
+type Click = {
+  type: GameActionTypes.CLICK;
+  payload: number;
+};
+
 export type GameAction =
   | NoPayloadAction
   | WithPayloadAction
   | InitAction
-  | Unlock;
+  | Unlock
+  | Click;
 
 export default function gameReducer(
   state: GameStats,
@@ -58,7 +61,7 @@ export default function gameReducer(
     case GameActionTypes.CLICK:
       return {
         ...state,
-        count: state.count + state.perClick,
+        count: state.count + action.payload,
       };
     case GameActionTypes.AUTOCLICK:
       return {

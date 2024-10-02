@@ -47,7 +47,6 @@ export default function InventoryProvider({
     { row: 5, col: 2, id: "blocker row:5 col:2", type: "blocker" },
     { row: 1, col: 3, id: "blocker row:1 col:3", type: "blocker" },
     { row: 2, col: 3, id: "blocker row:2 col:3", type: "blocker" },
-    { row: 3, col: 3, id: "blocker row:3 col:3", type: "blocker" },
     { row: 4, col: 3, id: "blocker row:4 col:3", type: "blocker" },
     { row: 5, col: 3, id: "blocker row:5 col:3", type: "blocker" },
     { row: 1, col: 4, id: "blocker row:1 col:4", type: "blocker" },
