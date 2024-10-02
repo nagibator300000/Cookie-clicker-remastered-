@@ -68,7 +68,7 @@ function App() {
               type={inventory.dropTargetData.type}
               row={inventory.dropTargetData.row}
               col={inventory.dropTargetData.col}
-              id="Abob5"
+              id="Abob"
               isDropTarget
             ></InventoryContent>
           )}
@@ -80,6 +80,20 @@ function App() {
                 isOverlaping={
                   el === inventory.overlap &&
                   el.id !== inventory.dropTargetData?.id
+                }
+                onClick={
+                  el.type === "blocker"
+                    ? () => {
+                        if (inventory.isEditing) {
+                          inventory.setInventoryContent(
+                            inventory.inventoryContent.filter(
+                              (e) => e.id !== el.id
+                            )
+                          );
+                          inventory.setIsEditing(false);
+                        }
+                      }
+                    : undefined
                 }
               ></InventoryContent>
             );

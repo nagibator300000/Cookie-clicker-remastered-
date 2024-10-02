@@ -15,6 +15,7 @@ export enum GameActionTypes {
   UPGRADE_PERIOD_TIME,
   RESET,
   INIT,
+  UNLOCK,
 }
 
 type NoPayloadTypes =
@@ -26,7 +27,10 @@ type NoPayloadAction = {
   type: NoPayloadTypes;
 };
 type WithPayloadAction = {
-  type: Exclude<GameActionTypes, NoPayloadTypes | GameActionTypes.INIT>;
+  type: Exclude<
+    GameActionTypes,
+    NoPayloadTypes | GameActionTypes.INIT | GameActionTypes.UNLOCK
+  >;
   payload: { cost: number; upgrade: number };
 };
 
@@ -35,7 +39,16 @@ type InitAction = {
   payload: GameStats;
 };
 
-export type GameAction = NoPayloadAction | WithPayloadAction | InitAction;
+type Unlock = {
+  type: GameActionTypes.UNLOCK;
+  payload: number;
+};
+
+export type GameAction =
+  | NoPayloadAction
+  | WithPayloadAction
+  | InitAction
+  | Unlock;
 
 export default function gameReducer(
   state: GameStats,
@@ -72,6 +85,11 @@ export default function gameReducer(
         ...state,
         count: state.count - action.payload.cost,
         periodTime: state.periodTime * (1 - action.payload.upgrade),
+      };
+    case GameActionTypes.UNLOCK:
+      return {
+        ...state,
+        count: state.count - action.payload,
       };
     case GameActionTypes.INIT:
       return action.payload;

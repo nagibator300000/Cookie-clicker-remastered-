@@ -1,6 +1,12 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import { InventoryContentProps, GridContext, GridMoveEvent } from "..";
-import { restrictToFirstScrollableAncestor, restrictToWindowEdges } from "@dnd-kit/modifiers";
+import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 
 type InventoryProviderProps = {
   verticalCellCount: number;
@@ -10,8 +16,11 @@ type InventoryProviderProps = {
 
 type InventoryContext = {
   inventoryContent: InventoryContentProps[];
+  setInventoryContent: Dispatch<SetStateAction<InventoryContentProps[]>>;
   dropTargetData: InventoryContentProps | null;
   overlap: InventoryContentProps | undefined;
+  isEditing: boolean;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 
 const inventoryContext = createContext<InventoryContext | null>(null);
@@ -28,7 +37,31 @@ export default function InventoryProvider({
   >([
     { row: 1, col: 1, id: "blocker row:1 col:1", type: "blocker" },
     { row: 2, col: 1, id: "blocker row:2 col:1", type: "blocker" },
+    { row: 3, col: 1, id: "blocker row:3 col:1", type: "blocker" },
+    { row: 4, col: 1, id: "blocker row:4 col:1", type: "blocker" },
+    { row: 5, col: 1, id: "blocker row:5 col:1", type: "blocker" },
+    { row: 1, col: 2, id: "blocker row:1 col:2", type: "blocker" },
+    { row: 2, col: 2, id: "blocker row:2 col:2", type: "blocker" },
+    { row: 3, col: 2, id: "blocker row:3 col:2", type: "blocker" },
+    { row: 4, col: 2, id: "blocker row:4 col:2", type: "blocker" },
+    { row: 5, col: 2, id: "blocker row:5 col:2", type: "blocker" },
+    { row: 1, col: 3, id: "blocker row:1 col:3", type: "blocker" },
+    { row: 2, col: 3, id: "blocker row:2 col:3", type: "blocker" },
+    { row: 3, col: 3, id: "blocker row:3 col:3", type: "blocker" },
+    { row: 4, col: 3, id: "blocker row:4 col:3", type: "blocker" },
+    { row: 5, col: 3, id: "blocker row:5 col:3", type: "blocker" },
+    { row: 1, col: 4, id: "blocker row:1 col:4", type: "blocker" },
+    { row: 2, col: 4, id: "blocker row:2 col:4", type: "blocker" },
+    { row: 3, col: 4, id: "blocker row:3 col:4", type: "blocker" },
+    { row: 4, col: 4, id: "blocker row:4 col:4", type: "blocker" },
+    { row: 5, col: 4, id: "blocker row:5 col:4", type: "blocker" },
+    { row: 1, col: 5, id: "blocker row:1 col:5", type: "blocker" },
+    { row: 2, col: 5, id: "blocker row:2 col:5", type: "blocker" },
+    { row: 3, col: 5, id: "blocker row:3 col:5", type: "blocker" },
+    { row: 4, col: 5, id: "blocker row:4 col:5", type: "blocker" },
+    { row: 5, col: 5, id: "blocker row:5 col:5", type: "blocker" },
   ]);
+  const [isEditing, setIsEditing] = useState(false);
 
   const overlap = inventoryContent.find(
     (val) => val.col === dropTargetData?.col && val.row === dropTargetData?.row
@@ -66,8 +99,11 @@ export default function InventoryProvider({
     <inventoryContext.Provider
       value={{
         inventoryContent,
+        setInventoryContent,
         dropTargetData,
         overlap,
+        isEditing,
+        setIsEditing,
       }}
     >
       <GridContext

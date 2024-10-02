@@ -2,23 +2,6 @@
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-}
-
-.charms_shop {
-  transition: transform 0.5s;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  right: 0;
-  transform: translateX(200%);
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-}
-
-.active {
-  transform: translateX(0);
 }
 
 .upgrades_shop {
@@ -27,6 +10,7 @@
   display: flex;
   gap: 50px;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
@@ -42,6 +26,7 @@
 
 .product {
   background-color: black;
+  width: 300px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -50,6 +35,27 @@
   color: white;
   cursor: pointer;
   border: none;
+}
+
+.product::after {
+  transition: opacity ease-in-out 0.3s;
+  content: url("/shop_fleur.png");
+  opacity: 0;
+}
+
+.product::before {
+  transition: opacity ease-in-out 0.2s;
+  content: url("/shop_fleur.png");
+  transform: scaleX(-100%);
+  opacity: 0;
+}
+
+.product:hover::after {
+  opacity: 1;
+}
+
+.product:hover::before {
+  opacity: 1;
 }
 
 .price {
@@ -64,6 +70,32 @@
   transform: rotate(180deg);
 }
 
+.charms_shop {
+  transition: transform 0.5s;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  transform: translateX(200%);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.charms_shop.active {
+  transform: translateX(0);
+}
+
 .row {
   display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.row:nth-of-type(even) {
+  padding-left: 30px;
 }
