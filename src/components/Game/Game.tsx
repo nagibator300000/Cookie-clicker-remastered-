@@ -4,49 +4,45 @@ import { Key, useState } from "react";
 import type { GameStats } from "../../../schemas/gameStats";
 import Indicator from "../Indicator/Indicator";
 import "./Game.css";
+import { useGameStatsStore } from "../../stores/gameStats";
 
 type Indecator = {
   key: Key;
-  inner: number;
   position: {
     x: number;
     y: number;
   };
 };
 
-type GameArgs = {
-  gameData: GameStats;
-  onClick: () => void;
-  onClear: () => void;
-};
-
-export default function Game({ gameData, onClick, onClear }: GameArgs) {
+export default function Game({}) {
   const [hideMenu, setHide] = useState(true);
   const [indicator, setIndicator] = useState<Indecator[]>([]);
+  const reset = useGameStatsStore((stats) => stats.reset);
+  const count = useGameStatsStore((stats) => stats.count);
+  const click = useGameStatsStore((stats) => stats.click);
   function indicatorWrapper() {
     return indicator.map((i) => (
       <Indicator position={i.position} key={i.key} />
     ));
+  }
+  function ClearProgress() {
+    localStorage.clear();
+    reset();
   }
   return (
     <div className="game">
       <div className="value">
         <div className="geoes">
           <img src="/Geo.png"></img>
-          {gameData.count}
-        </div>
-        <div className="perSecond">
-          points per second:
-          {(gameData.periodPoints / gameData.periodTime).toFixed(2)}
+          {count}
         </div>
       </div>
       <Counter
         img={"/Deposit 1.png"}
         onClick={(event) => {
-          onClick();
+          click;
           const newIndicator = {
             key: crypto.randomUUID(),
-            inner: gameData.perClick,
             position: {
               x: event.clientX,
               y: event.clientY,
@@ -72,7 +68,7 @@ export default function Game({ gameData, onClick, onClear }: GameArgs) {
         isHided={hideMenu}
         OnAcept={() => {
           setHide(true);
-          onClear();
+          ClearProgress();
         }}
         OnCancel={() => {
           setHide(true);

@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { NotificationProvider } from "./components";
-import GameStatsProvider from "./components/ReducerProvider/ReducerProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { FetchError } from "./utils/fetchJSON.ts";
 import { InventoryProvider } from "./components";
@@ -31,13 +29,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <div className="rightCornerFleur"></div>
     </div>
     <QueryClientProvider client={client}>
-      <NotificationProvider>
-        <GameStatsProvider>
-          <InventoryProvider verticalCellCount={5} horizontalCellCount={5}>
-            <App />
-          </InventoryProvider>
-        </GameStatsProvider>
-      </NotificationProvider>
+      <InventoryProvider verticalCellCount={5} horizontalCellCount={5}>
+        <App />
+      </InventoryProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

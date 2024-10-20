@@ -10,43 +10,27 @@ import {
   Shop,
 } from "./components";
 import useGameStats from "./hooks/useGameStats";
-import { GameActionTypes } from "./utils/gameReducer";
 import useUser from "./hooks/useUser";
 import { FetchError } from "./utils/fetchJSON";
 import useInterval from "./hooks/useInterval";
 import { useInventory } from "./components";
 import InventoryContent from "./components/InventoryContent/InventoryContent";
+import { useGameStatsStore } from "./stores/gameStats";
 
 function App() {
   const gameStats = useGameStats();
   const inventory = useInventory();
 
+  const periodTime = useGameStatsStore((stats) => stats.periodTime);
+  const autoClick = useGameStatsStore((stats) => stats.autoClick);
+
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
-  function OnClick() {
-    gameStats.dispatch({
-      type: GameActionTypes.CLICK,
-      payload: gameStats.stats.perClick,
-    });
-    if (inventory.inventoryContent.find((el) => el.type === "quick_slash")) {
-      setTimeout(() => {
-        gameStats.dispatch({
-          type: GameActionTypes.CLICK,
-          payload: gameStats.stats.perClick,
-        });
-      }, 300);
-    }
-  }
   const user = useUser();
 
-  function ClearProgress() {
-    localStorage.clear();
-    gameStats.dispatch({ type: GameActionTypes.RESET });
-  }
-
   useInterval(() => {
-    gameStats.dispatch({ type: GameActionTypes.AUTOCLICK });
-  }, gameStats.stats.periodTime * 1000);
+    autoClick();
+  }, periodTime * 1000);
   if (user.isLoading || gameStats.isLoading) {
     return (
       <div className="load">
@@ -107,11 +91,7 @@ function App() {
           })}
         </Inventory>
       </div>
-      <Game
-        onClick={OnClick}
-        onClear={ClearProgress}
-        gameData={gameStats.stats}
-      ></Game>
+      <Game></Game>
       <Shop></Shop>
       {isOpenProfile && (
         <Account

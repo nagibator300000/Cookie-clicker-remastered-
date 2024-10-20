@@ -17,10 +17,6 @@ export type { GridMoveEvent } from "./GridContext/GridContext";
 export type { NotificationData } from "./Notification/Notification";
 
 export {
-  default as NotificationProvider,
-  useNotification,
-} from "./NotificationProvider/NotificationProvider";
-export {
   default as InventoryProvider,
   useInventory,
 } from "./InventoryContext/InventoryContext";
