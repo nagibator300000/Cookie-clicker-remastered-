@@ -13,16 +13,14 @@ import useGameStats from "./hooks/useGameStats";
 import useUser from "./hooks/useUser";
 import { FetchError } from "./utils/fetchJSON";
 import useInterval from "./hooks/useInterval";
-import { useInventory } from "./components";
-import InventoryContent from "./components/InventoryContent/InventoryContent";
-import { useGameStatsStore } from "./stores/gameStats";
+
+import useGameStatsStore from "./stores/gameStats";
 
 function App() {
   const gameStats = useGameStats();
-  const inventory = useInventory();
 
-  const periodTime = useGameStatsStore((stats) => stats.periodTime);
-  const autoClick = useGameStatsStore((stats) => stats.autoClick);
+  const periodTime = useGameStatsStore((state) => state.periodTime);
+  const autoClick = useGameStatsStore((state) => state.autoClick);
 
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
@@ -53,43 +51,7 @@ function App() {
   return (
     <div className="clicker">
       <div className="inventoryHandler">
-        <Inventory>
-          {inventory.dropTargetData && (
-            <InventoryContent
-              type={inventory.dropTargetData.type}
-              row={inventory.dropTargetData.row}
-              col={inventory.dropTargetData.col}
-              id="Abob"
-              isDropTarget
-            ></InventoryContent>
-          )}
-          {inventory.inventoryContent.map((el) => {
-            return (
-              <InventoryContent
-                {...el}
-                key={el.id}
-                isOverlaping={
-                  el === inventory.overlap &&
-                  el.id !== inventory.dropTargetData?.id
-                }
-                onClick={
-                  el.type === "blocker"
-                    ? () => {
-                        if (inventory.isEditing) {
-                          inventory.setInventoryContent(
-                            inventory.inventoryContent.filter(
-                              (e) => e.id !== el.id
-                            )
-                          );
-                          inventory.setIsEditing(false);
-                        }
-                      }
-                    : undefined
-                }
-              ></InventoryContent>
-            );
-          })}
-        </Inventory>
+        <Inventory></Inventory>
       </div>
       <Game></Game>
       <Shop></Shop>

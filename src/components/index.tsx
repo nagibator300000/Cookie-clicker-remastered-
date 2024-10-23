@@ -11,12 +11,8 @@ export { default as Login } from "./Login/Login";
 export { default as Notification } from "./Notification/Notification";
 export { default as Shop } from "./Shop/Shop";
 export { default as Saving } from "./Saving/Saving";
+export { default as InventoryProvider } from "./InventoryContext/InventoryContext";
 
 export type { InventoryContentProps } from "./InventoryContent/InventoryContent";
 export type { GridMoveEvent } from "./GridContext/GridContext";
 export type { NotificationData } from "./Notification/Notification";
-
-export {
-  default as InventoryProvider,
-  useInventory,
-} from "./InventoryContext/InventoryContext";

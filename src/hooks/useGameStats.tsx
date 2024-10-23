@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useGameStatsMutation from "./useGameStatsMutation";
 import useGameStatsQuery from "./useGameStatsQuery";
 import useInterval from "./useInterval";
-import { useGameStatsStore } from "../stores/gameStats";
+import useGameStatsStore from "../stores/gameStats";
 
 export default function useGameStats() {
   const post = useGameStatsMutation();

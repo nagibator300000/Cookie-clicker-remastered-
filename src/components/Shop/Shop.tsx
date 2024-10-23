@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./Shop.css";
 import clsx from "clsx";
-import { InventoryContent, useInventory } from "..";
+import { InventoryContent } from "..";
 import useNotificationStore from "../../stores/notification";
-import { useGameStatsStore } from "../../stores/gameStats";
+import useGameStatsStore from "../../stores/gameStats";
+import useInventoryStore from "../../stores/inventory";
 
 export default function Shop() {
   const [isSwitched, setIsSwitched] = useState(false);
@@ -16,7 +17,8 @@ export default function Shop() {
     (stats) => stats.upgradePeriodPoints
   );
   const unlock = useGameStatsStore((stats) => stats.unlock);
-  const { setIsEditing, isEditing } = useInventory();
+  const isEditing = useInventoryStore((state) => state.isEditing);
+  const setIsEditing = useInventoryStore((state) => state.setIsEditing);
   const add = useNotificationStore((state) => state.add);
   return (
     <div className="shop">

@@ -1,10 +1,9 @@
 import { Counter } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
 import { Key, useState } from "react";
-import type { GameStats } from "../../../schemas/gameStats";
 import Indicator from "../Indicator/Indicator";
 import "./Game.css";
-import { useGameStatsStore } from "../../stores/gameStats";
+import useGameStatsStore from "../../stores/gameStats";
 
 type Indecator = {
   key: Key;
@@ -40,7 +39,7 @@ export default function Game({}) {
       <Counter
         img={"/Deposit 1.png"}
         onClick={(event) => {
-          click;
+          click();
           const newIndicator = {
             key: crypto.randomUUID(),
             position: {

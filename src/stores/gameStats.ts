@@ -60,4 +60,4 @@ const useGameStatsStore = create<GameStatsStore>()((set) => ({
   },
 }));
 
-export { useGameStatsStore };
+export default useGameStatsStore;
