@@ -15,38 +15,52 @@ const defaultInventory: InventoryContentProps[] = Array.from({
 
 interface InventoryStore {
   inventoryContent: InventoryContentProps[];
-  add: (charm: InventoryContentProps) => void;
-  remove: (id: UniqueIdentifier) => void;
   overlap: InventoryContentProps | null;
   dropTarget: InventoryContentProps | null;
-  setDropTarget: (targetData: InventoryContentProps | null) => void;
   isEditing: boolean;
-  setIsEditing: (val: boolean) => void;
+  startEditing: () => void;
+  finishEditing: (itemId: UniqueIdentifier) => void;
+  hoverItem: (DropTarget: InventoryContentProps | null) => void;
+  dropItem: () => void;
 }
 
 const useInventoryStore = create<InventoryStore>()((set) => ({
   inventoryContent: defaultInventory,
-  add: (charm) =>
-    set((state) => ({
-      inventoryContent: [...state.inventoryContent, charm],
-    })),
-  remove: (id) =>
-    set((state) => ({
-      inventoryContent: state.inventoryContent.filter((e) => e.id !== id),
-    })),
+  startEditing: () => set(() => ({ isEditing: true })),
+  finishEditing: () => set(() => ({ isEditing: false })),
   overlap: null,
   dropTarget: null,
-  setDropTarget: (dropTarget) =>
+  hoverItem: (dropTarget) =>
     set((state) => ({
       dropTarget,
       overlap: state.inventoryContent.find(
         (e) => e.col === dropTarget?.col && e.row === dropTarget?.row
       ),
     })),
-  isEditing: false,
-  setIsEditing: (val) => {
-    set(() => ({ isEditing: val }));
+  dropItem: () => {
+    set((state) => {
+      if (!state.dropTarget) return state;
+      if (state.overlap) {
+        return {
+          dropTarget: null,
+        };
+      }
+
+      return {
+        dropTarget: null,
+        inventoryContent: [
+          ...state.inventoryContent.filter(
+            (e) => e.id !== state.dropTarget?.id
+          ),
+          {
+            ...state.dropTarget,
+            id: `col:${state.dropTarget.col} row:${state.dropTarget.row}`,
+          },
+        ],
+      };
+    });
   },
+  isEditing: false,
 }));
 
 export default useInventoryStore;

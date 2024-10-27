@@ -4,7 +4,7 @@ import {
   type DragMoveEvent,
 } from "@dnd-kit/core";
 
-type Position = { col: number; row: number };
+export type Position = { col: number; row: number };
 
 interface GridMoveEvent extends DragMoveEvent {
   position?: Position;

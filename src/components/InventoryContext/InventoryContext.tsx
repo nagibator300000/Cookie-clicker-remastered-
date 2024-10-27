@@ -13,9 +13,8 @@ export default function InventoryProvider({
   horizontalCellCount,
   children,
 }: InventoryProviderProps) {
-  const remove = useInventoryStore((state) => state.remove);
-  const setDropTarget = useInventoryStore((state) => state.setDropTarget);
-  const add = useInventoryStore((state) => state.add);
+  const dropItem = useInventoryStore((state) => state.dropItem);
+  const hoverItem = useInventoryStore((state) => state.hoverItem);
 
   function OnMove(event: GridMoveEvent) {
     if (event.position) {
@@ -24,25 +23,10 @@ export default function InventoryProvider({
         id: event.active.id,
         type: event.active.data.current?.type,
       };
-      setDropTarget(newdropTarget);
+      hoverItem(newdropTarget);
     } else {
-      setDropTarget(null);
+      hoverItem(null);
     }
-  }
-
-  function OnEnd() {
-    const dropTarget = useInventoryStore.getState().dropTarget;
-    if (!dropTarget) return;
-    if (useInventoryStore.getState().overlap) {
-      setDropTarget(null);
-      return;
-    }
-    remove(dropTarget.id),
-      add({
-        ...dropTarget,
-        id: `col:${dropTarget.col} row:${dropTarget.row}`,
-      }),
-      setDropTarget(null);
   }
   return (
     <GridContext
@@ -50,7 +34,7 @@ export default function InventoryProvider({
       verticalCellCount={verticalCellCount}
       modifiers={[restrictToFirstScrollableAncestor]}
       onGridMove={OnMove}
-      onDragEnd={OnEnd}
+      onDragEnd={dropItem}
     >
       {children}
     </GridContext>
