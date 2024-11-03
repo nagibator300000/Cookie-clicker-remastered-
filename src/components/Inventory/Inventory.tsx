@@ -1,16 +1,26 @@
 import { useDroppable } from "@dnd-kit/core";
 import "./Inventory.css";
 import { InventoryContent } from "..";
-import useInventoryStore from "../../stores/inventory";
+import useGameStore from "../../stores/game";
 
 export default function Inventory() {
   const { setNodeRef } = useDroppable({ id: "inventory" });
-  const overlap = useInventoryStore((state) => state.overlap);
-  const isEditing = useInventoryStore((state) => state.isEditing);
-  const dropTarget = useInventoryStore((state) => state.dropTarget);
-  const inventoryContent = useInventoryStore((state) => state.inventoryContent);
-  const remove = useInventoryStore((state) => state.remove);
-  const setIsEditing = useInventoryStore((state) => state.setIsEditing);
+  const { overlap, finishEditing, inventoryContent, isEditing, dropTarget } =
+    useGameStore(
+      ({
+        overlap,
+        finishEditing,
+        inventoryContent,
+        isEditing,
+        dropTarget,
+      }) => ({
+        overlap,
+        finishEditing,
+        inventoryContent,
+        isEditing,
+        dropTarget,
+      })
+    );
   return (
     <div ref={setNodeRef} className="inventory">
       {dropTarget && (
@@ -32,9 +42,7 @@ export default function Inventory() {
               el.type === "blocker"
                 ? () => {
                     if (isEditing) {
-                      remove(el.id);
-
-                      setIsEditing(false);
+                      finishEditing(el.id);
                     }
                   }
                 : undefined

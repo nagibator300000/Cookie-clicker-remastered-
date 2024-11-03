@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create, StateCreator } from "zustand";
 import type { InventoryContentProps } from "../components";
 import { UniqueIdentifier } from "@dnd-kit/core";
 
@@ -13,7 +13,7 @@ const defaultInventory: InventoryContentProps[] = Array.from({
   }))
   .filter((el) => el.col !== 3 || el.row !== 3) as InventoryContentProps[];
 
-interface InventoryStore {
+export interface InventorySlice {
   inventoryContent: InventoryContentProps[];
   overlap: InventoryContentProps | null;
   dropTarget: InventoryContentProps | null;
@@ -24,7 +24,7 @@ interface InventoryStore {
   dropItem: () => void;
 }
 
-const useInventoryStore = create<InventoryStore>()((set) => ({
+const createInventorySlice: StateCreator<InventorySlice, [], []> = (set) => ({
   inventoryContent: defaultInventory,
   startEditing: () => set(() => ({ isEditing: true })),
   finishEditing: () => set(() => ({ isEditing: false })),
@@ -61,6 +61,6 @@ const useInventoryStore = create<InventoryStore>()((set) => ({
     });
   },
   isEditing: false,
-}));
+});
 
-export default useInventoryStore;
+export default createInventorySlice;

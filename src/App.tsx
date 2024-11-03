@@ -13,14 +13,12 @@ import useGameStats from "./hooks/useGameStats";
 import useUser from "./hooks/useUser";
 import { FetchError } from "./utils/fetchJSON";
 import useInterval from "./hooks/useInterval";
-
-import useGameStatsStore from "./stores/gameStats";
+import useGameStore from "./stores/game";
 
 function App() {
   const gameStats = useGameStats();
 
-  const periodTime = useGameStatsStore((state) => state.periodTime);
-  const autoClick = useGameStatsStore((state) => state.autoClick);
+  const { periodTime, autoClick } = useGameStore();
 
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 

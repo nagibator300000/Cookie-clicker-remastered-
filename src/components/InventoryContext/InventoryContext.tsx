@@ -1,6 +1,6 @@
 import { GridContext, GridMoveEvent } from "..";
 import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
-import useInventoryStore from "../../stores/inventory";
+import useGameStore from "../../stores/game";
 
 type InventoryProviderProps = {
   verticalCellCount: number;
@@ -13,8 +13,7 @@ export default function InventoryProvider({
   horizontalCellCount,
   children,
 }: InventoryProviderProps) {
-  const dropItem = useInventoryStore((state) => state.dropItem);
-  const hoverItem = useInventoryStore((state) => state.hoverItem);
+  const { dropItem, hoverItem } = useGameStore();
 
   function OnMove(event: GridMoveEvent) {
     if (event.position) {

@@ -12,6 +12,7 @@ export { default as Notification } from "./Notification/Notification";
 export { default as Shop } from "./Shop/Shop";
 export { default as Saving } from "./Saving/Saving";
 export { default as InventoryProvider } from "./InventoryContext/InventoryContext";
+export { default as SoulOrb } from "./SoulOrb/SoulOrb";
 
 export type { InventoryContentProps } from "./InventoryContent/InventoryContent";
 export type { GridMoveEvent } from "./GridContext/GridContext";

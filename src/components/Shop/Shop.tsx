@@ -3,23 +3,38 @@ import "./Shop.css";
 import clsx from "clsx";
 import { InventoryContent } from "..";
 import useNotificationStore from "../../stores/notification";
-import useGameStatsStore from "../../stores/gameStats";
-import useInventoryStore from "../../stores/inventory";
+import useGameStore from "../../stores/game";
 
 export default function Shop() {
   const [isSwitched, setIsSwitched] = useState(false);
-  const count = useGameStatsStore((stats) => stats.count);
-  const upgradePerClick = useGameStatsStore((stats) => stats.upgradePerClick);
-  const upgradePeriodTime = useGameStatsStore(
-    (stats) => stats.upgradePeriodTime
-  );
-  const upgradePeriodPoints = useGameStatsStore(
-    (stats) => stats.upgradePeriodPoints
-  );
-  const unlock = useGameStatsStore((stats) => stats.unlock);
-  const isEditing = useInventoryStore((state) => state.isEditing);
-  const setIsEditing = useInventoryStore((state) => state.setIsEditing);
   const add = useNotificationStore((state) => state.add);
+  const {
+    startEditing,
+    isEditing,
+    unlock,
+    upgradePeriodPoints,
+    upgradePeriodTime,
+    upgradePerClick,
+    count,
+  } = useGameStore(
+    ({
+      startEditing,
+      isEditing,
+      unlock,
+      upgradePeriodPoints,
+      upgradePerClick,
+      upgradePeriodTime,
+      count,
+    }) => ({
+      startEditing,
+      isEditing,
+      unlock,
+      upgradePerClick,
+      upgradePeriodPoints,
+      upgradePeriodTime,
+      count,
+    })
+  );
   return (
     <div className="shop">
       <button
@@ -68,7 +83,7 @@ export default function Shop() {
           disabled={count < 50 || isEditing}
           onClick={() => {
             unlock(50);
-            setIsEditing(true);
+            startEditing();
             add({
               type: "info",
               content: "click on the blocker to delete it",

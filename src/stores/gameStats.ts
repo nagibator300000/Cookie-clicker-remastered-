@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { GameStats } from "../../schemas/gameStats";
+import type { StateCreator } from "zustand";
 
 const defaultStats = {
   count: 0,
@@ -8,7 +8,7 @@ const defaultStats = {
   periodTime: 5,
 };
 
-interface GameStatsStore extends GameStats {
+export interface GameStatsSlice extends GameStats {
   click: () => void;
   autoClick: () => void;
   reset: () => void;
@@ -19,7 +19,12 @@ interface GameStatsStore extends GameStats {
   init: (stats: GameStats) => void;
 }
 
-const useGameStatsStore = create<GameStatsStore>()((set) => ({
+const createGameStatsSlice: StateCreator<
+  GameStatsSlice,
+  [],
+  [],
+  GameStatsSlice
+> = (set) => ({
   ...defaultStats,
   click: () => {
     set((state) => ({
@@ -58,6 +63,6 @@ const useGameStatsStore = create<GameStatsStore>()((set) => ({
   init: (stats) => {
     set(() => stats);
   },
-}));
+});
 
-export default useGameStatsStore;
+export default createGameStatsSlice;
