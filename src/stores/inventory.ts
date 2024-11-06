@@ -27,7 +27,11 @@ export interface InventorySlice {
 const createInventorySlice: StateCreator<InventorySlice, [], []> = (set) => ({
   inventoryContent: defaultInventory,
   startEditing: () => set(() => ({ isEditing: true })),
-  finishEditing: () => set(() => ({ isEditing: false })),
+  finishEditing: (itemId) =>
+    set((state) => ({
+      isEditing: false,
+      inventoryContent: state.inventoryContent.filter((e) => e.id !== itemId),
+    })),
   overlap: null,
   dropTarget: null,
   hoverItem: (dropTarget) =>

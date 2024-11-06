@@ -11,7 +11,7 @@ import {
 } from "./components";
 import useGameStats from "./hooks/useGameStats";
 import useUser from "./hooks/useUser";
-import { FetchError } from "./utils/fetchJSON";
+import { FetchError } from "./utils";
 import useInterval from "./hooks/useInterval";
 import useGameStore from "./stores/game";
 

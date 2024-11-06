@@ -1,9 +1,10 @@
-import { Counter, SoulOrb } from "../";
+import { Counter } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
 import { Key, useState } from "react";
 import Indicator from "../Indicator/Indicator";
 import "./Game.css";
 import useGameStore from "../../stores/game";
+
 type Indecator = {
   key: Key;
   position: {
@@ -12,19 +13,12 @@ type Indecator = {
   };
 };
 
-export default function Game() {
+export default function Game({}) {
   const [hideMenu, setHide] = useState(true);
   const [indicator, setIndicator] = useState<Indecator[]>([]);
-  const { reset, count, click, add, perClick } = useGameStore(
-    ({ reset, count, click, add, perClick }) => ({
-      reset,
-      count,
-      click,
-      add,
-      perClick,
-    })
-  );
-
+  const reset = useGameStore((stats) => stats.reset);
+  const count = useGameStore((stats) => stats.count);
+  const click = useGameStore((stats) => stats.click);
   function indicatorWrapper() {
     return indicator.map((i) => (
       <Indicator position={i.position} key={i.key} />
@@ -36,7 +30,6 @@ export default function Game() {
   }
   return (
     <div className="game">
-      <SoulOrb></SoulOrb>
       <div className="value">
         <div className="geoes">
           <img src="/Geo.png"></img>
@@ -47,7 +40,6 @@ export default function Game() {
         img={"/Deposit 1.png"}
         onClick={(event) => {
           click();
-          add(perClick);
           const newIndicator = {
             key: crypto.randomUUID(),
             position: {
