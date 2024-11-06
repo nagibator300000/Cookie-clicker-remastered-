@@ -5,22 +5,12 @@ import useGameStore from "../../stores/game";
 
 export default function Inventory() {
   const { setNodeRef } = useDroppable({ id: "inventory" });
-  const { overlap, finishEditing, inventoryContent, isEditing, dropTarget } =
-    useGameStore(
-      ({
-        overlap,
-        finishEditing,
-        inventoryContent,
-        isEditing,
-        dropTarget,
-      }) => ({
-        overlap,
-        finishEditing,
-        inventoryContent,
-        isEditing,
-        dropTarget,
-      })
-    );
+  const overlap = useGameStore((state) => state.overlap);
+  const isEditing = useGameStore((state) => state.isEditing);
+  const dropTarget = useGameStore((state) => state.dropTarget);
+  const inventoryContent = useGameStore((state) => state.inventoryContent);
+  const finishEditing = useGameStore((state) => state.finishEditing);
+
   return (
     <div ref={setNodeRef} className="inventory">
       {dropTarget && (

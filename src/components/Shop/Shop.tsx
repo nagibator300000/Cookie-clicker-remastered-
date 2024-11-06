@@ -8,33 +8,16 @@ import useGameStore from "../../stores/game";
 export default function Shop() {
   const [isSwitched, setIsSwitched] = useState(false);
   const add = useNotificationStore((state) => state.add);
-  const {
-    startEditing,
-    isEditing,
-    unlock,
-    upgradePeriodPoints,
-    upgradePeriodTime,
-    upgradePerClick,
-    count,
-  } = useGameStore(
-    ({
-      startEditing,
-      isEditing,
-      unlock,
-      upgradePeriodPoints,
-      upgradePerClick,
-      upgradePeriodTime,
-      count,
-    }) => ({
-      startEditing,
-      isEditing,
-      unlock,
-      upgradePerClick,
-      upgradePeriodPoints,
-      upgradePeriodTime,
-      count,
-    })
+  const startEditing = useGameStore((state) => state.startEditing);
+  const isEditing = useGameStore((state) => state.isEditing);
+  const unlock = useGameStore((state) => state.unlock);
+  const upgradePeriodPoints = useGameStore(
+    (state) => state.upgradePeriodPoints
   );
+  const upgradePeriodTime = useGameStore((state) => state.upgradePeriodTime);
+  const upgradePerClick = useGameStore((state) => state.upgradePerClick);
+  const count = useGameStore((state) => state.count);
+
   return (
     <div className="shop">
       <button

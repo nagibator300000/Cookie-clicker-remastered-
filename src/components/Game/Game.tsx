@@ -15,15 +15,11 @@ type Indecator = {
 export default function Game() {
   const [hideMenu, setHide] = useState(true);
   const [indicator, setIndicator] = useState<Indecator[]>([]);
-  const { reset, count, click, add, perClick } = useGameStore(
-    ({ reset, count, click, add, perClick }) => ({
-      reset,
-      count,
-      click,
-      add,
-      perClick,
-    })
-  );
+  const reset = useGameStore((state) => state.reset);
+  const count = useGameStore((state) => state.count);
+  const click = useGameStore((state) => state.click);
+  const add = useGameStore((state) => state.add);
+  const perClick = useGameStore((state) => state.perClick);
 
   function indicatorWrapper() {
     return indicator.map((i) => (

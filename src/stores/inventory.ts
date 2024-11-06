@@ -1,4 +1,4 @@
-import { create, StateCreator } from "zustand";
+import { StateCreator } from "zustand";
 import type { InventoryContentProps } from "../components";
 import { UniqueIdentifier } from "@dnd-kit/core";
 
