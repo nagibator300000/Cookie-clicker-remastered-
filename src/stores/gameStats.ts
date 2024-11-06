@@ -1,7 +1,7 @@
 import { GameStats } from "../../schemas/gameStats";
 import type { StateCreator } from "zustand";
 
-const defaultStats = {
+export const defaultStats = {
   count: 0,
   perClick: 1,
   periodPoints: 0,
