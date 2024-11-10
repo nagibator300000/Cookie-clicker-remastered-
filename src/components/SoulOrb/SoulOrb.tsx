@@ -13,7 +13,7 @@ export default function SoulOrb() {
       className="soul_orb"
       src="soul orb.png"
       alt=""
-      style={{ "--percentage": 100 - souls + "%" } as SoulOrbCSS}
+      style={{ "--percentage": souls + "%" } as SoulOrbCSS}
     />
   );
 }

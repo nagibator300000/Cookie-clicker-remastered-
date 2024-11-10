@@ -1,4 +1,4 @@
-import { Counter } from "../";
+import { Counter, SoulOrb } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
 import { Key, useState } from "react";
 import Indicator from "../Indicator/Indicator";
@@ -13,12 +13,14 @@ type Indecator = {
   };
 };
 
-export default function Game({}) {
+export default function Game() {
   const [hideMenu, setHide] = useState(true);
   const [indicator, setIndicator] = useState<Indecator[]>([]);
-  const reset = useGameStore((stats) => stats.reset);
-  const count = useGameStore((stats) => stats.count);
-  const click = useGameStore((stats) => stats.click);
+  const reset = useGameStore((state) => state.reset);
+  const count = useGameStore((state) => state.count);
+  const click = useGameStore((state) => state.click);
+  const spell = useGameStore((state) => state.spell);
+  const souls = useGameStore((state) => state.souls);
   function indicatorWrapper() {
     return indicator.map((i) => (
       <Indicator position={i.position} key={i.key} />
@@ -36,6 +38,7 @@ export default function Game({}) {
           {count}
         </div>
       </div>
+      <SoulOrb></SoulOrb>
       <Counter
         img={"/Deposit 1.png"}
         onClick={(event) => {
@@ -60,6 +63,13 @@ export default function Game({}) {
       >
         {indicatorWrapper()}
       </Counter>
+      <button
+        onClick={(_event) => {
+          if (souls >= 33) spell();
+        }}
+      >
+        Spell
+      </button>
       <button className="clear" onClick={() => setHide(false)}>
         Clear Progress
       </button>

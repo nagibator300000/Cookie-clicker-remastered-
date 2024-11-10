@@ -1,5 +1,6 @@
 import { GameStats } from "../../schemas/gameStats";
 import type { StateCreator } from "zustand";
+import { SoulSlice } from "./soul";
 
 export const defaultStats = {
   count: 0,
@@ -20,7 +21,7 @@ export interface GameStatsSlice extends GameStats {
 }
 
 const createGameStatsSlice: StateCreator<
-  GameStatsSlice,
+  GameStatsSlice & SoulSlice,
   [],
   [],
   GameStatsSlice
@@ -29,6 +30,7 @@ const createGameStatsSlice: StateCreator<
   click: () => {
     set((state) => ({
       count: state.count + state.perClick,
+      souls: state.souls + 3 > 100 ? 100 : state.souls + 3,
     }));
   },
   autoClick: () => {

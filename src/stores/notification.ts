@@ -7,7 +7,7 @@ interface NotificationState extends NotificationData {
 
 interface NotificationStore {
   add: (data: NotificationData) => void;
-  hide: (key: string) => void;
+  remove: (key: string) => void;
   notifications: NotificationState[];
 }
 
@@ -19,10 +19,10 @@ const useNotificationStore = create<NotificationStore>()((set) => ({
       notifications: [...state.notifications, newNotification],
     }));
     setTimeout(() => {
-      useNotificationStore.getState().hide(notificationKey);
+      useNotificationStore.getState().remove(notificationKey);
     }, 1000 * 5);
   },
-  hide: (key) => {
+  remove: (key) => {
     set((state) => ({
       notifications: state.notifications.filter((e) => e.key != key),
     }));

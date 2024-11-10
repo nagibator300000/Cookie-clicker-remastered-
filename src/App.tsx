@@ -8,6 +8,7 @@ import {
   Avatar,
   Saving,
   Shop,
+  NotificationsDisplay,
 } from "./components";
 import useGameStats from "./hooks/useGameStats";
 import useUser from "./hooks/useUser";
@@ -66,6 +67,7 @@ function App() {
         Profile
         <Avatar img={user.data.picture} />
       </button>
+      <NotificationsDisplay />
       <Saving isSaving={gameStats.isSaving} />
     </div>
   );

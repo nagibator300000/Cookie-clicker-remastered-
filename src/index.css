@@ -24,12 +24,3 @@ body {
 * {
   box-sizing: border-box;
 }
-
-.notifications {
-  position: fixed;
-  bottom: 0;
-  left: 50vw;
-  transform: translateX(-50%);
-  display: grid;
-  grid-template-rows: 10;
-}
