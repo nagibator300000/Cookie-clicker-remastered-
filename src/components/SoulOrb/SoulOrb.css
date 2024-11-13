@@ -1,4 +1,4 @@
 .soul_orb {
-  --percentage: 100%;
-  clip-path: inset(100 - var(--percentage) 0 0 0);
+  --value: calc(100% - var(--percentage));
+  clip-path: inset(var(--value) 0 0 0);
 }
