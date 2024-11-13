@@ -6,4 +6,17 @@
   top: var(--y);
   left: var(--x);
   transform: translate(-50%, -50%);
+  animation: linear fly 1s;
+}
+
+@keyframes fly {
+  from {
+    transform: translate(-50%, -50%);
+  }
+  to {
+    transform: translate(
+      calc(var(--target-x) - var(--x)-50%),
+      calc(var(--target-y) - var(--y)-50%)
+    );
+  }
 }

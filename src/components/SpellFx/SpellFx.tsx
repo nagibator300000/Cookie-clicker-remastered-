@@ -8,11 +8,18 @@ interface SpellStyle extends CSSProperties {
   "--y": string;
 }
 
-export default function SpellFx({ start }: SpellFxData) {
+export default function SpellFx({ start, finish }: SpellFxData) {
   return (
     <div
       className="spell"
-      style={{ "--x": start.x + "px", "--y": start.y + "px" } as SpellStyle}
+      style={
+        {
+          "--x": start.x + "px",
+          "--y": start.y + "px",
+          "--target-x": finish.x + "px",
+          "--target-y": finish.y + "px",
+        } as SpellStyle
+      }
     ></div>
   );
 }
