@@ -12,3 +12,4 @@ const useGameStore = create<InventorySlice & GameStatsSlice & SoulSlice>()(
 );
 
 export default useGameStore;
+export type { SpellFxData } from "./soul";

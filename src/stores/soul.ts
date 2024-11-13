@@ -6,11 +6,16 @@ type Coordinates = {
   y: number;
 };
 
+export interface SpellFxData {
+  start: Coordinates;
+  finish: Coordinates;
+}
+
 export interface SoulSlice {
   souls: number;
   add: (val: number) => void;
-  spell: ({ x, y }: Coordinates) => void;
-  spells: Coordinates[];
+  spell: (data: SpellFxData) => void;
+  spells: SpellFxData[];
 }
 
 const SoulSlice: StateCreator<SoulSlice & GameStatsSlice, [], [], SoulSlice> = (
@@ -21,11 +26,11 @@ const SoulSlice: StateCreator<SoulSlice & GameStatsSlice, [], [], SoulSlice> = (
     set((state) => ({
       souls: state.souls + val > 100 ? 100 : state.souls + val,
     })),
-  spell: (pos) =>
+  spell: (data) =>
     set((state) => ({
       count: state.count + 15,
       souls: state.souls - 33,
-      spells: [...state.spells, pos],
+      spells: [...state.spells, data],
     })),
   spells: [],
 });

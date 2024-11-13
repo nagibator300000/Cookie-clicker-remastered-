@@ -1,0 +1,9 @@
+.spell {
+  height: 96px;
+  width: 242px;
+  background-image: url("/vengreful spirit.png");
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  transform: translate(-50%, -50%);
+}

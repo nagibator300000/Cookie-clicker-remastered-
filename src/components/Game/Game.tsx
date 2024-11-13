@@ -1,6 +1,6 @@
-import { Counter, SoulOrb } from "../";
+import { Counter, SoulOrb, SpellDisplay } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
-import { CSSProperties, Key, useState } from "react";
+import { Key, useState } from "react";
 import Indicator from "../Indicator/Indicator";
 import "./Game.css";
 import useGameStore from "../../stores/game";
@@ -13,11 +13,6 @@ type Indecator = {
   };
 };
 
-interface SpellStyle extends CSSProperties {
-  "--x": string;
-  "--y": string;
-}
-
 export default function Game() {
   const [hideMenu, setHide] = useState(true);
   const [indicator, setIndicator] = useState<Indecator[]>([]);
@@ -25,7 +20,6 @@ export default function Game() {
   const count = useGameStore((state) => state.count);
   const click = useGameStore((state) => state.click);
   const spell = useGameStore((state) => state.spell);
-  const spells = useGameStore((state) => state.spells);
   const souls = useGameStore((state) => state.souls);
   function indicatorWrapper() {
     return indicator.map((i) => (
@@ -42,7 +36,10 @@ export default function Game() {
       onContextMenu={(event) => {
         event.preventDefault();
         if (souls < 33) return;
-        spell({ x: event.clientX, y: event.clientY });
+        spell({
+          start: { x: event.clientX, y: event.clientY },
+          finish: { x: 0, y: 0 },
+        });
       }}
     >
       <div className="value">
@@ -52,14 +49,7 @@ export default function Game() {
         </div>
       </div>
       <SoulOrb></SoulOrb>
-      <div className="spells">
-        {spells.map((e) => (
-          <div
-            className="spell"
-            style={{ "--x": e.x + "px", "--y": e.y + "px" } as SpellStyle}
-          ></div>
-        ))}
-      </div>
+      <SpellDisplay />
       <Counter
         img={"/Deposit 1.png"}
         onClick={(event) => {
