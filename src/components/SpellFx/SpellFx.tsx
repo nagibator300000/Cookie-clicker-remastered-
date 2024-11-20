@@ -1,17 +1,27 @@
-import { CSSProperties } from "react";
-import "./SpellFx.css";
+import { CSSProperties, useState } from "react";
+import "./SpellFx.scss";
 
 import type { SpellFxData } from "../../stores/game";
+import clsx from "clsx";
 
 interface SpellStyle extends CSSProperties {
   "--x": string;
   "--y": string;
 }
 
-export default function SpellFx({ start, finish }: SpellFxData) {
+interface SpellFxProps extends SpellFxData {
+  onAnimationEnd: () => void;
+}
+
+export default function SpellFx({
+  start,
+  finish,
+  onAnimationEnd,
+}: SpellFxProps) {
+  const [isCollide, setIsCollide] = useState(false);
   return (
     <div
-      className="spell"
+      className={clsx("spell", isCollide && "collide")}
       style={
         {
           "--x": start.x + "px",
@@ -20,6 +30,12 @@ export default function SpellFx({ start, finish }: SpellFxData) {
           "--target-y": finish.y + "px",
         } as SpellStyle
       }
+      onAnimationEnd={() => {
+        setIsCollide(true);
+        if (isCollide) {
+          onAnimationEnd();
+        }
+      }}
     ></div>
   );
 }

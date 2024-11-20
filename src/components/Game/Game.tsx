@@ -1,6 +1,6 @@
 import { Counter, SoulOrb, SpellDisplay } from "../";
 import ClearMenu from "../ClearMenu/ClearMenu";
-import { Key, useState } from "react";
+import { Key, useRef, useState } from "react";
 import Indicator from "../Indicator/Indicator";
 import "./Game.css";
 import useGameStore from "../../stores/game";
@@ -16,6 +16,7 @@ type Indecator = {
 export default function Game() {
   const [hideMenu, setHide] = useState(true);
   const [indicator, setIndicator] = useState<Indecator[]>([]);
+  const counterRef = useRef<HTMLButtonElement>(null);
   const reset = useGameStore((state) => state.reset);
   const count = useGameStore((state) => state.count);
   const click = useGameStore((state) => state.click);
@@ -34,11 +35,14 @@ export default function Game() {
     <div
       className="game"
       onContextMenu={(event) => {
+        if (!counterRef.current) return;
         event.preventDefault();
         if (souls < 33) return;
+        const rect = counterRef.current.getBoundingClientRect();
         spell({
           start: { x: event.clientX, y: event.clientY },
-          finish: { x: 0, y: 0 },
+          finish: { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 },
+          key: Date.now(),
         });
       }}
     >
@@ -51,6 +55,7 @@ export default function Game() {
       <SoulOrb></SoulOrb>
       <SpellDisplay />
       <Counter
+        ref={counterRef}
         img={"/Deposit 1.png"}
         onClick={(event) => {
           click();

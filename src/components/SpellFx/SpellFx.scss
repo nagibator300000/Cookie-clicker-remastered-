@@ -1,0 +1,33 @@
+@use "@/mixins";
+
+.spell {
+  height: 96px;
+  width: 242px;
+  top: var(--target-y);
+  left: var(--target-x);
+  background-image: url("/vengreful spirit.png");
+  position: absolute;
+  --offset-x: calc(var(--x) - var(--target-x));
+  --offset-y: calc(var(--y) - var(--target-y));
+  --rotation: atan2(var(--offset-y) * -1, var(--offset-x) * -1);
+  animation: linear fly 1s forwards;
+  pointer-events: none;
+}
+
+.spell.collide {
+  width: 142px;
+  height: 189px;
+  background-image: url("/spell collision.png");
+  transform: translate(-50%, -50%) rotate(var(--rotation));
+  @include mixins.spriteAnim(collision, 2, 142px, 0.03s);
+}
+
+@keyframes fly {
+  from {
+    transform: translate(-50%, -50%) translate(var(--offset-x), var(--offset-y))
+      rotate(var(--rotation));
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(var(--rotation));
+  }
+}
