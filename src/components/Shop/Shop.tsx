@@ -79,35 +79,15 @@ export default function Shop() {
       <div className={clsx("charms_shop", isSwitched && "active")}>
         <div className="row">
           <InventoryContent
-            id={"fury_of_the_fallen1"}
+            id={"fury_of_the_fallen"}
             type="fury_of_the_fallen"
           />
-          <InventoryContent id={"quick_slash1"} type="quick_slash" />
-          <InventoryContent id={"fragile_force1"} type="fragile_force" />
-        </div>
-        <div className="row">
-          <InventoryContent
-            id={"fury_of_the_fallen2"}
-            type="fury_of_the_fallen"
-          />
-          <InventoryContent id={"quick_slash2"} type="quick_slash" />
-          <InventoryContent id={"fragile_force2"} type="fragile_force" />
-        </div>
-        <div className="row">
-          <InventoryContent
-            id={"fury_of_the_fallen3"}
-            type="fury_of_the_fallen"
-          />
-          <InventoryContent id={"quick_slash3"} type="quick_slash" />
-          <InventoryContent id={"fragile_force3"} type="fragile_force" />
-        </div>
-        <div className="row">
-          <InventoryContent
-            id={"fury_of_the_fallen4"}
-            type="fury_of_the_fallen"
-          />
-          <InventoryContent id={"quick_slash4"} type="quick_slash" />
-          <InventoryContent id={"fragile_force4"} type="fragile_force" />
+          <InventoryContent id={"quick_slash"} type="quick_slash" />
+          <InventoryContent id={"fragile_force"} type="fragile_force" />
+          <InventoryContent id={"shaman_stone"} type="shaman_stone" />
+          <InventoryContent id={"soul_catcher"} type="soul_catcher" />
+          <InventoryContent id={"soul_eater"} type="soul_eater" />
+          <InventoryContent id={"spell_twister"} type="spell_twister" />
         </div>
       </div>
     </div>
