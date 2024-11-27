@@ -18,7 +18,7 @@ export interface SpellFxData {
 export interface SoulSlice {
   souls: number;
   add: (val: number) => void;
-  spell: (data: Exclude<SpellFxData, "type">) => void;
+  spell: (data: Omit<SpellFxData, "key" | "type">) => void;
   removeSpell: (key: UniqueIdentifier) => void;
 }
 
@@ -35,7 +35,7 @@ const SoulSlice: StateCreator<
     })),
   spell: (data) =>
     set((state) => {
-      state.addFX({ ...data, type: "spell" });
+      state.addFX({ ...data, type: "spell", key: Date.now() });
       return { souls: state.souls - 33 };
     }),
   removeSpell: (key) => {

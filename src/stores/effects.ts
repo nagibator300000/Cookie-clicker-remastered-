@@ -22,7 +22,7 @@ const createEffectsSlice: StateCreator<EffectsSlice, [], [], EffectsSlice> = (
   effects: [],
   addFX: (data) => {
     set((state) => ({
-      effects: [...state.effects, data],
+      effects: [...state.effects, { ...data, key: Date.now() }],
     }));
   },
   removeFX: (key) => {

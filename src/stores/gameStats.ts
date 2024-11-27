@@ -1,6 +1,7 @@
 import { GameStats } from "../../schemas/gameStats";
 import type { StateCreator } from "zustand";
 import { SoulSlice } from "./soul";
+import { EffectsSlice, HitFxData } from "./effects";
 
 export const defaultStats = {
   count: 0,
@@ -10,7 +11,7 @@ export const defaultStats = {
 };
 
 export interface GameStatsSlice extends GameStats {
-  click: () => void;
+  click: (data: Omit<HitFxData, "key" | "type">) => void;
   autoClick: () => void;
   reset: () => void;
   upgradePerClick: (cost: number) => void;
@@ -21,17 +22,20 @@ export interface GameStatsSlice extends GameStats {
 }
 
 const createGameStatsSlice: StateCreator<
-  GameStatsSlice & SoulSlice,
+  GameStatsSlice & SoulSlice & EffectsSlice,
   [],
   [],
   GameStatsSlice
 > = (set) => ({
   ...defaultStats,
-  click: () => {
-    set((state) => ({
-      count: state.count + state.perClick,
-      souls: state.souls + 3 > 100 ? 100 : state.souls + 3,
-    }));
+  click: (data) => {
+    set((state) => {
+      state.addFX({ ...data, key: Date.now(), type: "hit" });
+      return {
+        count: state.count + state.perClick,
+        souls: state.souls + 3 > 100 ? 100 : state.souls + 3,
+      };
+    });
   },
   autoClick: () => {
     set((state) => ({

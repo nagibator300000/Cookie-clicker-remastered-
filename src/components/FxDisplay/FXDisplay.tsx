@@ -1,4 +1,4 @@
-import useGameStore, { SpellFxData } from "@/stores/game";
+import useGameStore from "@/stores/game";
 import { SpellFx } from "..";
 import { HitFx } from "..";
 
