@@ -15,8 +15,8 @@ export { default as InventoryProvider } from "./InventoryContext/InventoryContex
 export { default as SoulOrb } from "./SoulOrb/SoulOrb";
 export { default as NotificationsDisplay } from "./NotificationsDisplay/NotificationsDisplay";
 export { default as SpellFx } from "./SpellFx/SpellFx";
-export { default as SpellDisplay} from "./SpellDisplay/SpellDisplay";
-
+export { default as SpellDisplay } from "./FxDisplay/FXDisplay";
+export { default as HitFx } from "./HitFx/HitFx";
 
 export type { InventoryContentProps } from "./InventoryContent/InventoryContent";
 export type { GridMoveEvent } from "./GridContext/GridContext";
