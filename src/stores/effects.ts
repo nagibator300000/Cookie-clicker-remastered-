@@ -10,9 +10,11 @@ export type HitFxData = {
 
 type Effect = SpellFxData | HitFxData;
 
+type FXProps = Omit<SpellFxData, "key"> | Omit<HitFxData, "key">;
+
 export type EffectsSlice = {
   effects: Effect[];
-  addFX: (data: Effect) => void;
+  addFX: (data: FXProps) => void;
   removeFX: (key: UniqueIdentifier) => void;
 };
 

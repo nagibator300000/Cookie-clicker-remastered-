@@ -2,6 +2,7 @@ import { GameStats } from "../../schemas/gameStats";
 import type { StateCreator } from "zustand";
 import { SoulSlice } from "./soul";
 import { EffectsSlice, HitFxData } from "./effects";
+import { InventorySlice } from "./inventory";
 
 export const defaultStats = {
   count: 0,
@@ -22,7 +23,7 @@ export interface GameStatsSlice extends GameStats {
 }
 
 const createGameStatsSlice: StateCreator<
-  GameStatsSlice & SoulSlice & EffectsSlice,
+  GameStatsSlice & SoulSlice & EffectsSlice & InventorySlice,
   [],
   [],
   GameStatsSlice
@@ -30,10 +31,18 @@ const createGameStatsSlice: StateCreator<
   ...defaultStats,
   click: (data) => {
     set((state) => {
-      state.addFX({ ...data, key: Date.now(), type: "hit" });
+      state.addFX({ ...data, type: "hit" });
+      let soulsPerClick = 3;
+
+      if (state.findCharm("soul_catcher")) soulsPerClick += 3;
+      if (state.findCharm("soul_eater")) soulsPerClick += 12;
+      state.addSouls(soulsPerClick);
       return {
-        count: state.count + state.perClick,
-        souls: state.souls + 3 > 100 ? 100 : state.souls + 3,
+        count:
+          state.count +
+          (state.findCharm("quick_slash")
+            ? Math.floor(state.perClick * 1.5)
+            : state.perClick),
       };
     });
   },

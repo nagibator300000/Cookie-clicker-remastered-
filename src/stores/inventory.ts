@@ -22,6 +22,7 @@ export interface InventorySlice {
   finishEditing: (itemId: UniqueIdentifier) => void;
   hoverItem: (DropTarget: InventoryContentProps | null) => void;
   dropItem: () => void;
+  findCharm: (type: string) => boolean;
 }
 
 const createInventorySlice: StateCreator<InventorySlice, [], []> = (set) => ({
@@ -63,6 +64,14 @@ const createInventorySlice: StateCreator<InventorySlice, [], []> = (set) => ({
         ],
       };
     });
+  },
+  findCharm: (type) => {
+    let isThereACharm = false;
+    set((state) => {
+      isThereACharm = !!state.inventoryContent.find((e) => e.type === type);
+      return {};
+    });
+    return isThereACharm;
   },
   isEditing: false,
 });

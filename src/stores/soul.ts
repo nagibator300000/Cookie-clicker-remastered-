@@ -2,6 +2,7 @@ import type { StateCreator } from "zustand";
 import { GameStatsSlice } from "./gameStats";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import type { EffectsSlice } from "./effects";
+import { InventorySlice } from "./inventory";
 
 type Coordinates = {
   x: number;
@@ -17,32 +18,35 @@ export interface SpellFxData {
 
 export interface SoulSlice {
   souls: number;
-  add: (val: number) => void;
+  addSouls: (val: number) => void;
   spell: (data: Omit<SpellFxData, "key" | "type">) => void;
   removeSpell: (key: UniqueIdentifier) => void;
 }
 
 const SoulSlice: StateCreator<
-  SoulSlice & GameStatsSlice & EffectsSlice,
+  SoulSlice & GameStatsSlice & EffectsSlice & InventorySlice,
   [],
   [],
   SoulSlice
 > = (set) => ({
   souls: 0,
-  add: (val) =>
-    set((state) => ({
-      souls: state.souls + val > 100 ? 100 : state.souls + val,
-    })),
+  addSouls: (val) =>
+    set((state) => {
+      if (state.findCharm("fury_of_fallen")) return {};
+      return { souls: state.souls + val > 100 ? 100 : state.souls + val };
+    }),
   spell: (data) =>
     set((state) => {
-      state.addFX({ ...data, type: "spell", key: Date.now() });
-      return { souls: state.souls - 33 };
+      state.addFX({ ...data, type: "spell" });
+      return {
+        souls: state.souls - (state.findCharm("spell_twister") ? 25 : 33),
+      };
     }),
   removeSpell: (key) => {
     set((state) => {
       state.removeFX(key);
       return {
-        count: state.count + 15,
+        count: state.count + (state.findCharm("shaman_stone") ? 20 : 15),
       };
     });
   },

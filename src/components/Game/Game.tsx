@@ -42,7 +42,6 @@ export default function Game() {
         spell({
           start: { x: event.clientX, y: event.clientY },
           finish: { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 },
-          key: Date.now(),
         });
       }}
     >
@@ -58,7 +57,7 @@ export default function Game() {
         ref={counterRef}
         img={"/Deposit 1.png"}
         onClick={(event) => {
-          click();
+          click({ coordinates: { x: event.clientX, y: event.clientY } });
           const newIndicator = {
             key: crypto.randomUUID(),
             position: {

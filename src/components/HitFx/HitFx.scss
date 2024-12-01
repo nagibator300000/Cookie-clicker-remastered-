@@ -1,0 +1,12 @@
+@use "@/mixins";
+.hitFx {
+  position: absolute;
+  background-image: url("/Hit Sprite.png");
+  height: 155px;
+  width: 243px;
+  top: var(--y);
+  left: var(--x);
+  transform: translate(-50%, -50%) rotate(var(--rotation));
+  @include mixins.spriteAnim(hit, 3, 243px, 0.1s);
+  pointer-events: none;
+}
