@@ -39,6 +39,7 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.5",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express-session": "^1.18.0",

@@ -11,7 +11,8 @@ export const defaultStats = {
   periodTime: 5,
 };
 
-export interface GameStatsSlice extends GameStats {
+export interface GameStatsSlice
+  extends Omit<GameStats, "souls" | "inventoryContent"> {
   click: (data: Omit<HitFxData, "key" | "type">) => void;
   autoClick: () => void;
   reset: () => void;
@@ -36,12 +37,19 @@ const createGameStatsSlice: StateCreator<
 
       if (state.findCharm("soul_catcher")) soulsPerClick += 3;
       if (state.findCharm("soul_eater")) soulsPerClick += 12;
+
+      let modifier = 1;
+
+      if (state.findCharm("quick_slash")) modifier += 0.5;
+      if (state.findCharm("fury_of_the_fallen")) modifier += 0.75;
+      if (state.findCharm("fragile_force")) modifier += 1;
+
       state.addSouls(soulsPerClick);
       return {
         count:
           state.count +
           (state.findCharm("quick_slash")
-            ? Math.floor(state.perClick * 1.5)
+            ? Math.floor(state.perClick * modifier)
             : state.perClick),
       };
     });

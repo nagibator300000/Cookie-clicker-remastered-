@@ -8,6 +8,7 @@ import { Strategy } from "passport-google-oauth20";
 import { loadEnv } from "./utils.js";
 import passport from "passport";
 import bodyParser from "body-parser";
+import GameStatsSchema from "../schemas/gameStats";
 
 console.log("Starting back");
 
@@ -144,6 +145,7 @@ app.get(
 app.get("/gamedata", corsMiddleware, (req, res) => {
   if (req.user) {
     const data = JSON.parse(req.user?.gameData);
+    GameStatsSchema.parse(data);
     res.json(data);
   } else {
     res.sendStatus(401);

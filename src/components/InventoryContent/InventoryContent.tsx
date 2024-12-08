@@ -20,7 +20,7 @@ export type InventoryContentProps = {
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-type ContentTypes =
+export type ContentTypes =
   | "blocker"
   | "fragile_force"
   | "quick_slash"
@@ -164,6 +164,7 @@ export default function InventoryContent({
       {...listeners}
       {...attributes}
       data-tooltip-id={tooltip_id.current}
+      data-charm-type={type}
       onClick={onClick}
       className={clsx(
         "charm",

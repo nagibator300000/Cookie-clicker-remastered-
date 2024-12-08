@@ -16,13 +16,21 @@ export default function useGameStats() {
   }, [init, get.data]);
 
   useInterval(() => {
-    const { count, perClick, periodPoints, periodTime } =
-      useGameStore.getState();
+    const {
+      count,
+      perClick,
+      periodPoints,
+      periodTime,
+      inventoryContent,
+      souls,
+    } = useGameStore.getState();
     post.mutate({
       count,
       perClick,
       periodPoints,
       periodTime,
+      inventoryContent,
+      souls,
     });
   }, 10000);
   return {

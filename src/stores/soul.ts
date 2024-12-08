@@ -32,7 +32,7 @@ const SoulSlice: StateCreator<
   souls: 0,
   addSouls: (val) =>
     set((state) => {
-      if (state.findCharm("fury_of_fallen")) return {};
+      if (state.findCharm("fury_of_the_fallen")) return {};
       return { souls: state.souls + val > 100 ? 100 : state.souls + val };
     }),
   spell: (data) =>

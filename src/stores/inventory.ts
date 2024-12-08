@@ -1,6 +1,7 @@
 import { StateCreator } from "zustand";
-import type { InventoryContentProps } from "../components";
+import type { ContentTypes, InventoryContentProps } from "../components";
 import { UniqueIdentifier } from "@dnd-kit/core";
+import useGameStore from "./game";
 
 const defaultInventory: InventoryContentProps[] = Array.from({
   length: 25,
@@ -22,19 +23,20 @@ export interface InventorySlice {
   finishEditing: (itemId: UniqueIdentifier) => void;
   hoverItem: (DropTarget: InventoryContentProps | null) => void;
   dropItem: () => void;
-  findCharm: (type: string) => boolean;
+  findCharm: (type: Exclude<ContentTypes, "blocker">) => boolean;
 }
 
 const createInventorySlice: StateCreator<InventorySlice, [], []> = (set) => ({
   inventoryContent: defaultInventory,
+  overlap: null,
+  dropTarget: null,
+  isEditing: false,
   startEditing: () => set(() => ({ isEditing: true })),
   finishEditing: (itemId) =>
     set((state) => ({
       isEditing: false,
       inventoryContent: state.inventoryContent.filter((e) => e.id !== itemId),
     })),
-  overlap: null,
-  dropTarget: null,
   hoverItem: (dropTarget) =>
     set((state) => ({
       dropTarget,
@@ -66,14 +68,9 @@ const createInventorySlice: StateCreator<InventorySlice, [], []> = (set) => ({
     });
   },
   findCharm: (type) => {
-    let isThereACharm = false;
-    set((state) => {
-      isThereACharm = !!state.inventoryContent.find((e) => e.type === type);
-      return {};
-    });
-    return isThereACharm;
+    const state = useGameStore.getState();
+    return !!state.inventoryContent.find((e) => e.type === type);
   },
-  isEditing: false,
 });
 
 export default createInventorySlice;

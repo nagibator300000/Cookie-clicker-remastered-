@@ -18,6 +18,9 @@ export { default as SpellFx } from "./SpellFx/SpellFx";
 export { default as SpellDisplay } from "./FxDisplay/FXDisplay";
 export { default as HitFx } from "./HitFx/HitFx";
 
-export type { InventoryContentProps } from "./InventoryContent/InventoryContent";
+export type {
+  InventoryContentProps,
+  ContentTypes,
+} from "./InventoryContent/InventoryContent";
 export type { GridMoveEvent } from "./GridContext/GridContext";
 export type { NotificationData } from "./Notification/Notification";
