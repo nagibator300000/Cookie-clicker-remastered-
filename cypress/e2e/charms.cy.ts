@@ -1,20 +1,15 @@
+const gameData = {
+  count: 500,
+  perClick: 1,
+  periodPoints: 0,
+  periodTime: 5,
+  souls: 0,
+};
+
 describe("Game stats test", () => {
   beforeEach(() => {
     cy.viewport(2560, 1440);
     cy.intercept("GET", "/user", { fixture: "user.json" });
-    cy.intercept("GET", "/gameData", (req) => {
-      cy.readFile("cypress/fixtures/gameStats.json")
-        .then((gameStats) => {
-          gameStats.inventoryContent.push({
-            type: "quick-slash",
-            row: 3,
-            col: 3,
-          });
-        })
-        .then((data) => {
-          req.reply(data);
-        });
-    });
     cy.intercept("POST", "/gamedata", { fixture: "gameStats.json" });
     cy.visit("http://localhost:1941");
 
@@ -23,6 +18,11 @@ describe("Game stats test", () => {
   });
 
   it("quick slash charm", () => {
+    const newGameData = {
+      ...gameData,
+      inventoryContent: [{ type: "quick-slash", row: 1, col: 1 }],
+    };
+    cy.intercept("GET", "/gameData", { body: newGameData });
     cy.get(".switch_shop").click();
     cy.get("[data-charm-type=quick_slash]").should("be.visible");
   });
