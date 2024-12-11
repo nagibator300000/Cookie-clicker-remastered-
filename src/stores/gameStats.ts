@@ -9,6 +9,7 @@ export const defaultStats = {
   perClick: 1,
   periodPoints: 0,
   periodTime: 5,
+  soul: 100,
 };
 
 export interface GameStatsSlice
@@ -46,11 +47,7 @@ const createGameStatsSlice: StateCreator<
 
       state.addSouls(soulsPerClick);
       return {
-        count:
-          state.count +
-          (state.findCharm("quick_slash")
-            ? Math.floor(state.perClick * modifier)
-            : state.perClick),
+        count: state.count + Math.floor(state.perClick * modifier),
       };
     });
   },
