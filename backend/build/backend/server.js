@@ -8,7 +8,7 @@ import { Strategy } from "passport-google-oauth20";
 import { loadEnv } from "./utils.js";
 import passport from "passport";
 import bodyParser from "body-parser";
-import GameStatsSchema from "../schemas/gameStats";
+import GameStatsSchema from "../schemas/gameStats.js";
 console.log("Starting back");
 const cookieMiddleware = cookiePlugin();
 const db = new PrismaClient();
@@ -21,7 +21,6 @@ const strategy = new Strategy({
     clientSecret: loadEnv("CLIENT_SECRET"),
     callbackURL: "http://localhost:1488/callback",
 }, async (_accessToken, _refreshToken, profile, callback) => {
-    console.log(JSON.stringify(profile, null, 2));
     const picture = profile.photos ? profile.photos[0].value : "";
     const user = await db.user.upsert({
         where: { id: profile.id },
@@ -47,11 +46,6 @@ const sessionMiddleware = sessionPlugin({
     store: prismaStore,
 });
 const app = express();
-const stats = [
-    { id: 0, money: 0 },
-    { id: 1, money: 10 },
-    { id: 2, money: 50 },
-];
 app.use(cookieMiddleware);
 app.use(sessionMiddleware);
 app.use(bodyParser.json());
@@ -77,17 +71,6 @@ passport.deserializeUser(async (userData, done) => {
         done("User hasn't id");
     }
 });
-app.get("/", (_req, res) => {
-    res.send("Nuke");
-});
-app.get("/stat/:userId", (req, res) => {
-    console.log("aaa");
-    const stat = stats[Number(req.params.userId)];
-    if (!stat) {
-        res.status(404).send("Not found");
-    }
-    res.json(stat);
-});
 app.get("/login", passport.authenticate("google", {
     scope: ["profile"],
 }));
@@ -107,6 +90,7 @@ app.get("/gamedata", corsMiddleware, (req, res) => {
     if (req.user) {
         const data = JSON.parse(req.user?.gameData);
         GameStatsSchema.parse(data);
+        console.log(data);
         res.json(data);
     }
     else {

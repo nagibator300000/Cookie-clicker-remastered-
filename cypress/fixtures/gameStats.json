@@ -4,5 +4,5 @@
   "periodPoints": 0,
   "periodTime": 5,
   "souls": 0,
-  "inventoryContent": []
+  "inventoryContent": [{ "type": "blocker", "row": 1, "col": 1, "id": 1 }]
 }
