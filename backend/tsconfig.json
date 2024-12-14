@@ -1,9 +1,4 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "noEmit": false,
-    "allowImportingTsExtensions": false,
-    "outDir": "./build"
-  },
   "include": ["server.ts", "utils.ts", "global.d.ts"]
 }
