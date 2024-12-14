@@ -8,7 +8,7 @@ import { Strategy } from "passport-google-oauth20";
 import { loadEnv } from "./utils";
 import passport from "passport";
 import bodyParser from "body-parser";
-import GameStatsSchema from "../schemas/gameStats.js";
+import GameStatsSchema from "../schemas/gameStats";
 
 console.log("Starting back");
 
