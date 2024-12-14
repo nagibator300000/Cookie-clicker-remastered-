@@ -9,7 +9,9 @@ import { loadEnv } from "./utils";
 import passport from "passport";
 import bodyParser from "body-parser";
 import GameStatsSchema from "../schemas/gameStats.js";
+import * as dotenv from "dotenv";
 
+dotenv.config({ path: "./.env" });
 console.log("Starting back");
 
 const cookieMiddleware = cookiePlugin();
