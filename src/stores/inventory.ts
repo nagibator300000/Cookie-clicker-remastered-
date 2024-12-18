@@ -26,7 +26,11 @@ export interface InventorySlice {
   findCharm: (type: Exclude<ContentTypes, "blocker">) => boolean;
 }
 
-const createInventorySlice: StateCreator<InventorySlice, [], []> = (set) => ({
+const createInventorySlice: StateCreator<
+  InventorySlice,
+  [["zustand/devtools", never]],
+  []
+> = (set) => ({
   inventoryContent: defaultInventory,
   overlap: null,
   dropTarget: null,

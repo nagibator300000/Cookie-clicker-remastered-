@@ -26,7 +26,7 @@ export interface GameStatsSlice
 
 const createGameStatsSlice: StateCreator<
   GameStatsSlice & SoulSlice & EffectsSlice & InventorySlice,
-  [],
+  [["zustand/devtools", never]],
   [],
   GameStatsSlice
 > = (set) => ({

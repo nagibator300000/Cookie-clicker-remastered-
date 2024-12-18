@@ -18,9 +18,12 @@ export type EffectsSlice = {
   removeFX: (key: UniqueIdentifier) => void;
 };
 
-const createEffectsSlice: StateCreator<EffectsSlice, [], [], EffectsSlice> = (
-  set
-) => ({
+const createEffectsSlice: StateCreator<
+  EffectsSlice,
+  [["zustand/devtools", never]],
+  [],
+  EffectsSlice
+> = (set) => ({
   effects: [],
   addFX: (data) => {
     set((state) => ({

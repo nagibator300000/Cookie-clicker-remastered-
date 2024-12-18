@@ -25,7 +25,7 @@ export interface SoulSlice {
 
 const SoulSlice: StateCreator<
   SoulSlice & GameStatsSlice & EffectsSlice & InventorySlice,
-  [],
+  [["zustand/devtools", never]],
   [],
   SoulSlice
 > = (set) => ({
