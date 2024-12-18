@@ -8,8 +8,9 @@ import { Strategy } from "passport-google-oauth20";
 import { loadEnv } from "./utils";
 import passport from "passport";
 import bodyParser from "body-parser";
-import GameStatsSchema from "../schemas/gameStats.js";
+import GameStatsSchema from "../schemas/gameStats";
 import * as dotenv from "dotenv";
+import defaultStats from "../defaultStats";
 
 dotenv.config({ path: "./.env" });
 console.log("Starting back");
@@ -126,9 +127,14 @@ app.get(
 app.get("/gamedata", corsMiddleware, (req, res) => {
   if (req.user) {
     const data = JSON.parse(req.user?.gameData);
-    GameStatsSchema.parse(data);
-    console.log(data);
-    res.json(data);
+    try {
+      GameStatsSchema.parse(data);
+      res.json(data);
+      console.log(JSON.stringify(data) + ":132");
+    } catch (e) {
+      res.json(defaultStats);
+      console.log("супер-пупер обьект");
+    }
   } else {
     res.sendStatus(401);
   }

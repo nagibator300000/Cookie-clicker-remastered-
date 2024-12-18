@@ -50,6 +50,7 @@ const createInventorySlice: StateCreator<InventorySlice, [], []> = (set) => ({
       if (state.overlap) {
         return {
           dropTarget: null,
+          overlap: null,
         };
       }
 

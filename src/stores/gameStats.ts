@@ -9,7 +9,7 @@ export const defaultStats = {
   perClick: 1,
   periodPoints: 0,
   periodTime: 5,
-  soul: 100,
+  souls: 0,
 };
 
 export interface GameStatsSlice
