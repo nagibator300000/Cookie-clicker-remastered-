@@ -1,41 +1,42 @@
-import { GridContext, GridMoveEvent } from "..";
-import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
-import useGameStore from "../../stores/game";
+import { GridContext, GridMoveEvent } from '..'
+import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
+import useGameStore from '../../stores/game'
 
 type InventoryProviderProps = {
-  verticalCellCount: number;
-  horizontalCellCount: number;
-  children: React.ReactNode;
-};
+    verticalCellCount: number
+    horizontalCellCount: number
+    children: React.ReactNode
+}
 
 export default function InventoryProvider({
-  verticalCellCount,
-  horizontalCellCount,
-  children,
+    verticalCellCount,
+    horizontalCellCount,
+    children,
 }: InventoryProviderProps) {
-  const { dropItem, hoverItem } = useGameStore();
+    const { dropItem, hoverItem } = useGameStore()
 
-  function OnMove(event: GridMoveEvent) {
-    if (event.position) {
-      const newdropTarget = {
-        ...event.position,
-        id: event.active.id,
-        type: event.active.data.current?.type,
-      };
-      hoverItem(newdropTarget);
-    } else {
-      hoverItem(null);
+    function OnMove(event: GridMoveEvent) {
+        if (event.position) {
+            const newdropTarget = {
+                ...event.position,
+                id: event.active.id,
+                type: event.active.data.current?.type,
+                durability: event.active.data.current?.durability,
+            }
+            hoverItem(newdropTarget)
+        } else {
+            hoverItem(null)
+        }
     }
-  }
-  return (
-    <GridContext
-      horizontalCellCount={horizontalCellCount}
-      verticalCellCount={verticalCellCount}
-      modifiers={[restrictToFirstScrollableAncestor]}
-      onGridMove={OnMove}
-      onDragEnd={dropItem}
-    >
-      {children}
-    </GridContext>
-  );
+    return (
+        <GridContext
+            horizontalCellCount={horizontalCellCount}
+            verticalCellCount={verticalCellCount}
+            modifiers={[restrictToFirstScrollableAncestor]}
+            onGridMove={OnMove}
+            onDragEnd={dropItem}
+        >
+            {children}
+        </GridContext>
+    )
 }

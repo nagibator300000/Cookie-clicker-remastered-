@@ -130,10 +130,8 @@ app.get("/gamedata", corsMiddleware, (req, res) => {
     try {
       GameStatsSchema.parse(data);
       res.json(data);
-      console.log(JSON.stringify(data) + ":132");
     } catch (e) {
       res.json(defaultStats);
-      console.log("супер-пупер обьект");
     }
   } else {
     res.sendStatus(401);

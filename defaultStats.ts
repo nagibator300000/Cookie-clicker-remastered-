@@ -1,4 +1,6 @@
-const defaultStats = {
+import { GameStats } from "./schemas/gameStats";
+
+const defaultStats: GameStats = {
   count: 0,
   perClick: 1,
   periodPoints: 0,
