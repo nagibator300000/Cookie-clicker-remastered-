@@ -1,15 +1,18 @@
-import useNotificationStore from "../../stores/notification";
-import { Notification } from "..";
-import "./NotificationsDisplay.css";
+import useGameStore from '@/stores/game'
+import { Notification } from '..'
+import './NotificationsDisplay.css'
 
 export default function NotificationsDisplay() {
-  const notifications = useNotificationStore((state) => state.notifications);
-  const remove = useNotificationStore((state) => state.remove);
-  return (
-    <div className="notificationsDisplay">
-      {notifications.map((el) => (
-        <Notification {...el} onClick={() => remove(el.key)} />
-      ))}
-    </div>
-  );
+    const notifications = useGameStore((state) => state.notifications)
+    const removeNotification = useGameStore((state) => state.removeNotification)
+    return (
+        <div className="notificationsDisplay">
+            {notifications.map((el) => (
+                <Notification
+                    {...el}
+                    onClick={() => removeNotification(el.key)}
+                />
+            ))}
+        </div>
+    )
 }

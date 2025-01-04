@@ -4,6 +4,7 @@ import { SoulSlice } from './soul'
 import { EffectsSlice, HitFxData } from './effects'
 import { InventorySlice } from './inventory'
 import defaultStats from '../../defaultStats'
+import { NotificationSlice } from './notification'
 
 export interface GameStatsSlice
     extends Omit<GameStats, 'souls' | 'inventoryContent'> {
@@ -18,7 +19,11 @@ export interface GameStatsSlice
 }
 
 const createGameStatsSlice: StateCreator<
-    GameStatsSlice & SoulSlice & EffectsSlice & InventorySlice,
+    GameStatsSlice &
+        SoulSlice &
+        EffectsSlice &
+        InventorySlice &
+        NotificationSlice,
     [['zustand/devtools', never]],
     [],
     GameStatsSlice
@@ -45,7 +50,7 @@ const createGameStatsSlice: StateCreator<
             let newInventory = state.inventoryContent
             if (oldFragileForce && oldFragileForce.durability) {
                 modifier += 1
-                let newFragileForce = {
+                const newFragileForce = {
                     ...oldFragileForce,
                     durability: oldFragileForce.durability - 1,
                 }

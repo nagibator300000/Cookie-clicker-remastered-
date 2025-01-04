@@ -1,0 +1,83 @@
+@use './mixins';
+
+.clicker {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  padding: 60px 30px;
+  overflow: hidden;
+}
+
+.inventoryHandler {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.load {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadAnim {
+  height: 111px;
+  width: 105px;
+  background-image: url('/loading.png');
+  @include mixins.spriteAnim(loading, 8, 105px, 0.5s, infinite);
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+  padding: 1rem;
+}
+
+.user {
+  position: absolute;
+  right: 2%;
+  top: 2%;
+  z-index: 1;
+}
+
+.account {
+  z-index: 2;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 3vh;
+  top: 7vh;
+  color: white;
+  display: flex;
+  font-size: 30px;
+  align-items: center;
+  font-family: inherit;
+  gap: 10px;
+}
+
+.oops {
+  width: 50%;
+  height: 15%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Hollow;
+  display: flex;
+  h1 {
+    font-size: 200px;
+    margin: 0;
+  }
+  h5 {
+    font-size: 50;
+  }
+  align-items: end;
+}

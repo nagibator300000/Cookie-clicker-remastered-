@@ -1,15 +1,18 @@
 .close {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 40px;
+  right: 40px;
   width: 64px;
   aspect-ratio: 1/1;
+  border: none;
+  background-image: url('/cross.svg');
+  background-color: transparent;
 }
 
-.overlay.hide {
+.account.hide {
   display: none;
 }
-.overlay {
+.account {
   position: absolute;
   left: 25%;
   top: 0;
@@ -18,7 +21,7 @@
   background-color: rgb(191, 191, 191);
   border-radius: 5%;
   padding: 3%;
-  z-index: 2;
+  z-index: 3;
   color: black;
 }
 

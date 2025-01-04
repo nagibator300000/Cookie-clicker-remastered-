@@ -1,5 +1,5 @@
-import "./App.scss";
-import { useState } from "react";
+import styles from './App.module.scss'
+import { useState } from 'react'
 import {
   Game,
   Login,
@@ -9,47 +9,47 @@ import {
   Saving,
   Shop,
   NotificationsDisplay,
-} from "./components";
-import useGameStats from "./hooks/useGameStats";
-import useUser from "./hooks/useUser";
-import { FetchError } from "./utils";
-import useInterval from "./hooks/useInterval";
-import useGameStore from "./stores/game";
+} from './components'
+import useGameStats from './hooks/useGameStats'
+import useUser from './hooks/useUser'
+import { FetchError } from './utils'
+import useInterval from './hooks/useInterval'
+import useGameStore from './stores/game'
 
 function App() {
-  const gameStats = useGameStats();
+  const gameStats = useGameStats()
 
-  const { periodTime, autoClick } = useGameStore();
+  const { periodTime, autoClick } = useGameStore()
 
-  const [isOpenProfile, setIsOpenProfile] = useState(false);
+  const [isOpenProfile, setIsOpenProfile] = useState(false)
 
-  const user = useUser();
+  const user = useUser()
 
   useInterval(() => {
-    autoClick();
-  }, periodTime * 1000);
+    autoClick()
+  }, periodTime * 1000)
   if (user.isLoading || gameStats.isLoading) {
     return (
-      <div className="load">
-        <div className="loadAnim"></div>
+      <div className={styles.load}>
+        <div className={styles.loadAnim}></div>
       </div>
-    );
+    )
   }
   if (user.error instanceof FetchError && user.error.status === 401) {
-    return <Login></Login>;
+    return <Login></Login>
   }
   if (user.error || !user.data || gameStats.error) {
-    console.log(gameStats.error);
+    console.log(gameStats.error)
     return (
-      <div className="oops">
+      <div className={styles.oops}>
         <h1>Oops</h1>
         <h5>We've got some problems with backend</h5>
       </div>
-    );
+    )
   }
   return (
-    <div className="clicker">
-      <div className="inventoryHandler">
+    <div className={styles.clicker}>
+      <div className={styles.inventoryHandler}>
         <Inventory></Inventory>
       </div>
       <Game></Game>
@@ -59,18 +59,18 @@ function App() {
           url={user.data.picture}
           name={user.data.name}
           onClose={() => {
-            setIsOpenProfile(false);
+            setIsOpenProfile(false)
           }}
         />
       )}
-      <button className="account" onClick={() => setIsOpenProfile(true)}>
+      <button className={styles.account} onClick={() => setIsOpenProfile(true)}>
         Profile
         <Avatar img={user.data.picture} />
       </button>
       <NotificationsDisplay />
       <Saving isSaving={gameStats.isSaving} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

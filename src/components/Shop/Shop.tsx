@@ -2,7 +2,6 @@ import { useState } from 'react'
 import './Shop.css'
 import clsx from 'clsx'
 import { InventoryContent } from '..'
-import useNotificationStore from '../../stores/notification'
 import useGameStore from '../../stores/game'
 
 export default function Shop() {
@@ -16,7 +15,7 @@ export default function Shop() {
     const unlock = useGameStore((stats) => stats.unlock)
     const isEditing = useGameStore((state) => state.isEditing)
     const startEditing = useGameStore((state) => state.startEditing)
-    const add = useNotificationStore((state) => state.add)
+    const addNotification = useGameStore((state) => state.addNotification)
     return (
         <div className="shop">
             <button
@@ -66,7 +65,7 @@ export default function Shop() {
                     onClick={() => {
                         unlock(50)
                         startEditing()
-                        add({
+                        addNotification({
                             type: 'info',
                             content: 'click on the blocker to delete it',
                         })
