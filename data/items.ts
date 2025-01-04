@@ -46,14 +46,23 @@ const CONTENT_INFO: ItemInfo = {
         (item) => item.type === 'fragile_force'
       )
 
-      const newItem: InventoryContentProps = {
+      if (!oldItem || !oldItem.durability) return stats
+
+      const newItem = {
         ...oldItem,
         durability: oldItem.durability - 1,
+      }
+      const newInventory = stats.inventoryContent.filter(
+        (e) => e.id !== oldItem.id
+      )
+      if (newItem.durability > 0) {
+        newInventory.push(newItem)
       }
 
       return {
         ...stats,
         count: stats.count + bonusGeos,
+        inventoryContent: newInventory,
       }
     },
   },
@@ -65,6 +74,13 @@ const CONTENT_INFO: ItemInfo = {
         'The nails still long to be wielded. \
         Allows the bearer to slash much more rapidly with their nail',
     },
+    bonus: (stats) => {
+      const bonusGeos = Math.floor(stats.perClick * 0.5)
+      return {
+        ...stats,
+        count: stats.count + bonusGeos,
+      }
+    },
   },
   fury_of_the_fallen: {
     img: '/Charms/Fury of the Fallen.png',
@@ -72,6 +88,13 @@ const CONTENT_INFO: ItemInfo = {
       title:
         'Embodies the fury and heroism that comes upon those who are about to die',
       description: "When close to death, the bearer's strength will increase",
+    },
+    bonus: (stats) => {
+      const bonusGeos = Math.floor(stats.perClick * 0.75)
+      return {
+        ...stats,
+        count: stats.count + bonusGeos,
+      }
     },
   },
   spell_twister: {
@@ -97,6 +120,12 @@ const CONTENT_INFO: ItemInfo = {
       description:
         'Increases the amount of SOUL gained when striking an enemy with the nail',
     },
+    bonus: (stats) => {
+      return {
+        ...stats,
+        souls: stats.souls + 3,
+      }
+    },
   },
   soul_eater: {
     img: '/Charms/Soul Eater.png',
@@ -105,6 +134,12 @@ const CONTENT_INFO: ItemInfo = {
         'Forgotten shaman artifact, used to draw SOUL from still-living creatures',
       description:
         'Greatly increases the amount of SOUL gained when striking an enemy with the nail',
+    },
+    bonus: (stats) => {
+      return {
+        ...stats,
+        souls: stats.souls + 12,
+      }
     },
   },
 }
