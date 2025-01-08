@@ -32,14 +32,18 @@ const createGameStatsSlice: StateCreator<
   click: (data) => {
     set((state) => {
       state.addFX({ ...data, type: 'hit' })
-      let soulsPerClick = 3
+      let newState = state
+      for (let i of state.inventoryContent) {
+        if (i.bonus) {
+          newState = i.bonus(newState)
+        }
+      }
+      console.log(newState)
 
-      if (state.findCharm('soul_catcher')) soulsPerClick += 3
-      if (state.findCharm('soul_eater')) soulsPerClick += 12
-
-      state.addSouls(soulsPerClick)
+      state.addSouls(3)
       return {
-        count: state.count + state.perClick,
+        ...newState,
+        count: newState.count + state.perClick,
       }
     })
   },

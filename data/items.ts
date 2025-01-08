@@ -1,5 +1,4 @@
 import type { GameStats } from '../schemas/gameStats'
-import type { InventoryContentProps } from '../src/components'
 
 export type ItemTypes =
   | 'blocker'
@@ -22,7 +21,7 @@ type GeneralItems = {
   }
 }
 
-interface ItemInfo extends GeneralItems {
+export interface ItemInfo extends GeneralItems {
   blocker: {
     img: string
   }
