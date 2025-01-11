@@ -5,6 +5,7 @@ import { EffectsSlice, HitFxData } from './effects'
 import { InventorySlice } from './inventory'
 import defaultStats from '../../defaultStats'
 import { NotificationSlice } from './notification'
+import CONTENT_INFO from '../../data/items'
 
 export interface GameStatsSlice
   extends Omit<GameStats, 'souls' | 'inventoryContent'> {
@@ -34,9 +35,7 @@ const createGameStatsSlice: StateCreator<
       state.addFX({ ...data, type: 'hit' })
       let newState = state
       for (let i of state.inventoryContent) {
-        if (i.bonus) {
-          newState = i.bonus(newState)
-        }
+        newState = CONTENT_INFO[i.type]?.bonus(newState)
       }
       console.log(newState)
 

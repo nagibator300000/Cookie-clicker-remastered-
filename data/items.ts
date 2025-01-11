@@ -1,31 +1,43 @@
 import type { GameStats } from '../schemas/gameStats'
 
-export type ItemTypes =
-  | 'blocker'
+type ClickBuffItems =
   | 'fragile_force'
   | 'quick_slash'
   | 'fury_of_the_fallen'
-  | 'shaman_stone'
-  | 'soul_catcher'
   | 'soul_eater'
-  | 'spell_twister'
+  | 'soul_catcher'
 
-type GeneralItems = {
-  [T in Exclude<ItemTypes, 'blocker'>]: {
-    img: string
-    info: {
-      title: string
-      description: string
-    }
-    bonus: (stats: GameStats) => GameStats
+type SpellBuffItems = 'spell_twister' | 'shaman_stone'
+
+export type ItemTypes = ClickBuffItems | SpellBuffItems | 'blocker'
+
+type GeneralInfo = {
+  img: string
+  info: {
+    title: string
+    description: string
   }
 }
 
-export interface ItemInfo extends GeneralItems {
+type ClickBuffItem = {
+  [T in ClickBuffItems]: {
+    onClickBonus: (stats: GameStats) => GameStats
+  } & GeneralInfo
+}
+
+type SpellBuffItem = {
+  [T in SpellBuffItems]: {
+    onSpellBonus: (stats: GameStats) => GameStats
+  } & GeneralInfo
+}
+
+type BlockerInfo = {
   blocker: {
     img: string
   }
 }
+
+type ItemInfo = ClickBuffItem & SpellBuffItem & BlockerInfo
 
 const CONTENT_INFO: ItemInfo = {
   blocker: {
@@ -39,7 +51,7 @@ const CONTENT_INFO: ItemInfo = {
       description:
         'This charm is fragile, and will break if its bearer is killed',
     },
-    bonus: (stats) => {
+    onClickBonus: (stats) => {
       const bonusGeos = stats.perClick
       const oldItem = stats.inventoryContent.find(
         (item) => item.type === 'fragile_force'
@@ -73,7 +85,7 @@ const CONTENT_INFO: ItemInfo = {
         'The nails still long to be wielded. \
         Allows the bearer to slash much more rapidly with their nail',
     },
-    bonus: (stats) => {
+    onClickBonus: (stats) => {
       const bonusGeos = Math.floor(stats.perClick * 0.5)
       return {
         ...stats,
@@ -88,7 +100,7 @@ const CONTENT_INFO: ItemInfo = {
         'Embodies the fury and heroism that comes upon those who are about to die',
       description: "When close to death, the bearer's strength will increase",
     },
-    bonus: (stats) => {
+    onClickBonus: (stats) => {
       const bonusGeos = Math.floor(stats.perClick * 0.75)
       return {
         ...stats,
@@ -104,6 +116,7 @@ const CONTENT_INFO: ItemInfo = {
         it improves the bearer's ability to cast spells",
       description: 'Reduces the SOUL cost of casting spells',
     },
+    onSpellBonus: (stats) => stats,
   },
   shaman_stone: {
     img: '/Charms/Shaman Stone.png',
@@ -111,6 +124,7 @@ const CONTENT_INFO: ItemInfo = {
       title: 'Said to contain the knowledge of past generations of shaman',
       description: 'Increases the power of spells, dealing more damage to foes',
     },
+    onSpellBonus: (stats) => stats,
   },
   soul_catcher: {
     img: '/Charms/Soul Catcher.png',
@@ -119,7 +133,7 @@ const CONTENT_INFO: ItemInfo = {
       description:
         'Increases the amount of SOUL gained when striking an enemy with the nail',
     },
-    bonus: (stats) => {
+    onClickBonus: (stats) => {
       return {
         ...stats,
         souls: stats.souls + 3,
@@ -134,7 +148,7 @@ const CONTENT_INFO: ItemInfo = {
       description:
         'Greatly increases the amount of SOUL gained when striking an enemy with the nail',
     },
-    bonus: (stats) => {
+    onClickBonus: (stats) => {
       return {
         ...stats,
         souls: stats.souls + 12,

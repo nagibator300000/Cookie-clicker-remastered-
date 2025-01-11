@@ -3,7 +3,7 @@ import './InventoryContent.css'
 import { useDraggable, type UniqueIdentifier } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import clsx from 'clsx'
-import { Tooltip } from 'react-tooltip'
+import { Tooltip } from '..'
 import type { ItemTypes } from '../../../data/items'
 import CONTENT_INFO from '../../../data/items'
 
@@ -58,9 +58,8 @@ export default function InventoryContent({
       )}
       style={style}
     >
-      <Tooltip id={tooltip_id.current} place="top">
-        {!row ? content_data.description : ''}
-      </Tooltip>
+      {content_data !== 'blocker'}
+      <Tooltip id={tooltip_id.current} title={} description=""></Tooltip>
     </div>
   )
 }
