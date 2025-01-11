@@ -1,4 +1,3 @@
-import { UniqueIdentifier } from '@dnd-kit/core'
 import { Tooltip as LibTooltip } from 'react-tooltip'
 
 type TooltipProps = {
