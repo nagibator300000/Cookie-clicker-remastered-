@@ -1,46 +1,47 @@
-import { MouseEventHandler, useRef, type CSSProperties } from 'react'
 import './InventoryContent.css'
-import { useDraggable, type UniqueIdentifier } from '@dnd-kit/core'
-import { CSS } from '@dnd-kit/utilities'
-import clsx from 'clsx'
-import { Tooltip } from '..'
-import type { ItemTypes } from '../../../data/items'
-import CONTENT_INFO from '../../../data/items'
-import GeneralContent from './GeneralContent'
-import Charm from './Charm'
+import { ItemTypes } from '../../../data/items'
+import Charm, { CharmProps } from './Charm'
+import Blocker, { BlockerProps } from './Blocker'
 
-export type InventoryContentProps = {
-  row?: number
-  col?: number
-  id: UniqueIdentifier
-  durability?: number
-  isDropTarget?: boolean
-  isOverlaping?: boolean
+type CharmPart = Omit<CharmProps, 'type'>
+type BlockerPart = Omit<BlockerProps, 'onClick'>
+export interface InventoryContentProps extends BlockerPart, CharmPart {
   type: ItemTypes
-  onClick?: MouseEventHandler<HTMLDivElement>
+  onClick?: BlockerProps['onClick']
 }
 
-export default function InventoryContent({
+function InventoryContent({
   row,
   col,
   id,
-  isDropTarget,
-  isOverlaping,
   type,
   durability,
   onClick,
+  isDropTarget,
+  isOverlaping,
 }: InventoryContentProps) {
-  const content_data = CONTENT_INFO[type]
-  if (type === 'blocker')
-    return <GeneralContent row={row} col={col} img={content_data.img} />
-  return (
-    <Charm
-      row={row}
-      col={col}
-      img={content_data.img}
-      id={id}
-      title={content_data.title}
-      description={content_data.description}
-    />
-  )
+  if (type === 'blocker' && onClick) {
+    return (
+      <Blocker
+        row={row}
+        col={col}
+        onClick={onClick}
+        isOverlaping={isOverlaping}
+      />
+    )
+  }
+  if (type !== 'blocker')
+    return (
+      <Charm
+        durability={durability}
+        type={type}
+        row={row}
+        col={col}
+        id={id}
+        isOverlaping={isOverlaping}
+        isDropTarget={isDropTarget}
+      />
+    )
 }
+
+export default InventoryContent

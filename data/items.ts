@@ -37,7 +37,8 @@ type BlockerInfo = {
   }
 }
 
-type ItemInfo = ClickBuffItem & SpellBuffItem & BlockerInfo
+export type CharmInfo = ClickBuffItem & SpellBuffItem
+type ItemInfo = CharmInfo & BlockerInfo
 
 const CONTENT_INFO: ItemInfo = {
   blocker: {
