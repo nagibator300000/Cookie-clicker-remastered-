@@ -1,4 +1,3 @@
-export { default as fetchJSON } from "./fetchJSON";
-export { isUser } from "./typeguards";
+export { default as fetchJSON } from './fetchJSON'
 
-export { FetchError } from "./fetchJSON";
+export { FetchError } from './fetchJSON'
