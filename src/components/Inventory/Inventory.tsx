@@ -1,15 +1,15 @@
-import { useDroppable } from "@dnd-kit/core";
-import "./Inventory.css";
-import { InventoryContent } from "..";
-import useGameStore from "../../stores/game";
+import { useDroppable } from '@dnd-kit/core'
+import './Inventory.css'
+import { InventoryContent } from '..'
+import useGameStore from '../../stores/game'
 
 export default function Inventory() {
-  const { setNodeRef } = useDroppable({ id: "inventory" });
-  const overlap = useGameStore((state) => state.overlap);
-  const isEditing = useGameStore((state) => state.isEditing);
-  const dropTarget = useGameStore((state) => state.dropTarget);
-  const inventoryContent = useGameStore((state) => state.inventoryContent);
-  const finishEditing = useGameStore((state) => state.finishEditing);
+  const { setNodeRef } = useDroppable({ id: 'inventory' })
+  const overlap = useGameStore((state) => state.overlap)
+  const isEditing = useGameStore((state) => state.isEditing)
+  const dropTarget = useGameStore((state) => state.dropTarget)
+  const inventoryContent = useGameStore((state) => state.inventoryContent)
+  const finishEditing = useGameStore((state) => state.finishEditing)
   return (
     <div ref={setNodeRef} className="inventory">
       {dropTarget && (
@@ -28,17 +28,17 @@ export default function Inventory() {
             key={el.id}
             isOverlaping={el === overlap && el.id !== dropTarget?.id}
             onClick={
-              el.type === "blocker"
+              el.type === 'blocker'
                 ? () => {
                     if (isEditing) {
-                      finishEditing(el.id);
+                      finishEditing(el.id)
                     }
                   }
                 : undefined
             }
           ></InventoryContent>
-        );
+        )
       })}
     </div>
-  );
+  )
 }

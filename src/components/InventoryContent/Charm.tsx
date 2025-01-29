@@ -35,7 +35,9 @@ export default function Charm({
       img={content_data.img}
       {...attributes}
       {...listeners}
-      style={{ transform: CSS.Transform.toString(transform) }}
+      style={{
+        transform: CSS.Translate.toString(transform),
+      }}
       ref={setNodeRef}
       className={clsx(isDropTarget && styles.dropping)}
     >

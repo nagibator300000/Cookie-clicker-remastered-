@@ -34,19 +34,18 @@ const createGameStatsSlice: StateCreator<
   click: (data) => {
     set((state) => {
       state.addFX({ ...data, type: 'hit' })
-      const newState: GameStats = state
+      let newState: GameStats = state
       state.inventoryContent.forEach((current) => {
         const res = ClickBuffCharmsSchema.safeParse(current.type)
         if (res.success) {
           const type = res.data
           const info = CONTENT_INFO[type]
-          return info.onClickBonus(state)
+          newState = info.onClickBonus(newState)
         }
-      }, state)
-
-      state.addSouls(3)
+      })
       return {
         ...newState,
+        souls: newState.souls + 3,
         count: newState.count + state.perClick,
       }
     })

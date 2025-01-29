@@ -19,7 +19,6 @@ export interface SpellFxData {
 
 export interface SoulSlice {
   souls: number
-  addSouls: (val: number) => void
   spell: (data: Omit<SpellFxData, 'key' | 'type'>) => void
   removeSpell: (key: UniqueIdentifier) => void
 }
@@ -31,11 +30,6 @@ const SoulSlice: StateCreator<
   SoulSlice
 > = (set) => ({
   souls: defaultStats.souls,
-  addSouls: (val) =>
-    set((state) => {
-      if (state.findCharm('fury_of_the_fallen')) return state
-      return { souls: state.souls + val > 100 ? 100 : state.souls + val }
-    }),
   spell: (data) =>
     set(
       (state) => {
