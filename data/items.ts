@@ -1,15 +1,5 @@
 import type { GameStats } from '../schemas/gameStats'
-
-type ClickBuffItems =
-  | 'fragile_force'
-  | 'quick_slash'
-  | 'fury_of_the_fallen'
-  | 'soul_eater'
-  | 'soul_catcher'
-
-type SpellBuffItems = 'spell_twister' | 'shaman_stone'
-
-export type ItemTypes = ClickBuffItems | SpellBuffItems | 'blocker'
+import type { ClickBuffCharms, SpellBuffCharms } from '../schemas/itemTypes'
 
 type GeneralInfo = {
   img: string
@@ -20,13 +10,13 @@ type GeneralInfo = {
 }
 
 type ClickBuffItem = {
-  [T in ClickBuffItems]: {
+  [T in ClickBuffCharms]: {
     onClickBonus: (stats: GameStats) => GameStats
   } & GeneralInfo
 }
 
 type SpellBuffItem = {
-  [T in SpellBuffItems]: {
+  [T in SpellBuffCharms]: {
     onSpellBonus: (stats: GameStats) => GameStats
   } & GeneralInfo
 }

@@ -1,16 +1,8 @@
 import { z } from 'zod'
+import { ItemsTypesSchema } from './itemTypes'
 
 const InventoryContentSchema = z.object({
-  type: z.enum([
-    'blocker',
-    'fragile_force',
-    'quick_slash',
-    'fury_of_the_fallen',
-    'shaman_stone',
-    'soul_catcher',
-    'soul_eater',
-    'spell_twister',
-  ]),
+  type: ItemsTypesSchema,
   col: z.number().optional(),
   row: z.number().optional(),
   id: z.string().or(z.number()),

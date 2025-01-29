@@ -3,7 +3,7 @@ import { GameStatsSlice } from './gameStats'
 import { UniqueIdentifier } from '@dnd-kit/core'
 import type { EffectsSlice } from './effects'
 import { InventorySlice } from './inventory'
-import defaultStats from '../../defaultStats'
+import defaultStats from '../../data/defaultStats'
 
 type Coordinates = {
   x: number

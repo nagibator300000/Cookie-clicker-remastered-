@@ -1,5 +1,4 @@
-import './InventoryContent.css'
-import { ItemTypes } from '../../../data/items'
+import { ItemTypes } from '../../../schemas/itemTypes'
 import Charm, { CharmProps } from './Charm'
 import Blocker, { BlockerProps } from './Blocker'
 

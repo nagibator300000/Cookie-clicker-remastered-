@@ -3,9 +3,10 @@ import type { StateCreator } from 'zustand'
 import { SoulSlice } from './soul'
 import { EffectsSlice, HitFxData } from './effects'
 import { InventorySlice } from './inventory'
-import defaultStats from '../../defaultStats'
+import defaultStats from '../../data/defaultStats'
 import { NotificationSlice } from './notification'
 import CONTENT_INFO from '../../data/items'
+import { ClickBuffCharmsSchema } from '../../schemas/itemTypes'
 
 export interface GameStatsSlice
   extends Omit<GameStats, 'souls' | 'inventoryContent'> {
@@ -33,11 +34,15 @@ const createGameStatsSlice: StateCreator<
   click: (data) => {
     set((state) => {
       state.addFX({ ...data, type: 'hit' })
-      let newState = state
-      for (let i of state.inventoryContent) {
-        newState = CONTENT_INFO[i.type]?.bonus(newState)
-      }
-      console.log(newState)
+      const newState: GameStats = state
+      state.inventoryContent.forEach((current) => {
+        const res = ClickBuffCharmsSchema.safeParse(current.type)
+        if (res.success) {
+          const type = res.data
+          const info = CONTENT_INFO[type]
+          return info.onClickBonus(state)
+        }
+      }, state)
 
       state.addSouls(3)
       return {

@@ -1,8 +1,9 @@
 import { StateCreator } from 'zustand'
-import type { ContentTypes, InventoryContentProps } from '../components'
+import type { InventoryContentProps } from '../components'
 import { UniqueIdentifier } from '@dnd-kit/core'
 import useGameStore from './game'
-import defaultStats from '../../defaultStats'
+import defaultStats from '../..//data/defaultStats'
+import { ItemTypes } from '../../schemas/itemTypes'
 
 export interface InventorySlice {
   inventoryContent: InventoryContentProps[]
@@ -13,7 +14,7 @@ export interface InventorySlice {
   finishEditing: (itemId: UniqueIdentifier) => void
   hoverItem: (DropTarget: InventoryContentProps | null) => void
   dropItem: () => void
-  findCharm: (type: Exclude<ContentTypes, 'blocker'>) => boolean
+  findCharm: (type: ItemTypes) => boolean
 }
 
 const createInventorySlice: StateCreator<
