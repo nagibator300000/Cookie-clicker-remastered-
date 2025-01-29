@@ -15,7 +15,10 @@ export type ChildProps = Pick<
 >
 
 const GeneralContent = forwardRef<HTMLDivElement, GeneralContentProps>(
-  ({ row, col, img, style: styleProp, isOverlaping, className }, ref) => {
+  (
+    { row, col, img, style: styleProp, isOverlaping, className, ...rest },
+    ref
+  ) => {
     const style = {
       ...styleProp,
       '--row': row,
@@ -31,6 +34,7 @@ const GeneralContent = forwardRef<HTMLDivElement, GeneralContentProps>(
           isOverlaping && styles.overlaping
         )}
         ref={ref}
+        {...rest}
       ></div>
     )
   }
