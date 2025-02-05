@@ -33,6 +33,11 @@ const defaultStats: GameStats = {
     { type: 'blocker', row: 5, col: 4, id: 24 },
     { type: 'blocker', row: 5, col: 5, id: 25 },
   ],
+  achievements: [
+    { name: '1', status: true },
+    { name: '2', status: false },
+    { name: '3', status: true },
+  ],
 }
 
 export default defaultStats

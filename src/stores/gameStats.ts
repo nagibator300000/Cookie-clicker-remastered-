@@ -16,7 +16,7 @@ export interface GameStatsSlice
   upgradePerClick: (cost: number) => void
   upgradePeriodPoints: (cost: number) => void
   upgradePeriodTime: (cost: number) => void
-  unlock: (cost: number) => void
+  unlockSlot: (cost: number) => void
   init: (stats: GameStats) => void
 }
 
@@ -76,7 +76,7 @@ const createGameStatsSlice: StateCreator<
       periodPoints: state.periodTime + 0.1,
     }))
   },
-  unlock: (cost) => {
+  unlockSlot: (cost) => {
     set((state) => ({ count: state.count - cost }))
   },
   init: (stats) => {

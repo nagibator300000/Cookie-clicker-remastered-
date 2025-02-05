@@ -19,7 +19,8 @@ import useGameStore from './stores/game'
 function App() {
   const gameStats = useGameStats()
 
-  const { periodTime, autoClick } = useGameStore()
+  const periodTime = useGameStore((state) => state.periodTime)
+  const autoClick = useGameStore((state) => state.autoClick)
 
   const [isOpenProfile, setIsOpenProfile] = useState(false)
 

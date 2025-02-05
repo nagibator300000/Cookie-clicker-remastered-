@@ -1,19 +1,19 @@
-import { useEffect } from "react";
-import useGameStatsMutation from "./useGameStatsMutation";
-import useGameStatsQuery from "./useGameStatsQuery";
-import useInterval from "./useInterval";
-import useGameStore from "../stores/game";
+import { useEffect } from 'react'
+import useGameStatsMutation from './useGameStatsMutation'
+import useGameStatsQuery from './useGameStatsQuery'
+import useInterval from './useInterval'
+import useGameStore from '../stores/game'
 
 export default function useGameStats() {
-  const post = useGameStatsMutation();
-  const get = useGameStatsQuery();
-  const init = useGameStore((stats) => stats.init);
+  const post = useGameStatsMutation()
+  const get = useGameStatsQuery()
+  const init = useGameStore((stats) => stats.init)
 
   useEffect(() => {
     if (get.data) {
-      init(get.data);
+      init(get.data)
     }
-  }, [init, get.data]);
+  }, [init, get.data])
 
   useInterval(() => {
     const {
@@ -23,7 +23,8 @@ export default function useGameStats() {
       periodTime,
       inventoryContent,
       souls,
-    } = useGameStore.getState();
+      achievements,
+    } = useGameStore.getState()
     post.mutate({
       count,
       perClick,
@@ -31,11 +32,12 @@ export default function useGameStats() {
       periodTime,
       inventoryContent,
       souls,
-    });
-  }, 10000);
+      achievements,
+    })
+  }, 10000)
   return {
     error: get.error || post.error,
     isSaving: post.isPending,
     isLoading: get.isLoading,
-  };
+  }
 }

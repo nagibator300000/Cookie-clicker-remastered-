@@ -18,6 +18,7 @@ export { default as SpellFx } from './SpellFx/SpellFx'
 export { default as SpellDisplay } from './FxDisplay/FXDisplay'
 export { default as HitFx } from './HitFx/HitFx'
 export { default as Tooltip } from './Tooltip/Tooltip'
+export { default as Achievement } from './Achievement/Achievement'
 
 export type { InventoryContentProps } from './InventoryContent/InventoryContent'
 export type { GridMoveEvent } from './GridContext/GridContext'

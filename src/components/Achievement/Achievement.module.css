@@ -1,0 +1,41 @@
+.achievement {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  border: solid 3px grey;
+  border-radius: 10px;
+  width: 100%;
+  gap: 10px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.description {
+  color: rgb(70, 70, 70);
+  font-size: 15px;
+  font-weight: 100;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.closed {
+  background-color: rgba(40, 40, 40, 0.8);
+}
