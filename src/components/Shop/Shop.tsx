@@ -13,7 +13,6 @@ export default function Shop() {
   const unlockSlot = useGameStore((stats) => stats.unlockSlot)
   const isEditing = useGameStore((state) => state.isEditing)
   const startEditing = useGameStore((state) => state.startEditing)
-  const addNotification = useGameStore((state) => state.addNotification)
   return (
     <div className="shop">
       <button
@@ -63,10 +62,6 @@ export default function Shop() {
           onClick={() => {
             unlockSlot(50)
             startEditing()
-            addNotification({
-              type: 'info',
-              content: 'click on the blocker to delete it',
-            })
           }}
         >
           <div className="name">unlock slot</div>

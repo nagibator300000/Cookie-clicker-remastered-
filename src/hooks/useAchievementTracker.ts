@@ -6,12 +6,12 @@ function useAchievementTracker() {
   useEffect(() => {
     const unsubsdcribe = useGameStore.subscribe((state) => {
       achievements.forEach((achievement) => {
-        if (achievement.trigger(state)) {
-          if (
-            !useGameStore
-              .getState()
-              .achievements.find((e) => e === achievement.title)
-          ) {
+        if (
+          !useGameStore
+            .getState()
+            .achievements.find((e) => e === achievement.title)
+        ) {
+          if (achievement.trigger(state)) {
             useGameStore.getState().unlockAchievement(achievement.title)
           }
         }

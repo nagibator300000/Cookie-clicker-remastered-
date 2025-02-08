@@ -1,36 +1,20 @@
-import { ReactNode } from "react";
-import { errorSvg, infoSvg, successSvg, warningSvg } from "./SVGs";
-import "./Notification.css";
+import './Notification.css'
+import { Achievement } from '..'
+import ACHIEVEMENTs_CONTENT from '../../../data/achievements'
 
-export interface NotificationData {
-  type?: "error" | "warning" | "info" | "success";
-  content?: ReactNode;
-}
+export type NotificationData = { name: string }
 
 interface NotificationProps extends NotificationData {
-  onClick?: () => void;
+  onClick?: () => void
 }
 
-const SVGs = {
-  info: infoSvg(),
-  error: errorSvg(),
-  warning: warningSvg(),
-  success: successSvg(),
-};
-
-export default function Notification({
-  type = "info",
-  content,
-  onClick,
-}: NotificationProps) {
-  const svg = SVGs[type];
-  return (
-    <div className={`notification natification_${type}`} onClick={onClick}>
-      {svg}
-      <p>
-        <b>{type}: </b>
-        {content}
-      </p>
-    </div>
-  );
+export default function Notification({ name, onClick }: NotificationProps) {
+  const info = ACHIEVEMENTs_CONTENT.find((e) => e.title === name)
+  if (info) {
+    return (
+      <div className={`notification`} onClick={onClick}>
+        <Achievement {...info} status />
+      </div>
+    )
+  }
 }

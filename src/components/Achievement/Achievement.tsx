@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import styles from './Achievement.module.css'
 
-interface AchievementProps {
+export interface AchievementProps {
   img: string
   title: string
   description: string

@@ -7,7 +7,7 @@ interface NotificationState extends NotificationData {
 }
 
 export interface NotificationSlice {
-  addNotification: (data: NotificationData) => void
+  addNotification: (name: string) => void
   removeNotification: (key: string) => void
   notifications: NotificationState[]
 }
@@ -18,9 +18,9 @@ const createNotificationSlice: StateCreator<
   [],
   NotificationSlice
 > = (set) => ({
-  addNotification: (data: NotificationData) => {
+  addNotification: (name) => {
     const notificationKey = crypto.randomUUID()
-    const newNotification = { ...data, key: notificationKey }
+    const newNotification = { name, key: notificationKey }
     set((state) => ({
       notifications: [...state.notifications, newNotification],
     }))
