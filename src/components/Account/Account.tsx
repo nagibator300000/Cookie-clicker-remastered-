@@ -2,7 +2,7 @@ import useGameStore from '@/stores/game'
 import Avatar from '../Avatar/Avatar'
 import './Account.css'
 import { Achievement } from '..'
-import ACHIVMENTS_CONTENT from '../../../data/ahievements'
+import ACHIEVEMENTS_CONTENT from '../../../data/achievements'
 
 type Args = {
   url: string
@@ -24,12 +24,12 @@ export default function Account({ url, name, onClose }: Args) {
       <div className="achievements">
         Achievements
         <div className="achievementsConteiner">
-          {achievements.map((el) => {
-            const content = ACHIVMENTS_CONTENT.find((e) => e.title === el.name)
-            if (content) {
-              return <Achievement status={el.status} {...content} />
-            }
-          })}
+          {ACHIEVEMENTS_CONTENT.map((achievement) => (
+            <Achievement
+              {...achievement}
+              status={achievements.includes(achievement.title)}
+            />
+          ))}
         </div>
       </div>
     </div>

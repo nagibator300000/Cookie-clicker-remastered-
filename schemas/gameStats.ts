@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import InventoryContentSchema from './inventoryContent'
-import AchievementSchema from './achievement'
 
 const GameStatsSchema = z.object({
   count: z.number(),
@@ -9,7 +8,7 @@ const GameStatsSchema = z.object({
   periodTime: z.number(),
   inventoryContent: InventoryContentSchema.array(),
   souls: z.number(),
-  achievements: AchievementSchema.array(),
+  achievements: z.string().array(),
 })
 
 export type GameStats = z.infer<typeof GameStatsSchema>

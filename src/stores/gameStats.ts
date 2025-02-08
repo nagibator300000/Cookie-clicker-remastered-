@@ -45,7 +45,7 @@ const createGameStatsSlice: StateCreator<
       })
       return {
         ...newState,
-        souls: newState.souls + 3,
+        souls: newState.souls + 3 > 100 ? 100 : newState.souls + 3,
         count: newState.count + state.perClick,
       }
     })

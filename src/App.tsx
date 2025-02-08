@@ -15,9 +15,12 @@ import useUser from './hooks/useUser'
 import { FetchError } from './utils'
 import useInterval from './hooks/useInterval'
 import useGameStore from './stores/game'
+import useAchievementTracker from './hooks/useAchievementTracker'
 
 function App() {
   const gameStats = useGameStats()
+
+  useAchievementTracker()
 
   const periodTime = useGameStore((state) => state.periodTime)
   const autoClick = useGameStore((state) => state.autoClick)
