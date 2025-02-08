@@ -15,7 +15,6 @@ const createAchievementSlice: StateCreator<
   achievements: [],
   unlockAchievement: (name) => {
     set((state) => {
-      state.addNotification(name)
       return {
         achievements: [...state.achievements, name],
       }

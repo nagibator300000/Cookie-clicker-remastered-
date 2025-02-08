@@ -4,20 +4,17 @@ import achievements from '../../data/achievements'
 
 function useAchievementTracker() {
   useEffect(() => {
-    const unsubsdcribe = useGameStore.subscribe((state) => {
+    const unsubscribe = useGameStore.subscribe((state) => {
       achievements.forEach((achievement) => {
-        if (
-          !useGameStore
-            .getState()
-            .achievements.find((e) => e === achievement.title)
-        ) {
+        if (!state.achievements.includes(achievement.title)) {
           if (achievement.trigger(state)) {
-            useGameStore.getState().unlockAchievement(achievement.title)
+            state.unlockAchievement(achievement.title)
+            state.addNotification(achievement.title)
           }
         }
       })
     })
-    return () => unsubsdcribe()
+    return () => unsubscribe()
   }, [])
 }
 
