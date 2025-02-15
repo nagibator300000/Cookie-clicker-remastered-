@@ -1,23 +1,34 @@
 import useGameStore from '../../stores/game'
+import type { GameStats } from '../../../schemas/gameStats'
+
+type UpgradableStats = Pick<
+  GameStats,
+  'perClick' | 'periodPoints' | 'periodTime'
+>
+
+type Stat = UpgradableStats[keyof UpgradableStats]
 
 class Upgrade {
-  name: string
+  name: keyof UpgradableStats
   cost: number
+  upgradeMethod: (stat: Stat) => Stat
 
-  constructor(name: string, cost: number) {
+  constructor(
+    name: keyof UpgradableStats,
+    cost: number,
+    upgradeMethod: (stat: Stat) => Stat
+  ) {
     this.name = name
     this.cost = cost
+    this.upgradeMethod = upgradeMethod
   }
 
   upgrade() {
+    const stat = useGameStore.getState()[this.name]
     useGameStore.setState({
       count: useGameStore.getState().count - this.cost,
-      [this.name]: this.upgrade,
+      [this.name]: this.upgradeMethod(stat),
     })
-  }
-
-  upgradeMethod() {
-    return
   }
 
   disabled() {
@@ -25,7 +36,7 @@ class Upgrade {
   }
 }
 
-const perClickUpgrade = new Upgrade('perClick', 100)
+const perClickUpgrade = new Upgrade('perClick', 100, (stat) => stat + 1)
 
 const periodPointsUpgrade = new Upgrade('periodPoints', 200)
 
