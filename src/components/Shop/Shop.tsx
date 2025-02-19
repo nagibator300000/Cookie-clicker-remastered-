@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './Shop.css'
 import clsx from 'clsx'
 import { InventoryContent } from '..'
+import UpgradeShop from './UpgradeShop'
 
 export default function Shop() {
   const [isSwitched, setIsSwitched] = useState(false)
@@ -18,7 +19,7 @@ export default function Shop() {
           className={clsx('switch_img', isSwitched && 'switched')}
         />
       </button>
-
+      <UpgradeShop />
       <div className={clsx('charms_shop', isSwitched && 'active')}>
         <div className="row">
           <InventoryContent

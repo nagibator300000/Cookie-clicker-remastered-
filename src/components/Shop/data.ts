@@ -3,8 +3,6 @@ import type { GameStats } from '../../../schemas/gameStats'
 
 type UpgradableStats = 'perClick' | 'periodPoints' | 'periodTime' | 'unlockSlot'
 
-type Stat = UpgradableStats[keyof UpgradableStats]
-
 class Upgrade {
   name: UpgradableStats
   cost: number
@@ -20,7 +18,7 @@ class Upgrade {
     this.upgradeMethod = upgradeMethod
   }
 
-  upgrade() {
+  upgrade(additonal?: () => void) {
     const newState: Partial<GameStats> = {
       count: useGameStore.getState().count - this.cost,
     }
@@ -30,10 +28,16 @@ class Upgrade {
         newState[this.name] = this.upgradeMethod(stat)
     }
     useGameStore.setState(newState)
+    if (additonal) additonal()
   }
 
-  disabled() {
-    return useGameStore.getState().count < this.cost
+  disabled(count: number, additonal?: boolean) {
+    const isEnough = count < this.cost
+    if (additonal === undefined) {
+      return isEnough
+    } else {
+      return isEnough && additonal
+    }
   }
 }
 
