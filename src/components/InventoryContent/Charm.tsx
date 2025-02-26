@@ -26,7 +26,7 @@ export default function Charm({
     id: id,
     data: { type, durability },
   })
-  const content_data = CONTENT_INFO[type]
+  const content_data = CONTENT_INFO.filter((e) => e.name === type)
 
   return (
     <GeneralContent

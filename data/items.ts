@@ -9,32 +9,37 @@ type GeneralInfo = {
   }
 }
 
-type ClickBuffItem = {
-  [T in ClickBuffCharms]: {
+type ClickBuffItem = [
+  {
+    name: ClickBuffCharms
     onClickBonus: (stats: GameStats) => GameStats
   } & GeneralInfo
-}
+]
 
-type SpellBuffItem = {
-  [T in SpellBuffCharms]: {
+type SpellBuffItem = [
+  {
+    name: SpellBuffCharms
     onSpellBonus: (stats: GameStats) => GameStats
   } & GeneralInfo
-}
+]
 
-type BlockerInfo = {
-  blocker: {
+type BlockerInfo = [
+  {
+    name: 'blocker'
     img: string
   }
-}
+]
 
 export type CharmInfo = ClickBuffItem & SpellBuffItem
 type ItemInfo = CharmInfo & BlockerInfo
 
-const CONTENT_INFO: ItemInfo = {
-  blocker: {
+const CONTENT_INFO: ItemInfo = [
+  {
+    name: 'blocker',
     img: '/Charms/Blocker.png',
   },
-  fragile_force: {
+  {
+    name: 'fragile force',
     img: '/Charms/Fragile Strength.png',
     info: {
       title:
@@ -68,7 +73,8 @@ const CONTENT_INFO: ItemInfo = {
       }
     },
   },
-  quick_slash: {
+  {
+    name: 'quick slash',
     img: '/Charms/Quick Slash.png',
     info: {
       title: 'Born from imperfect, discarded nails that have fused together',
@@ -84,7 +90,8 @@ const CONTENT_INFO: ItemInfo = {
       }
     },
   },
-  fury_of_the_fallen: {
+  {
+    name: 'fury of the fallen',
     img: '/Charms/Fury of the Fallen.png',
     info: {
       title:
@@ -99,7 +106,8 @@ const CONTENT_INFO: ItemInfo = {
       }
     },
   },
-  spell_twister: {
+  {
+    name: 'spell twister',
     img: '/Charms/Spell Twister.png',
     info: {
       title:
@@ -109,7 +117,8 @@ const CONTENT_INFO: ItemInfo = {
     },
     onSpellBonus: (stats) => stats,
   },
-  shaman_stone: {
+  {
+    name: 'shaman stone',
     img: '/Charms/Shaman Stone.png',
     info: {
       title: 'Said to contain the knowledge of past generations of shaman',
@@ -117,7 +126,8 @@ const CONTENT_INFO: ItemInfo = {
     },
     onSpellBonus: (stats) => stats,
   },
-  soul_catcher: {
+  {
+    name: 'soul catcher',
     img: '/Charms/Soul Catcher.png',
     info: {
       title: 'Used by shamans to draw more SOUL from the world around them',
@@ -131,7 +141,8 @@ const CONTENT_INFO: ItemInfo = {
       }
     },
   },
-  soul_eater: {
+  {
+    name: 'soul eater',
     img: '/Charms/Soul Eater.png',
     info: {
       title:
@@ -146,6 +157,6 @@ const CONTENT_INFO: ItemInfo = {
       }
     },
   },
-}
+]
 
 export default CONTENT_INFO

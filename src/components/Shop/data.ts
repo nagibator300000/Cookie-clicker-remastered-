@@ -18,7 +18,7 @@ class Upgrade {
     this.upgradeMethod = upgradeMethod
   }
 
-  upgrade(additonal?: () => void) {
+  upgrade = (additonal?: () => void) => {
     const newState: Partial<GameStats> = {
       count: useGameStore.getState().count - this.cost,
     }

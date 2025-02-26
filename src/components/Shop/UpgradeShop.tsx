@@ -9,20 +9,21 @@ export default function UpgradeShop() {
   return (
     <div className="upgrades_shop">
       {UPGRADES.map((e) => {
-        if (e.name === 'unlockSlot') {
-          ;<Product
-            title="unlock slot"
+        return e.name === 'unlockSlot' ? (
+          <Product
+            title={e.name}
             price={e.cost}
             disabled={e.disabled(count, !isEditing)}
             onClick={() => e.upgrade(startEditing)}
+            key={e.name}
           />
-        }
-        return (
+        ) : (
           <Product
             title={e.name}
             price={e.cost}
             disabled={e.disabled(count)}
-            onClick={e.upgrade}
+            onClick={() => e.upgrade()}
+            key={e.name}
           />
         )
       })}
