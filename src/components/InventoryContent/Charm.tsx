@@ -1,8 +1,8 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core'
 import GeneralContent, { ChildProps } from './GeneralContent'
 import { CSS } from '@dnd-kit/utilities'
-import CONTENT_INFO from '../../../data/items'
-import type { ItemTypes } from '../../../schemas/itemTypes'
+import CONTENT_INFO, { CharmInfo } from '../../../data/items'
+import type { CharmsTypes } from '../../../schemas/itemTypes'
 import { Tooltip } from '..'
 import clsx from 'clsx'
 import styles from './InventoryContent.module.css'
@@ -11,7 +11,7 @@ export interface CharmProps extends ChildProps {
   id: UniqueIdentifier
   durability?: number
   isDropTarget?: boolean
-  type: Exclude<ItemTypes, 'blocker'>
+  type: CharmsTypes
 }
 
 export default function Charm({
@@ -26,7 +26,7 @@ export default function Charm({
     id: id,
     data: { type, durability },
   })
-  const content_data = CONTENT_INFO.filter((e) => e.name === type)
+  const content_data = CONTENT_INFO.find((e) => e.name === type) as CharmInfo
 
   return (
     <GeneralContent

@@ -5,7 +5,7 @@ import { EffectsSlice, HitFxData } from './effects'
 import { InventorySlice } from './inventory'
 import defaultStats from '../../data/defaultStats'
 import { NotificationSlice } from './notification'
-import CONTENT_INFO from '../../data/items'
+import { getCharm } from '../../data/items'
 import { ClickBuffCharmsSchema } from '../../schemas/itemTypes'
 
 export interface GameStatsSlice
@@ -39,7 +39,7 @@ const createGameStatsSlice: StateCreator<
         const res = ClickBuffCharmsSchema.safeParse(current.type)
         if (res.success) {
           const type = res.data
-          const info = CONTENT_INFO[type]
+          const info = getCharm(type)
           newState = info.onClickBonus(newState)
         }
       })

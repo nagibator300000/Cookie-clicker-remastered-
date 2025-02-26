@@ -7,7 +7,10 @@ export interface BlockerProps extends ChildProps {
 }
 
 export default function Blocker({ row, col, onClick }: BlockerProps) {
-  const content_data = CONTENT_INFO['blocker']
+  const content_data = CONTENT_INFO.find((e) => e.name === 'blocker')
+  if (!content_data) {
+    throw new Error('Check items.ts')
+  }
   return (
     <GeneralContent
       row={row}

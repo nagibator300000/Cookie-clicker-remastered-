@@ -1,11 +1,13 @@
 import clsx from 'clsx'
-import CONTENT_INFO from '../../../data/items'
+import CONTENT_INFO, { CharmInfo } from '../../../data/items'
 import InventoryContent from '../InventoryContent/InventoryContent'
 
 type CharmShopProps = {
   isActive: boolean
 }
-const INFO_ARRAY = CONTENT_INFO.filter(({ name }) => name !== 'blocker')
+const INFO_ARRAY = CONTENT_INFO.filter(
+  ({ name }) => name !== 'blocker'
+) as CharmInfo[]
 
 export default function CharmsShop({ isActive }: CharmShopProps) {
   return (

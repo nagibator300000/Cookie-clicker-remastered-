@@ -1,5 +1,10 @@
 import type { GameStats } from '../schemas/gameStats'
-import type { ClickBuffCharms, SpellBuffCharms } from '../schemas/itemTypes'
+import type {
+  CharmsTypes,
+  ClickBuffCharms,
+  ItemTypes,
+  SpellBuffCharms,
+} from '../schemas/itemTypes'
 
 type GeneralInfo = {
   img: string
@@ -9,37 +14,31 @@ type GeneralInfo = {
   }
 }
 
-type ClickBuffItem = [
-  {
-    name: ClickBuffCharms
-    onClickBonus: (stats: GameStats) => GameStats
-  } & GeneralInfo
-]
+type ClickBuffItem = {
+  name: ClickBuffCharms
+  onClickBonus: (stats: GameStats) => GameStats
+} & GeneralInfo
 
-type SpellBuffItem = [
-  {
-    name: SpellBuffCharms
-    onSpellBonus: (stats: GameStats) => GameStats
-  } & GeneralInfo
-]
+type SpellBuffItem = {
+  name: SpellBuffCharms
+  onSpellBonus: (stats: GameStats) => GameStats
+} & GeneralInfo
 
-type BlockerInfo = [
-  {
-    name: 'blocker'
-    img: string
-  }
-]
+type BlockerInfo = {
+  name: 'blocker'
+  img: string
+}
 
-export type CharmInfo = ClickBuffItem & SpellBuffItem
-type ItemInfo = CharmInfo & BlockerInfo
+export type CharmInfo = ClickBuffItem | SpellBuffItem
+type ItemInfo = CharmInfo | BlockerInfo
 
-const CONTENT_INFO: ItemInfo = [
+const CONTENT_INFO: ItemInfo[] = [
   {
     name: 'blocker',
     img: '/Charms/Blocker.png',
   },
   {
-    name: 'fragile force',
+    name: 'fragile_force',
     img: '/Charms/Fragile Strength.png',
     info: {
       title:
@@ -74,7 +73,7 @@ const CONTENT_INFO: ItemInfo = [
     },
   },
   {
-    name: 'quick slash',
+    name: 'quick_slash',
     img: '/Charms/Quick Slash.png',
     info: {
       title: 'Born from imperfect, discarded nails that have fused together',
@@ -91,7 +90,7 @@ const CONTENT_INFO: ItemInfo = [
     },
   },
   {
-    name: 'fury of the fallen',
+    name: 'fury_of_the_fallen',
     img: '/Charms/Fury of the Fallen.png',
     info: {
       title:
@@ -107,7 +106,7 @@ const CONTENT_INFO: ItemInfo = [
     },
   },
   {
-    name: 'spell twister',
+    name: 'spell_twister',
     img: '/Charms/Spell Twister.png',
     info: {
       title:
@@ -118,7 +117,7 @@ const CONTENT_INFO: ItemInfo = [
     onSpellBonus: (stats) => stats,
   },
   {
-    name: 'shaman stone',
+    name: 'shaman_stone',
     img: '/Charms/Shaman Stone.png',
     info: {
       title: 'Said to contain the knowledge of past generations of shaman',
@@ -127,7 +126,7 @@ const CONTENT_INFO: ItemInfo = [
     onSpellBonus: (stats) => stats,
   },
   {
-    name: 'soul catcher',
+    name: 'soul_catcher',
     img: '/Charms/Soul Catcher.png',
     info: {
       title: 'Used by shamans to draw more SOUL from the world around them',
@@ -142,7 +141,7 @@ const CONTENT_INFO: ItemInfo = [
     },
   },
   {
-    name: 'soul eater',
+    name: 'soul_eater',
     img: '/Charms/Soul Eater.png',
     info: {
       title:
@@ -158,5 +157,19 @@ const CONTENT_INFO: ItemInfo = [
     },
   },
 ]
+
+export function getCharm<T extends ItemTypes>(
+  type: T
+): T extends CharmsTypes
+  ? T extends ClickBuffCharms
+    ? ClickBuffItem
+    : SpellBuffItem
+  : BlockerInfo {
+  const item = CONTENT_INFO.find((e) => e.name === type)
+  if (!item) {
+    throw new Error('Something wrong with items.ts')
+  }
+  return item
+}
 
 export default CONTENT_INFO
