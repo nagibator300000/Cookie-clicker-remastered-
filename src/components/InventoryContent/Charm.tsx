@@ -1,7 +1,7 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core'
 import GeneralContent, { ChildProps } from './GeneralContent'
 import { CSS } from '@dnd-kit/utilities'
-import CONTENT_INFO, { CharmInfo } from '../../../data/items'
+import CONTENT_INFO, { CharmInfo, getCharm } from '../../../data/items'
 import type { CharmsTypes } from '../../../schemas/itemTypes'
 import { Tooltip } from '..'
 import clsx from 'clsx'
@@ -26,7 +26,7 @@ export default function Charm({
     id: id,
     data: { type, durability },
   })
-  const content_data = CONTENT_INFO.find((e) => e.name === type) as CharmInfo
+  const content_data = getCharm(type)
 
   return (
     <GeneralContent

@@ -14,7 +14,14 @@ export default function CharmsShop({ isActive }: CharmShopProps) {
     <div className={clsx('charms_shop', isActive && 'active')}>
       <div className="row">
         {INFO_ARRAY.map(({ name, ...data }) => {
-          return <InventoryContent id={name} type={name} {...data.info} />
+          return (
+            <InventoryContent
+              id={name}
+              type={name}
+              {...data.info}
+              durability={data.durability}
+            />
+          )
         })}
       </div>
     </div>

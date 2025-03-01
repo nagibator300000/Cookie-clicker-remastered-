@@ -7,6 +7,7 @@ import type {
 } from '../schemas/itemTypes'
 
 type GeneralInfo = {
+  durability?: number
   img: string
   info: {
     title: string
@@ -46,6 +47,7 @@ const CONTENT_INFO: ItemInfo[] = [
       description:
         'This charm is fragile, and will break if its bearer is killed',
     },
+    durability: 3,
     onClickBonus: (stats) => {
       const bonusGeos = stats.perClick
       const oldItem = stats.inventoryContent.find(
@@ -161,6 +163,7 @@ const CONTENT_INFO: ItemInfo[] = [
 export function getCharm(type: SpellBuffCharms): SpellBuffItem
 export function getCharm(type: ClickBuffCharms): ClickBuffItem
 export function getCharm(type: 'blocker'): BlockerInfo
+export function getCharm(type: CharmsTypes): CharmInfo
 export function getCharm(type: ItemTypes): ItemInfo {
   const item = CONTENT_INFO.find((el) => el.name === type)
   if (!item) {
