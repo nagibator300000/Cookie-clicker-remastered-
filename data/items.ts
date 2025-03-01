@@ -158,16 +158,13 @@ const CONTENT_INFO: ItemInfo[] = [
   },
 ]
 
-export function getCharm<T extends ItemTypes>(
-  type: T
-): T extends CharmsTypes
-  ? T extends ClickBuffCharms
-    ? ClickBuffItem
-    : SpellBuffItem
-  : BlockerInfo {
-  const item = CONTENT_INFO.find((e) => e.name === type)
+export function getCharm(type: SpellBuffCharms): SpellBuffItem
+export function getCharm(type: ClickBuffCharms): ClickBuffItem
+export function getCharm(type: 'blocker'): BlockerInfo
+export function getCharm(type: ItemTypes): ItemInfo {
+  const item = CONTENT_INFO.find((el) => el.name === type)
   if (!item) {
-    throw new Error('Something wrong with items.ts')
+    throw new Error('Something is wrong with items.ts')
   }
   return item
 }
