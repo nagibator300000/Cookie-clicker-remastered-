@@ -1,12 +1,12 @@
-import { ItemTypes } from '../../../schemas/itemTypes'
-import Charm, { CharmProps } from './Charm'
-import Blocker, { BlockerProps } from './Blocker'
+import { ItemTypes } from '../../../schemas/itemTypes';
+import Charm, { CharmProps } from './Charm';
+import Blocker, { BlockerProps } from './Blocker';
 
-type CharmPart = Omit<CharmProps, 'type'>
-type BlockerPart = Omit<BlockerProps, 'onClick'>
+type CharmPart = Omit<CharmProps, 'type'>;
+type BlockerPart = Omit<BlockerProps, 'onClick'>;
 export interface InventoryContentProps extends BlockerPart, CharmPart {
-  type: ItemTypes
-  onClick?: BlockerProps['onClick']
+  type: ItemTypes;
+  onClick?: BlockerProps['onClick'];
 }
 
 function InventoryContent({
@@ -18,6 +18,7 @@ function InventoryContent({
   onClick,
   isDropTarget,
   isOverlaping,
+  disabled,
 }: InventoryContentProps) {
   if (type === 'blocker' && onClick) {
     return (
@@ -27,7 +28,7 @@ function InventoryContent({
         onClick={onClick}
         isOverlaping={isOverlaping}
       />
-    )
+    );
   }
   if (type !== 'blocker')
     return (
@@ -39,8 +40,9 @@ function InventoryContent({
         id={id}
         isOverlaping={isOverlaping}
         isDropTarget={isDropTarget}
+        disabled={disabled}
       />
-    )
+    );
 }
 
-export default InventoryContent
+export default InventoryContent;

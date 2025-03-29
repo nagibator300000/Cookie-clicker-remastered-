@@ -1,20 +1,20 @@
-import { StateCreator } from 'zustand'
-import type { InventoryContentProps } from '../components'
-import { UniqueIdentifier } from '@dnd-kit/core'
-import useGameStore from './game'
-import defaultStats from '../..//data/defaultStats'
-import { ItemTypes } from '../../schemas/itemTypes'
+import { StateCreator } from 'zustand';
+import type { InventoryContentProps } from '../components';
+import { UniqueIdentifier } from '@dnd-kit/core';
+import useGameStore from './game';
+import defaultStats from '../..//data/defaultStats';
+import { ItemTypes } from '../../schemas/itemTypes';
 
 export interface InventorySlice {
-  inventoryContent: InventoryContentProps[]
-  overlap: InventoryContentProps | null
-  dropTarget: InventoryContentProps | null
-  isEditing: boolean
-  startEditing: () => void
-  finishEditing: (itemId: UniqueIdentifier) => void
-  hoverItem: (DropTarget: InventoryContentProps | null) => void
-  dropItem: () => void
-  findCharm: (type: ItemTypes) => boolean
+  inventoryContent: InventoryContentProps[];
+  overlap: InventoryContentProps | null;
+  dropTarget: InventoryContentProps | null;
+  isEditing: boolean;
+  startEditing: () => void;
+  finishEditing: (itemId: UniqueIdentifier) => void;
+  hoverItem: (DropTarget: InventoryContentProps | null) => void;
+  dropItem: () => void;
+  findCharm: (type: ItemTypes) => boolean;
 }
 
 const createInventorySlice: StateCreator<
@@ -42,12 +42,12 @@ const createInventorySlice: StateCreator<
   dropItem: () => {
     set(
       (state) => {
-        if (!state.dropTarget) return state
+        if (!state.dropTarget) return state;
         if (state.overlap) {
           return {
             dropTarget: null,
             overlap: null,
-          }
+          };
         }
 
         return {
@@ -61,16 +61,16 @@ const createInventorySlice: StateCreator<
               id: `col:${state.dropTarget.col} row:${state.dropTarget.row}`,
             },
           ],
-        }
+        };
       },
       undefined,
       'game:inventory/dropItem'
-    )
+    );
   },
   findCharm: (type) => {
-    const state = useGameStore.getState()
-    return !!state.inventoryContent.find((e) => e.type === type)
+    const state = useGameStore.getState();
+    return !!state.inventoryContent.find((e) => e.type === type);
   },
-})
+});
 
-export default createInventorySlice
+export default createInventorySlice;

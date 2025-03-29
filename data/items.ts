@@ -13,6 +13,7 @@ type GeneralInfo = {
     title: string
     description: string
   }
+  price?: number
 }
 
 type ClickBuffItem = {
@@ -47,6 +48,7 @@ const CONTENT_INFO: ItemInfo[] = [
       description:
         'This charm is fragile, and will break if its bearer is killed',
     },
+    price: 10,
     durability: 3,
     onClickBonus: (stats) => {
       const bonusGeos = stats.perClick
@@ -83,6 +85,7 @@ const CONTENT_INFO: ItemInfo[] = [
         'The nails still long to be wielded. \
         Allows the bearer to slash much more rapidly with their nail',
     },
+    price: 10,
     onClickBonus: (stats) => {
       const bonusGeos = Math.floor(stats.perClick * 0.5)
       return {
@@ -99,6 +102,7 @@ const CONTENT_INFO: ItemInfo[] = [
         'Embodies the fury and heroism that comes upon those who are about to die',
       description: "When close to death, the bearer's strength will increase",
     },
+    price: 10,
     onClickBonus: (stats) => {
       const bonusGeos = Math.floor(stats.perClick * 0.75)
       return {
@@ -116,6 +120,7 @@ const CONTENT_INFO: ItemInfo[] = [
         it improves the bearer's ability to cast spells",
       description: 'Reduces the SOUL cost of casting spells',
     },
+    price: 10,
     onSpellBonus: (stats) => stats,
   },
   {
@@ -125,6 +130,7 @@ const CONTENT_INFO: ItemInfo[] = [
       title: 'Said to contain the knowledge of past generations of shaman',
       description: 'Increases the power of spells, dealing more damage to foes',
     },
+    price: 10,
     onSpellBonus: (stats) => stats,
   },
   {
@@ -135,6 +141,7 @@ const CONTENT_INFO: ItemInfo[] = [
       description:
         'Increases the amount of SOUL gained when striking an enemy with the nail',
     },
+    price: 10,
     onClickBonus: (stats) => {
       return {
         ...stats,
@@ -151,6 +158,7 @@ const CONTENT_INFO: ItemInfo[] = [
       description:
         'Greatly increases the amount of SOUL gained when striking an enemy with the nail',
     },
+    price: 10,
     onClickBonus: (stats) => {
       return {
         ...stats,
