@@ -99,8 +99,5 @@
   display: flex;
   justify-content: center;
   gap: 5px;
-}
-
-.row:nth-of-type(even) {
-  padding-left: 30px;
+  flex-wrap: wrap;
 }

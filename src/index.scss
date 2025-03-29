@@ -42,7 +42,7 @@ body {
   left: 50%;
   width: 426px;
   height: 123px;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0.5);
   background-image: url('/top.png');
   @include mixins.spriteAnim(topFleurAnim, 8, 426px, 0.5s);
   z-index: 3;
@@ -54,7 +54,8 @@ body {
   left: 50%;
   width: 303px;
   height: 66px;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%) scale(0.5);
+  transform-origin: bottom;
   background-image: url('/bottom.png');
   @include mixins.spriteAnim(bottomFleurAnim, 8, 303px, 0.5s);
   z-index: 3;
@@ -66,7 +67,8 @@ body {
   left: 0;
   width: 842px;
   height: 87px;
-  transform: translateY(50%);
+  transform: translateY(50%) scale(0.5);
+  transform-origin: left;
   background-image: url('/top_left_corner.png');
   @include mixins.spriteAnim(leftFleurAnim, 8, 842px, 0.5s);
   z-index: 3;
@@ -78,7 +80,8 @@ body {
   right: 0;
   width: 842px;
   height: 87px;
-  transform: translateY(50%);
+  transform: translateY(50%) scale(0.5);
+  transform-origin: right;
   background-image: url('/top_right_corner.png');
   @include mixins.spriteAnim(rightFleurAnim, 8, 842px, 0.5s);
   z-index: 3;
