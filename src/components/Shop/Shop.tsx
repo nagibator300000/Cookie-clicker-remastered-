@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './Shop.css'
+import './Shop.scss'
 import clsx from 'clsx'
 import UpgradeShop from './UpgradeShop'
 import CharmsShop from './CharmsShop'

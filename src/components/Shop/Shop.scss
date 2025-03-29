@@ -35,29 +35,34 @@
   color: white;
   cursor: pointer;
   border: none;
-}
 
-.product::after {
-  transition: opacity ease-in-out 0.3s;
-  content: url("/shop_fleur.png");
-  opacity: 0;
-}
+  &::after {
+    transition: opacity ease-in-out 0.3s;
+    content: url('/shop_fleur.png');
+    opacity: 0;
+  }
 
-.product::before {
-  transition: opacity ease-in-out 0.2s;
-  content: url("/shop_fleur.png");
-  transform: scaleX(-100%);
-  opacity: 0;
-}
+  &::before {
+    transition: opacity ease-in-out 0.2s;
+    content: url('/shop_fleur.png');
+    transform: scaleX(-100%);
+    opacity: 0;
+  }
 
-.product:hover::after {
-  opacity: 1;
-}
+  &:hover {
+    &::after,
+    &::before {
+      opacity: 1;
+    }
+  }
 
-.product:hover::before {
-  opacity: 1;
+  &:disabled {
+    color: gray;
+    &::after,
+    &::before {
+    }
+  }
 }
-
 .price {
   font-size: 30px;
 }

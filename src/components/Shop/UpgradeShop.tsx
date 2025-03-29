@@ -13,7 +13,7 @@ export default function UpgradeShop() {
           <Product
             title={e.name}
             price={e.cost}
-            disabled={e.disabled(count, !isEditing)}
+            disabled={e.disabled(count, isEditing)}
             onClick={() => e.upgrade(startEditing)}
             key={e.name}
           />

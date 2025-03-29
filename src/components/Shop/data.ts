@@ -32,11 +32,11 @@ class Upgrade {
   }
 
   disabled(count: number, additonal?: boolean) {
-    const isEnough = count < this.cost
+    const isNotEnough = count < this.cost
     if (additonal === undefined) {
-      return isEnough
+      return isNotEnough
     } else {
-      return isEnough && additonal
+      return isNotEnough || additonal
     }
   }
 }

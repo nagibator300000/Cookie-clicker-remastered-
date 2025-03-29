@@ -1,7 +1,7 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core'
 import GeneralContent, { ChildProps } from './GeneralContent'
 import { CSS } from '@dnd-kit/utilities'
-import CONTENT_INFO, { CharmInfo, getCharm } from '../../../data/items'
+import { getCharm } from '../../../data/items'
 import type { CharmsTypes } from '../../../schemas/itemTypes'
 import { Tooltip } from '..'
 import clsx from 'clsx'
