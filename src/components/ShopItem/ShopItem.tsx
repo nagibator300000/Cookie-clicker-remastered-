@@ -19,6 +19,7 @@ export default function ShopItem({ type }: ShopItemProps) {
         type={type}
         id={type}
         {...charm}
+        price={price}
         disabled={count < price}
       ></InventoryContent>
       <p className="price">{price}</p>

@@ -22,6 +22,7 @@ export default function InventoryProvider({
         id: event.active.id,
         type: event.active.data.current?.type,
         durability: event.active.data.current?.durability,
+        price: event.active.data.current?.price,
       };
       hoverItem(newdropTarget);
     } else {

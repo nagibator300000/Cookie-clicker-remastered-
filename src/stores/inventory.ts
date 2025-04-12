@@ -4,6 +4,7 @@ import { UniqueIdentifier } from '@dnd-kit/core';
 import useGameStore from './game';
 import defaultStats from '../..//data/defaultStats';
 import { ItemTypes } from '../../schemas/itemTypes';
+import { GameStatsSlice } from './gameStats';
 
 export interface InventorySlice {
   inventoryContent: InventoryContentProps[];
@@ -18,9 +19,10 @@ export interface InventorySlice {
 }
 
 const createInventorySlice: StateCreator<
-  InventorySlice,
+  InventorySlice & GameStatsSlice,
   [['zustand/devtools', never]],
-  []
+  [],
+  InventorySlice
 > = (set) => ({
   inventoryContent: defaultStats.inventoryContent,
   overlap: null,
@@ -49,8 +51,15 @@ const createInventorySlice: StateCreator<
             overlap: null,
           };
         }
-
+        let newCount;
+        if (state.dropTarget.price) {
+          newCount = state.count - state.dropTarget.price;
+        } else {
+          newCount = state.count;
+        }
+        console.log(state.dropTarget.price);
         return {
+          count: newCount,
           dropTarget: null,
           inventoryContent: [
             ...state.inventoryContent.filter(

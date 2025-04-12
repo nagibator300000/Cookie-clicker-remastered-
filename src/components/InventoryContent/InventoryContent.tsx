@@ -18,6 +18,7 @@ function InventoryContent({
   onClick,
   isDropTarget,
   isOverlaping,
+  price,
   disabled,
 }: InventoryContentProps) {
   if (type === 'blocker' && onClick) {
@@ -40,6 +41,7 @@ function InventoryContent({
         id={id}
         isOverlaping={isOverlaping}
         isDropTarget={isDropTarget}
+        price={price}
         disabled={disabled}
       />
     );

@@ -12,6 +12,7 @@ export interface CharmProps extends ChildProps {
   durability?: number;
   isDropTarget?: boolean;
   type: CharmsTypes;
+  price?: number;
   disabled?: boolean;
 }
 
