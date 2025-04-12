@@ -1,5 +1,5 @@
-import { getCharm } from '../../../data/items';
-import { CharmsTypes } from '../../../schemas/itemTypes';
+import { getCharm } from '@data/items';
+import { CharmsTypes } from '@schemas/itemTypes';
 import { InventoryContent } from '..';
 import useGameStore from '@/stores/game';
 

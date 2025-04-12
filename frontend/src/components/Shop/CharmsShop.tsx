@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import CONTENT_INFO, { CharmInfo } from '../../../data/items';
+import CONTENT_INFO, { CharmInfo } from '@data/items';
 import { ShopItem } from '..';
 
 type CharmShopProps = {

@@ -2,8 +2,8 @@ import { StateCreator } from 'zustand';
 import type { InventoryContentProps } from '../components';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import useGameStore from './game';
-import defaultStats from '../..//data/defaultStats';
-import { ItemTypes } from '../../schemas/itemTypes';
+import defaultStats from '@data/defaultStats';
+import { ItemTypes } from '@schemas/itemTypes';
 import { GameStatsSlice } from './gameStats';
 
 export interface InventorySlice {

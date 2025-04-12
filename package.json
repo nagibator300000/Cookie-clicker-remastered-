@@ -1,15 +1,21 @@
 {
-  "name": "reactjson",
+  "name": "geosclicker",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
-    "devServer": "tsx watch backend/server.ts",
-    "devClient": "vite",
+    "devServer": "npm run dev --workspace=backend",
+    "devClient": "npm run dev --workspace=frontend",
     "dev": "concurrently \"npm run devServer\" \"npm run devClient\"",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "buildClient": "npm run build --workspace=frontend",
+    "buildServer": "npm run build --workspace=backend",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces",
+    "prettify": "npm run prettify --workspaces",
+    "start": "node dist/backend/index.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",

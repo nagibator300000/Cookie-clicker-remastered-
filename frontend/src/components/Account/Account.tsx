@@ -1,17 +1,17 @@
-import useGameStore from '@/stores/game'
-import Avatar from '../Avatar/Avatar'
-import './Account.css'
-import { Achievement } from '..'
-import ACHIEVEMENTS_CONTENT from '../../../data/achievements'
+import useGameStore from '@/stores/game';
+import Avatar from '../Avatar/Avatar';
+import './Account.css';
+import { Achievement } from '..';
+import ACHIEVEMENTS_CONTENT from '@data/achievements';
 
 type Args = {
-  url: string
-  name: string
-  onClose: () => void
-}
+  url: string;
+  name: string;
+  onClose: () => void;
+};
 
 export default function Account({ url, name, onClose }: Args) {
-  const achievements = useGameStore((state) => state.achievements)
+  const achievements = useGameStore((state) => state.achievements);
   return (
     <div className="account">
       <button className="close" onClick={onClose}>
@@ -33,5 +33,5 @@ export default function Account({ url, name, onClose }: Args) {
         </div>
       </div>
     </div>
-  )
+  );
 }

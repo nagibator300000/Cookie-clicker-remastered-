@@ -1,4 +1,4 @@
-import { ItemTypes } from '../../../schemas/itemTypes';
+import { ItemTypes } from '@schemas/itemTypes';
 import Charm, { CharmProps } from './Charm';
 import Blocker, { BlockerProps } from './Blocker';
 

@@ -1,8 +1,8 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import GeneralContent, { ChildProps } from './GeneralContent';
 import { CSS } from '@dnd-kit/utilities';
-import { getCharm } from '../../../data/items';
-import type { CharmsTypes } from '../../../schemas/itemTypes';
+import { getCharm } from '@data/items';
+import type { CharmsTypes } from '@schemas/itemTypes';
 import { Tooltip } from '..';
 import clsx from 'clsx';
 import styles from './InventoryContent.module.css';

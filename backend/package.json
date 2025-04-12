@@ -1,0 +1,10 @@
+{
+  "name": "@geosclicker/backend",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "tsx watch index.ts",
+    "build": "tsc --build",
+    "prettify": "prettier --log-level warn --cache --write '{src/**/*,*}.{ts,tsx,js,json,yml,scss}'"
+  }
+}
