@@ -1,10 +1,10 @@
-import { StateCreator } from 'zustand'
-import { NotificationSlice } from './notification'
+import { StateCreator } from 'zustand';
+import { NotificationSlice } from './notification';
 
 export type AchievementSlice = {
-  achievements: string[]
-  unlockAchievement: (name: string) => void
-}
+  achievements: string[];
+  unlockAchievement: (name: string) => void;
+};
 
 const createAchievementSlice: StateCreator<
   AchievementSlice & NotificationSlice,
@@ -17,9 +17,9 @@ const createAchievementSlice: StateCreator<
     set((state) => {
       return {
         achievements: [...state.achievements, name],
-      }
-    })
+      };
+    });
   },
-})
+});
 
-export default createAchievementSlice
+export default createAchievementSlice;

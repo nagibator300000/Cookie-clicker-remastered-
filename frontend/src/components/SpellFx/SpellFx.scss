@@ -1,11 +1,11 @@
-@use "@/mixins";
+@use '@/mixins';
 
 .spell {
   height: 96px;
   width: 242px;
   top: var(--target-y);
   left: var(--target-x);
-  background-image: url("/vengreful spirit.png");
+  background-image: url('/vengreful spirit.png');
   position: absolute;
   --offset-x: calc(var(--x) - var(--target-x));
   --offset-y: calc(var(--y) - var(--target-y));
@@ -17,7 +17,7 @@
 .spell.collide {
   width: 142px;
   height: 189px;
-  background-image: url("/spell collision.png");
+  background-image: url('/spell collision.png');
   transform: translate(-50%, -50%) rotate(var(--rotation));
   @include mixins.spriteAnim(collision, 2, 142px, 0.03s);
 }

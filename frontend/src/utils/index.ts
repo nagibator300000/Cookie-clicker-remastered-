@@ -1,3 +1,3 @@
-export { default as fetchJSON } from './fetchJSON'
+export { default as fetchJSON } from './fetchJSON';
 
-export { FetchError } from './fetchJSON'
+export { FetchError } from './fetchJSON';

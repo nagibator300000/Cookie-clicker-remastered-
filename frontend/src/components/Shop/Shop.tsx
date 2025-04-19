@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import './Shop.scss'
-import clsx from 'clsx'
-import UpgradeShop from './UpgradeShop'
-import CharmsShop from './CharmsShop'
+import { useState } from 'react';
+import './Shop.scss';
+import clsx from 'clsx';
+import UpgradeShop from './UpgradeShop';
+import CharmsShop from './CharmsShop';
 
 export default function Shop() {
-  const [isSwitched, setIsSwitched] = useState(false)
+  const [isSwitched, setIsSwitched] = useState(false);
 
   return (
     <div className="shop">
@@ -22,5 +22,5 @@ export default function Shop() {
       <UpgradeShop />
       <CharmsShop isActive={isSwitched} />
     </div>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-import { Tooltip as LibTooltip } from 'react-tooltip'
+import { Tooltip as LibTooltip } from 'react-tooltip';
 
 type TooltipProps = {
-  id: string
-  title: string
-  description: string
-}
+  id: string;
+  title: string;
+  description: string;
+};
 
 export default function Tooltip({ id, title, description }: TooltipProps) {
   return (
@@ -12,5 +12,5 @@ export default function Tooltip({ id, title, description }: TooltipProps) {
       <div>{title}</div>
       <div>{description}</div>
     </LibTooltip>
-  )
+  );
 }

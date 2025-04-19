@@ -1,9 +1,9 @@
-import "./SoulOrb.css";
-import useGameStore from "../../stores/game";
-import { CSSProperties } from "react";
+import './SoulOrb.css';
+import useGameStore from '../../stores/game';
+import { CSSProperties } from 'react';
 
 interface SoulOrbCSS extends CSSProperties {
-  "--percentage": string;
+  '--percentage': string;
 }
 
 export default function SoulOrb() {
@@ -13,7 +13,7 @@ export default function SoulOrb() {
       className="soul_orb"
       src="soul orb.png"
       alt=""
-      style={{ "--percentage": souls + "%" } as SoulOrbCSS}
+      style={{ '--percentage': souls + '%' } as SoulOrbCSS}
     />
   );
 }

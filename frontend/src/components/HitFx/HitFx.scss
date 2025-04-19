@@ -1,7 +1,7 @@
-@use "@/mixins";
+@use '@/mixins';
 .hitFx {
   position: absolute;
-  background-image: url("/Hit Sprite.png");
+  background-image: url('/Hit Sprite.png');
   height: 155px;
   width: 243px;
   top: var(--y);

@@ -1,18 +1,18 @@
-import { CSSProperties, forwardRef, HTMLAttributes } from 'react'
-import styles from './InventoryContent.module.css'
-import clsx from 'clsx'
+import { CSSProperties, forwardRef, HTMLAttributes } from 'react';
+import styles from './InventoryContent.module.css';
+import clsx from 'clsx';
 
 interface GeneralContentProps extends HTMLAttributes<HTMLDivElement> {
-  row?: number
-  col?: number
-  img: string
-  isOverlaping?: boolean
+  row?: number;
+  col?: number;
+  img: string;
+  isOverlaping?: boolean;
 }
 
 export type ChildProps = Pick<
   GeneralContentProps,
   'row' | 'col' | 'isOverlaping'
->
+>;
 
 const GeneralContent = forwardRef<HTMLDivElement, GeneralContentProps>(
   (
@@ -24,7 +24,7 @@ const GeneralContent = forwardRef<HTMLDivElement, GeneralContentProps>(
       '--row': row,
       '--col': col,
       backgroundImage: `url("${img}")`,
-    } as CSSProperties
+    } as CSSProperties;
     return (
       <div
         style={style}
@@ -36,8 +36,8 @@ const GeneralContent = forwardRef<HTMLDivElement, GeneralContentProps>(
         ref={ref}
         {...rest}
       ></div>
-    )
+    );
   }
-)
+);
 
-export default GeneralContent
+export default GeneralContent;

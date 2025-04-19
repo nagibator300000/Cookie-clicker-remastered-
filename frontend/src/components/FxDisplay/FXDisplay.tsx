@@ -1,6 +1,6 @@
-import useGameStore from "@/stores/game";
-import { SpellFx } from "..";
-import { HitFx } from "..";
+import useGameStore from '@/stores/game';
+import { SpellFx } from '..';
+import { HitFx } from '..';
 
 export default function SpellDisplay() {
   const effects = useGameStore((state) => state.effects);
@@ -10,7 +10,7 @@ export default function SpellDisplay() {
   return (
     <div className="effects">
       {effects.map((data) => {
-        if (data.type === "spell")
+        if (data.type === 'spell')
           return (
             <SpellFx
               {...data}

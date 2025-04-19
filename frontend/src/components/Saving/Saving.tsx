@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import "./Saving.scss";
-import clsx from "clsx";
+import { useEffect, useRef, useState } from 'react';
+import './Saving.scss';
+import clsx from 'clsx';
 
 type SavingProps = {
   isSaving: boolean;
@@ -26,5 +26,5 @@ export default function Saving({ isSaving }: SavingProps) {
       if (timeout.current) clearTimeout(timeout.current);
     };
   }, []);
-  return <div className={clsx("saving", isShown && "visible")}></div>;
+  return <div className={clsx('saving', isShown && 'visible')}></div>;
 }

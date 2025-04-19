@@ -1,5 +1,5 @@
-import { ReactNode, forwardRef } from "react";
-import "./Counter.css";
+import { ReactNode, forwardRef } from 'react';
+import './Counter.css';
 type CounterProps = {
   onClick: (event: React.MouseEvent) => void;
   img: string;

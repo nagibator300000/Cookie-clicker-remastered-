@@ -1,4 +1,4 @@
-import './Avatar.css'
+import './Avatar.css';
 function Avatar({ img }: { img: string }) {
   return (
     <>
@@ -6,7 +6,7 @@ function Avatar({ img }: { img: string }) {
         <img src={img} referrerPolicy="no-referrer" />
       </div>
     </>
-  )
+  );
 }
 
-export default Avatar
+export default Avatar;

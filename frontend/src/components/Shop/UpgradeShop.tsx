@@ -1,11 +1,11 @@
-import Product from './Product'
-import useGameStore from '../../stores/game'
-import UPGRADES from './data'
+import Product from './Product';
+import useGameStore from '../../stores/game';
+import UPGRADES from './data';
 
 export default function UpgradeShop() {
-  const count = useGameStore((state) => state.count)
-  const isEditing = useGameStore((state) => state.isEditing)
-  const startEditing = useGameStore((state) => state.startEditing)
+  const count = useGameStore((state) => state.count);
+  const isEditing = useGameStore((state) => state.isEditing);
+  const startEditing = useGameStore((state) => state.startEditing);
   return (
     <div className="upgrades_shop">
       {UPGRADES.map((e) => {
@@ -25,8 +25,8 @@ export default function UpgradeShop() {
             onClick={() => e.upgrade()}
             key={e.name}
           />
-        )
+        );
       })}
     </div>
-  )
+  );
 }

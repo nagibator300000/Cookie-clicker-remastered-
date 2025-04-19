@@ -1,11 +1,11 @@
-import clsx from 'clsx'
-import styles from './Achievement.module.css'
+import clsx from 'clsx';
+import styles from './Achievement.module.css';
 
 export interface AchievementProps {
-  img: string
-  title: string
-  description: string
-  status: boolean
+  img: string;
+  title: string;
+  description: string;
+  status: boolean;
 }
 
 export default function Achievement({
@@ -23,5 +23,5 @@ export default function Achievement({
         <div className={styles.description}>{description}</div>
       </div>
     </div>
-  )
+  );
 }

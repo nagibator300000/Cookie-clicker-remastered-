@@ -1,5 +1,5 @@
-import { CSSProperties, useEffect, useRef, useState } from "react";
-import "./Indicator.css";
+import { CSSProperties, useEffect, useRef, useState } from 'react';
+import './Indicator.css';
 
 type Args = {
   position: { x: number; y: number };
@@ -40,7 +40,7 @@ export default function Indicator({ position }: Args) {
       className="indicator"
       style={
         {
-          "--ofs": `calc(${ofs.x}px - 50%),calc(${ofs.y}px - 50%)`,
+          '--ofs': `calc(${ofs.x}px - 50%),calc(${ofs.y}px - 50%)`,
           left: position.x,
           top: position.y,
         } as CSSProperties

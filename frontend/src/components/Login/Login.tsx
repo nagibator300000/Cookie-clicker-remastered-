@@ -1,5 +1,5 @@
-import GoogleButton from "react-google-button";
-import "./Login.css";
+import GoogleButton from 'react-google-button';
+import './Login.css';
 
 const BACK_URL = import.meta.env.VITE_BACK_URL;
 export default function Login() {
@@ -12,7 +12,7 @@ export default function Login() {
         loop
         muted
       ></video>
-      <a className="login" href={BACK_URL + "/login"}>
+      <a className="login" href={BACK_URL + '/login'}>
         <GoogleButton />
       </a>
     </div>
